@@ -1,0 +1,160 @@
+<% layout('layout') %>
+
+
+    <nav class="navbar profile-nav" role="navigation" style="border-radius:0px">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand nav_brand" href="/home">Soccerchat</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                   <a class="navbar-brand nav_link" href="/members">Members</a>
+                   <a href="/profile/<%= user.username %>" class="img"><img src="/images/profile-pic.png" width="35px" height="35px" class="img-responsive img-circle" alt=""></a>
+                   <a class="navbar-brand nav_link" href="/profile/<%= user.username %>"><%= user.username %></a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle button" data-toggle="dropdown" style="background:#4aa1f3">My Profile <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/settings/profile">Manage Profile</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+            
+        </div>
+        
+    </nav>
+    
+    <div class="container home" style="margin:0 auto">
+      
+    <div class="row home-row">
+       <div class="col-lg-12 text-center">
+            <form method="POST" class="navbar-form form-wrapper ">
+                <div class="form-group">
+                  <input type="text" name="country" id="search" class="form-control" placeholder="Club Name">
+                </div>
+                <input type="submit" value="go" id="submit">
+            </form>
+        </div>
+        
+        <div class="col-lg-12 displayText">
+            <h2>Available Clubs Chat Room</h2>
+        </div>
+        
+        <div class="col-xs-12 col-sm-4 col-md-3 " id="side_bar" role="navigation" >
+           <div class='thumb-nail' style='border:none; padding-top:5px;'>
+                <form method="POST" class="form-horizontal" id="" action="">
+                    <h2>Filter</h2>
+                    
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <select name="country" id="country" class="form-control">
+                               <option value="">Filter By Country</option>
+                                <% country.forEach(function(val){ %>
+                                    <option value="<%= val._id %>"><%= val._id %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="form-group panel_footer">
+                        <button id="apply" class="">Apply</button>
+                    </div>
+               </form>
+            </div>
+        </div>
+  	
+        <div class="col-xs-12 col-sm-4 col-md-9 clubsDisplayDiv" id="">
+            <div class="col-xs-12">
+               <% if(data.length > 0) {%>
+                <% for(var i = 0; i < data.length; i++) {%>
+                    <form action="/home" method="post" id="add-fav">
+                        <div class="col-md-4 col-sm-6">
+                            <div class="panel panel-default text-center">
+                               <a href="/group/<%= data[i].name.replace(/ /g,"-") %>">
+
+                                <div class="panel-heading">
+                                    <img src="/uploads/<%= data[i].image %>" width="200px" height="171px" class="">
+                                </div>
+                                <div class="panel-body">
+                                    <h4><%= data[i].name %></h4>
+                                    <span><%= data[i].country %></span>
+                                    <i class="fa fa-heart"> <%= data[i].fans.length %></i>
+                                    <input type="hidden" name="id" id="id" value="<%= data[i]._id %>" class="form-control">
+                                    <input type="hidden" name="clubName" id="club_Name" value="<%= data[i].name %>" class="form-control">
+
+                                </div>
+                                </a>
+
+                                <button type="submit" id="add_fav" class="btn btn-primary">Add to favourite</button>
+
+                            </div>
+                        </div>
+                    </form>
+                <% } %>
+                <% } else { %>
+                    <h2>No records found</h2>
+                <% } %>
+            </div>
+            
+        </div>
+  </div>
+  
+</div>
+    
+<footer class="footer-distributed">
+    <div class="footer-left">
+        <h3>Soccerchat</h3>
+        <p class="footer-company-name">Soccerchat &copy; 2017</p>
+    </div>
+
+    <div class="footer-center">
+        <div>
+            <i class="fa fa-map-marker"></i>
+            <p><span>Akadeemia tee 7/2B</span> Tallinn, Estonia</p>
+        </div>
+
+        <div>
+            <i class="fa fa-phone"></i>
+            <p>+37258211057</p>
+        </div>
+
+        <div>
+            <i class="fa fa-envelope"></i>
+            <p><a href="mailto:support@company.com">support@company.com</a></p>
+        </div>
+
+    </div>
+
+    <div class="footer-right">
+        <p class="footer-company-about">
+            <span>About the company</span>
+            Soccerchat is an online chat application for soccer lovers.
+        </p>
+
+        <div class="footer-icons">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-github"></i></a>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/home.js"></script>

@@ -1,0 +1,131 @@
+<% layout('layout') %>
+  
+  
+<nav class="navbar profile-nav navbar-fixed-top" role="navigation" style="border-radius:0px">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand nav_brand" href="/home">Soccerchat</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+               <a class="navbar-brand nav_link" href="/members">Members</a>
+               <a href="/profile/<%= user.username %>" class="img"><img src="/images/profile-pic.png" width="35px" height="35px" class="img-responsive img-circle" alt=""></a>
+               <a class="navbar-brand nav_link" href="/profile/<%= user.username %>"><%= user.username %></a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle button" data-toggle="dropdown" style="background:#4aa1f3">My Profile <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/settings/profile">Manage Profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+
+
+            </ul>
+        </div>
+
+    </div>
+
+</nav> 
+
+<div class="container profile">
+    <a href="/chat/@<%= data.username %>@@<%= user.username %>" class="btn btn-primary" style="background-color:#4aa1f3">Message</a>
+    <div class="row">
+        
+        <div class="col-xs-12 col-sm-4 col-md-3 " id="sidebar" role="navigation" >
+           <div class='thumbnail' style='border:none; padding-top:5px;'>
+                <div class="user-image" style="height: 170px;">
+                    <a href="#">
+                        <img src="/profileImages/<%= data.userImage %>" class="sqr_img" style="">
+                    </a>
+                </div>
+                
+                <h1><%= data.fullname %></h1>
+                <h2>@<%= data.username %></h2>
+                <h3><%= data.city %></h3>
+                <span>About me</span><p><%= data.description %></p>
+            </div>
+        </div>
+  	
+        <div class="col-xs-12 col-sm-4 col-md-9 interestDiv" id="profileDiv">
+            <div class="col-xs-12 teams">
+                <h2>Favourite Soccer National Teams</h2>
+                <div class="item-list">
+                   <% if(data.favNationalTeam.length > 0) {%>
+                    <% data.favNationalTeam.forEach(function(val){%>
+                          <div class="item">
+                            <div class="item-label">
+                              <%= val.teamName %>
+                            </div>
+                          </div>
+                    <% }) %>
+                    <% } else { %>
+                        <h3>No Team Added Yet</h3>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="col-xs-12 teams">
+                <h2>Favourite Clubs</h2>
+                <div class="item-list">
+                   <% if(data.favClub.length > 0) {%>
+                    <% data.favClub.forEach(function(val){%>
+                          <div class="item">
+                            <div class="item-label">
+                              <%= val.favClubName %>
+                            </div>
+                          </div>
+                    <% }) %>
+                    <% } else { %>
+                        <h3>No Club Added Yet</h3>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="col-xs-12 teams">
+                <h2>Favourite Players</h2>
+                <div class="item-list">
+                   <% if(data.favPlayers.length > 0) {%>
+                    <% data.favPlayers.forEach(function(val){%>
+                          <div class="item">
+                            <div class="item-label">
+                              <%= val.favPlayersName %>
+                            </div>
+                          </div>
+                    <% }) %>
+                    <% } else { %>
+                        <h3>No Player Added Yet</h3>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        var height = $('.sqr_img').height();
+        var width = $('.sqr_img').width();
+
+        var divHeight = $('.user-image').height();
+
+        // if(height  < divHeight){
+        //     $('.user-image').css({'height': 'auto'});
+        // }else if(width < 170){
+        //     $('.sqr_img').css({'width': '170px'});
+        // }
+    })
+
+
+</script>
+
+

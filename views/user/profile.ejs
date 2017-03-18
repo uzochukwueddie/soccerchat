@@ -1,0 +1,155 @@
+<% layout('layout') %>
+  
+  
+<nav class="navbar profile-nav navbar-fixed-top" role="navigation" style="border-radius:0px">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand nav_brand" href="/home">Soccerchat</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+               <a class="navbar-brand nav_link" href="/members">Members</a>
+               <a href="/profile/<%= user.username %>" class="img"><img src="/images/profile-pic.png" width="35px" height="35px" class="img-responsive img-circle" alt=""></a>
+               <a class="navbar-brand nav_link" href="/profile/<%= user.username %>"><%= user.username %></a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle button" data-toggle="dropdown" style="background:#4aa1f3">My Profile <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/settings/profile">Manage Profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+
+
+            </ul>
+        </div>
+
+    </div>
+
+</nav> 
+
+<div class="container profile" style="height:500px">
+      
+    <div class="row">
+        
+        <div class="col-xs-12 col-sm-4 col-md-3 " id="sidebar" role="navigation" >
+           <div class='thumbnail' style='border:none;'>
+                <div class="user-image" style="height: 170px;">
+                    <a href="#">
+                        <img src="/profileImages/<%= data.userImage %>" class="sqr_img" style="">
+                    </a>
+                </div>
+                
+                <ul class="nav">
+                  <li class="active"><a href="/settings/profile">Profile</a></li>
+                  <li><a href="/settings/interests">Interests</a></li>              
+                </ul>
+            </div>
+        </div>
+  	
+        <div class="col-xs-12 col-sm-4 col-md-6 divCenter" id="">
+               <div class="col-xs-12 divForm">
+               <h2>Personal Information</h2>
+                <form method="POST" class="form-horizontal" id="" action="/settings/profile">
+                    <span id="error"></span>
+                    
+                    <div class="form-group ">
+                       <label for="gender" class="control-label col-sm-2" style=" padding:0">Gender</label>
+                        <div class="col-sm-10">
+                           
+                           <% if(typeof user.gender !== 'undefined') {%>
+                               <input type="radio" id="gender" name="gender" value="<%= user.gender %>" checked> <%= user.gender %>
+                           <% } else {%>
+                                <input type="radio" id="gender" name="gender" value="Male" > Male
+                                <input type="radio" id="gender" name="gender" value="Female" > Female
+                           <% } %>
+                           
+                            
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                       <label for="fname" class="control-label col-sm-2" style=" padding:0">Fullname</label>
+                        <div class="col-sm-10">
+                            <input id="fullname" class="form-control" name="fullname" type="text" placeholder="Fullname" value="<%= user.fullname %>">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group ">
+                       <label for="city" class="control-label col-sm-2" style="padding:0">Current City</label>
+                        <div class="col-sm-10">
+                            <input id="city" class="form-control" name="city" type="text" placeholder="City, State, Country" value="<%= user.city %>">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group ">
+                       <label for="fname" class="control-label col-sm-2" style="padding:0">A bit about you</label>
+                        <div class="col-sm-10">
+                            <textarea name="description" id="description" class="form-control" cols="30" rows="10"><%= user.description %></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fname" class="control-label col-sm-2" style="padding:0">Profile Image</label>
+                        <div class="col-sm-10">
+                            <button class="btn btn-lg add-btn" type="button">Add Profile Image</button>
+                            <input type="file" class="form-control" name="upload" id="add-input" style="display:none">
+                            <span id="completed"></span>
+                        </div>
+                    </div><br>
+
+
+                    <div class="form-group" style="text-align:center; margin:0 auto; padding-bottom:10px;">
+                        <input type="submit" id="profile" value="Save Profile" class=" btn btn-primary" name="submit" style="margin-bottom:20px;">
+                    </div>
+
+                  </form>
+                </div>
+        </div>
+        
+        <div class="col-xs-12 col-sm-4 col-md-2" id="sidebar" style="">
+           <div class="col-xs-12 teams" style=''>
+               <h2>Friends</h2>
+                <div class="item-list">
+                    <% user.friendsList.forEach(function(val){%>
+                          <div class="item">
+                            <div class="item-label">
+                              <%= val.friendName %>
+                            </div>
+                          </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+        
+        
+  </div>
+</div>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        var height = $('.sqr_img').height();
+        var width = $('.sqr_img').width();
+
+        var divHeight = $('.user-image').height();
+
+        // if(height  < divHeight){
+        //     $('.user-image').css({'height': 'auto'});
+        // }else if(width < 170){
+        //     $('.sqr_img').css({'width': '170px'});
+        // }
+    })
+
+
+</script>
+
+

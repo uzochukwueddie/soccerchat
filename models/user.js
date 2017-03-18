@@ -1,0 +1,85 @@
+var mongoose = require('mongoose');
+var bcrypt = require('bcrypt-nodejs');
+
+var userSchema = mongoose.Schema({
+    username: {
+        type: String, 
+        unique: true
+    },
+    fullname: {type: String, unique: true, default: ''},
+    email: {type: String, unique: true},
+    gender: {type: String},
+    password: {type: String},
+    club: {type: String},
+    userImage: {type: String, default: 'defaultPic.png'},
+    request: [{
+        userId: {type: String, default: ''},
+        username: {type: String, default: ''},
+    }],
+    friendsList: [{
+        friendId: {type: String, default: ''},
+        friendName: {type: String, default: ''}
+    }], 
+    favClub: [{
+        favClubName: {type: String, default: ''}
+    }],
+    city: {type: String, default: ''},
+    description: {type: String, default: ''},
+    favNationalTeam: [{
+        teamName: {type: String, default: '', required: true},
+    }],
+    favPlayers: [{
+        favPlayersName: {type: String, default: '', required: true},
+    }]
+});
+
+userSchema.methods.encryptPassword = (password) => {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+};
+
+userSchema.methods.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+};
+
+
+
+module.exports = mongoose.model('User', userSchema);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

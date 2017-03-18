@@ -1,0 +1,238 @@
+<% layout('layout') %>
+
+<div class="header">
+    <div class="team-menu">
+        <a href="/home">Soccer Chat</a> | <%= user.club %>
+    </div>
+    <div class="channel-menu">
+        <span class="channel-menu_name">
+            <span class="channel-menu_prefix"></span>
+            <%= name %>
+            
+        </span>
+        
+        <span class="btn-group dropdown dropdown-notifications sw-open request">
+              <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i data-count="3" class="glyphicon glyphicon-bell notification-icon"></i>
+                <span class="caret"></span>
+              </button>
+
+              <div class="dropdown-container ">
+               <div class="dropdown-toolbar">
+                  <h3 class="dropdown-toolbar-title">Friend Request</h3>
+                </div>
+
+                <ul class="dropdown-menu notifications ">
+                  <% data.request.forEach(function(val){ %>
+                      <li class="">
+                           <h3><%= val.username %></h3>
+                           
+                           <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
+                           <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
+                           <button type="submit" name="accept" id="accept_friend" class="btn btn-primary accept"><i class="fa fa-check"></i> Accept</button>
+                           
+                           <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
+                           
+                           <button type="submit" name="cancel" id="cancel_friend" class="btn remove"><i class="fa fa-remove"></i> Cancel</button>
+                      </li>
+                  <% }) %>
+                </ul>
+              </div>
+        </span>
+        
+    </div>
+</div>
+
+
+<div class="main" style="background-color:red">
+    <div class="listings" style="background-color:green">
+        <div class="listings_channels">
+            <h2 class="listings_header">Favourite Clubs</h2>
+            <ul class="channel_list">
+                <div>
+                    <li class="channel">
+                        <% if(data.favClub.length > 0) {%>
+                            <% data.favClub.forEach(function(val){ %>
+                                  <a class="channel_name">
+                                       <h3>
+                                       <a href="/group/<%= val.favClubName %>"><%= val.favClubName %></a>
+                                       </h3>
+                                  </a>
+                            <% }) %>
+                        <% } %>
+                    </li>
+                </div>
+            </ul>
+        </div>
+        
+        <div class="listings_channels">
+            <h2 class="listings_header">Friends</h2>
+            <ul class="channel_list">
+                <div>
+                    <% if(data.friendsList.length > 0) {%>
+                        <% data.friendsList.forEach(function(val){ %>
+                         <li class="channel">
+                          <a class="channel_name" href="/chat/@<%= val.friendName.replace(/ /g, "-") %>@<%= user.fullname.replace(/ /g, "-") %>">
+                              @<%= val.friendName %>
+                          </a>
+                          </li>
+                        <% }) %>
+                    <% } %>
+                    
+                </div>
+            </ul>
+        </div>
+        <div class="listings_direct-messages"></div>
+        
+        <div class="footer">
+            <div class="">
+                <span class=""></span>
+                <span class=""><%= user.fullname %></span>
+                <span class="">online</span>
+            </div>
+
+        </div>
+        
+        
+    </div>
+    
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <form action="" id="add_friend">
+            <input type="hidden" name="receiverName" id="receiverName" value="">
+            <button type="submit" id="" class="btn btn-primary add"><i class="fa fa-user"></i> Add Friend</button>
+        </form>
+    </div>
+    
+    <div class="listings2" id="main">
+        <div class="listings_channels">
+            <h2 class="listings_header">Online Club Fans</h2>
+            <ul class="channel_list">
+                <li class="channel">
+                    <a class="channel_name">
+                        <div onclick="openNav()" id="users"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+
+    
+<ol id="messages"></ol>
+
+<script id="message-template" type="text/template">
+    <div class="message-history">
+        <div>
+            <div class="message">
+                <a href="" class="message_profile-pic"></a>
+                <a href="" class="message_username">{{from}}</a>
+                <span class="message_content">{{text}}</span>
+            </div>
+        </div>
+    </div>
+</script>
+
+<div class="input-box">
+    <form action="" id="message-form">
+        <input type="hidden" name="sender" id="sender" class="" value="<%= user.fullname %>"><br>
+        <input type="hidden" name="roomName" id="roomName" value="<%= user.club %>">
+
+        <input type="text" name="message" class="input-box_text" id="msg" placeholder="Type your message" autofocus autocomplete="off">
+        <button class="btn btn-primary">Send</button>
+    </form>
+</div>
+
+
+
+
+<% if(typeof data.favClub !== 'undefined' && data.favClub !== null) {%>
+                        <% data.favClub.forEach(function(val){ %> 
+                              <li class="channel channel_lists">
+                                   <a href="/group/<%= val.favClubName %>" class="user-menu_username channel_name">
+                                      <i class="fa fa-futbol-o" aria-hidden="true"></i>
+                                       <%= val.favClubName %>
+                                   </a>
+                              </li>
+                        <% }) %>
+                    <% } else {%>
+                        <li class="channel channel_lists">
+                            <a href="#" class="user-menu_username channel_name">
+                                No Favourite Clubs
+                            </a>
+                        </li>
+                    <% } %>
+                    
+                    
+                    
+                    <% if(data.friendsList.length > 0) {%>
+                        <% data.friendsList.forEach(function(val){ %>
+                         <li class="channel channel_lists">
+                          <a class="channel_name " href="/chat/@<%= val.friendName.replace(/ /g, "-") %>@<%= user.username.replace(/ /g, "-") %>">
+                            <div class="imgName">
+                               <img src="http://placehold.it/27x27" width="27px" height="27px" class="img-responsive img-circle">
+                              <h3 class="">@<%= val.friendName %></h3> 
+                            </div>
+                             
+                          </a>
+                          </li>
+                        <% }) %>
+                    <% } else { %>
+                        <li class="channel channel_lists">
+                            <a href="#" class="user-menu_username channel_name">
+                                No Friends Yet
+                            </a>
+                        </li>
+                    <% } %>
+                    
+                    
+                    <ul id="nav" class="navbar">
+                <li id="notification_li">
+                <% if(data.request.length > 0) {%>
+                <span id="notification_count"><%= data.request.length %></span>
+                <% } %>
+                <a href="#" id="notificationLink"><i class="fa fa-user-plus"></i></a>
+                    <div id="notificationContainer">
+                        <div id="notificationTitle">
+                            Friend Requests
+                        </div>
+                        <div id="notificationsBody" class="notifications">
+                           <% if(data.request.length > 0) {%>
+                            <% data.request.forEach(function(val){ %>
+                                   <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object img-responsive img-circle" src="http://placehold.it/50x50" >
+                                    </span>
+                                    <div class="media-body">
+                                        <h5 class="media-heading">
+                                            <strong>
+                                                <%= val.username %>
+                                            </strong>
+                                        </h5>
+                                        
+                                        <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
+                                       <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
+                                       <button type="submit" name="accept" id="accept_friend" class="btn btn-primary accept"><i class="fa fa-check"></i> Accept</button>
+
+                                       <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
+
+                                       <button type="submit" name="cancel" id="cancel_friend" class="btn remove"><i class="fa fa-remove"></i> Cancel</button>
+                                        
+                                    </div>
+                                  </div>
+                          <% }) %>
+                          <% } else{ %>
+                              <h3 class="text-center">No Friend Request</h3>
+                        <% } %>
+                          
+                          
+                        </div>
+                        <div id="notificationFooter"><a href="#">See All</a></div>
+                    </div>
+                </li>
+            </ul>
+</div>
+
+<% include ./partials/footer %>
