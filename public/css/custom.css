@@ -1,4 +1,23 @@
-/* The side navigation menu */
+body{
+    background-color: #f1f1f1 !important;
+}
+
+.home-navbar > li > a{
+    background-color: #4aa1f3 !important;
+    color: white !important;
+}
+
+.home-navbar > li > a > img{
+    float: left;
+    margin-right: 10px;
+    margin-top:-7px;
+}
+
+.collapse{
+    width: 100%;
+}
+
+/* The side _brandigation menu */
 .sidenav {
     height: 25%; 
     width: 0; 
@@ -81,7 +100,6 @@ chat{
     margin: 0px;
     padding: 0px;
     display: inline-block;
-/*    padding: 0 0.5rem 0 0.6rem;*/
   color: #fff;
   font-size: 1.4rem;
   font-weight: 900;
@@ -90,7 +108,6 @@ chat{
 }
 
 #nav li {
-/*    float: left;*/
     margin-right: 20px;
     font-size: 14px;
     font-weight:bold;
@@ -345,7 +362,7 @@ font-size: 11px;
     overflow: scroll;
 }
 .dropdown-menu{
-    position:fixed;
+    /*position:fixed;*/
 }
 
 .button{
@@ -430,6 +447,7 @@ font-size: 11px;
     color: white;
     font-size: 25px;
     font-weight: bold;
+    padding-left: 0;
 }
 
 .thumbnail{
