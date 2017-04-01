@@ -129,13 +129,13 @@ ul, li {
     margin-left: 35px;
 }
 
-@media (max-width: 600px) {
+/*@media (max-width: 600px) {
   * {
     font-size: 1rem;
   }
 
   .chat__sidebar {
-    display: none;
+    
   }
 
   .chat__footer {
@@ -148,5 +148,5 @@ ul, li {
 
   .chat__footer button {
     margin-right: 0px;
-  }
+  }*/
 }

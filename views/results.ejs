@@ -1,34 +1,38 @@
 <% layout('layout') %>
 
 
-    <nav class="navbar profile-nav" role="navigation" style="border-radius:0px">
+    <nav class="navbar navbar-default  profile-nav" role="navigation" style="border-radius:0px">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <button id="menu-toggle" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target= "#navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand nav_brand" href="/home">Soccerchat</a>
+                <a class="navbar-brand nav_brand" id="home-logo" href="/home">Soccerchat</a>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                   <a class="navbar-brand nav_link" href="/members">Members</a>
-                   <a href="/profile/<%= user.username %>" class="img"><img src="/images/profile-pic.png" width="35px" height="35px" class="img-responsive img-circle" alt=""></a>
-                   <a class="navbar-brand nav_link" href="/profile/<%= user.username %>"><%= user.username %></a>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle button" data-toggle="dropdown" style="background:#4aa1f3">My Profile <b class="caret"></b></a>
+
+            <div id="navbar-collapse" class = "collapse navbar-collapse" >
+              <ul class="nav navbar-nav navbar-right home-navbar">
+                   <li><a class=" nav_link" href="/members">Members</a></li>
+
+                   <li>
+                        <a class=" nav_link" href="/profile/<%= user.username %>">
+                            <img src="/images/profile-pic.png" width="35px" height="35px" class="img-responsive img-circle" alt="">
+                            <%= user.username %>
+                        </a>
+                    </li>
+                    <li class="dropdown nav_link">
+                        <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Profile <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/settings/profile">Manage Profile</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/logout">Logout</a></li>
                         </ul>
                     </li>
-                    
-                    
                 </ul>
-            </div>
+          </div>
             
         </div>
         
@@ -42,12 +46,15 @@
                 <div class="form-group">
                   <input type="text" name="country" id="search" class="form-control" placeholder="Club Name">
                 </div>
-                <input type="submit" value="go" id="submit">
+                
+                <div class="form-group">
+                    <input type="submit" value="go" id="submit">
+                </div>
             </form>
         </div>
         
         <div class="col-lg-12 displayText">
-            <h2>Available Clubs Chat Room</h2>
+            <h2>Available Chat Rooms</h2>
         </div>
         
         <div class="col-xs-12 col-sm-4 col-md-3 " id="side_bar" role="navigation" >
@@ -81,7 +88,7 @@
                     <form action="/home" method="post" id="add-fav">
                         <div class="col-md-4 col-sm-6">
                             <div class="panel panel-default text-center">
-                               <a href="/group/<%= data[i].name.replace(/ /g,"-") %>">
+                               <a href="/group/<%= data[i].name %>">
 
                                 <div class="panel-heading">
                                     <img src="/uploads/<%= data[i].image %>" width="200px" height="171px" class="">
@@ -89,7 +96,7 @@
                                 <div class="panel-body">
                                     <h4><%= data[i].name %></h4>
                                     <span><%= data[i].country %></span>
-                                    <i class="fa fa-heart"> <%= data[i].fans.length %></i>
+                                    <i class="fa fa-user"> <%= data[i].fans.length %></i>
                                     <input type="hidden" name="id" id="id" value="<%= data[i]._id %>" class="form-control">
                                     <input type="hidden" name="clubName" id="club_Name" value="<%= data[i].name %>" class="form-control">
 
@@ -108,6 +115,8 @@
             </div>
             
         </div>
+
+       
   </div>
   
 </div>

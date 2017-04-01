@@ -444,7 +444,7 @@ font-size: 11px;
 }
 
 .profile-nav .nav_brand{
-    color: white;
+    color: white !important;
     font-size: 25px;
     font-weight: bold;
     padding-left: 0;

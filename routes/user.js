@@ -316,8 +316,10 @@ module.exports = (app) => {
             var res1 = results[0];
             var res2 = results[1];
 
+            console.log(res1)
+
             var productChunks = [];
-            var chunkSize = 4;
+            var chunkSize = 3;
             for(var i=0; i < res1.length; i += chunkSize){
                 productChunks.push(res1.slice(i, i+chunkSize));
             }

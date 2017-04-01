@@ -1,194 +1,212 @@
 <% layout('layout') %>
 
-<div class="header">
-    <div class="team-menu">
-        <a href="/home">Soccer Chat</a> | <%= user.club %>
-    </div>
-    <div class="channel-menu">
-        <span class="channel-menu_name">
-            <span class="channel-menu_prefix"></span>
-            <%= name %>
+<nav class="navbar navbar-default profile-nav" role="navigation" style="border-radius:0px; margin-bottom:0">
+        <div class="container">
+          <div class="navbar-header" style="">
+            <button id="menu-toggle" type="button" class="navbar-toggle collapsed" data-toggle = "collapse" data-target= "#navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar bar1"></span>
+              <span class="icon-bar bar2"></span>
+              <span class="icon-bar bar3"></span>
+            </button>
+            <!-- <a class="navbar-brand nav_brand" id="home-logo" href="/home"></a> -->
+            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a>
             
-        </span>
-        
-        <span class="btn-group dropdown dropdown-notifications sw-open request">
-              <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <i data-count="3" class="glyphicon glyphicon-bell notification-icon"></i>
-                <span class="caret"></span>
-              </button>
+          </div>
+          
+          <div id="navbar-collapse" class = "collapse navbar-collapse" >
+            <div class="header" id="">
 
-              <div class="dropdown-container ">
-               <div class="dropdown-toolbar">
-                  <h3 class="dropdown-toolbar-title">Friend Request</h3>
-                </div>
+              <div class="channel-menu">
+                  <span class="channel-menu_name">
+                      @<%= name.replace(/ /g, "-") %>
+                  </span>
 
-                <ul class="dropdown-menu notifications ">
-                  <% data.request.forEach(function(val){ %>
-                      <li class="">
-                           <h3><%= val.username %></h3>
-                           
-                           <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
-                           <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
-                           <button type="submit" name="accept" id="accept_friend" class="btn btn-primary accept"><i class="fa fa-check"></i> Accept</button>
-                           
-                           <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
-                           
-                           <button type="submit" name="cancel" id="cancel_friend" class="btn remove"><i class="fa fa-remove"></i> Cancel</button>
-                      </li>
-                  <% }) %>
-                </ul>
-              </div>
-        </span>
-        
-    </div>
-</div>
+                  <span class="channel-menu_name">
+                      <ul id="nav" class="navbar">
+                          <li id="notification_li">
+                          <% if(data.request.length > 0) {%>
+                          <span id="notification_count"><%= data.request.length %></span>
+                          <% } %>
+                          <a href="#" id="notificationLink"><i class="fa fa-user-plus"></i></a>
+                              <div id="notificationContainer">
+                                  <div id="notificationTitle">
+                                      Friend Requests
+                                  </div>
+                                  <div id="notificationsBody" class="notifications">
+                                     <% if(data.request.length > 0) {%>
+                                      <% data.request.forEach(function(val){ %>
+                                             <div class="media">
+                                              <span class="pull-left">
+                                                  <img class="media-object img-responsive img-circle" src="http://placehold.it/50x50" >
+                                              </span>
+                                              <div class="media-body">
+                                                  <div class="media-heading">
+                                                      <strong>
+                                                          <%= val.username %>
+                                                      </strong>
+                                                  </div>
+                                                  
+                                                  <div class="media-text">
+                                                     <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
+                                                     <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
+                                                     <button type="submit" name="accept" id="accept_friend" class="btn btn-primary accept"><i class="fa fa-check"></i> Accept</button>
 
+                                                     <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
 
-<div class="main" style="background-color:red">
-    <div class="listings" style="background-color:green">
-        <div class="listings_channels">
-            <h2 class="listings_header">Favourite Clubs</h2>
-            <ul class="channel_list">
-                <div>
-                    <li class="channel">
-                        <% if(data.favClub.length > 0) {%>
-                            <% data.favClub.forEach(function(val){ %>
-                                  <a class="channel_name">
-                                       <h3>
-                                       <a href="/group/<%= val.favClubName %>"><%= val.favClubName %></a>
-                                       </h3>
-                                  </a>
-                            <% }) %>
+                                                     <button type="submit" name="cancel" id="cancel_friend" class="btn remove"><i class="fa fa-remove"></i> Cancel</button>
+                                                  </div>
+                                                  
+                                              </div>
+                                            </div>
+                                    <% }) %>
+                                    <% } else{ %>
+                                        <h3 class="text-center">No Friend Request</h3>
+                                  <% } %>
+                                    
+                                    
+                                  </div>
+                                  <div id="notificationFooter"></div>
+                              </div>
+                          </li>
+                      </ul>
+                  </span>
+
+                  <span class="channel-menu_name">
+                    <ul id="nav2" class="navbar">
+                        <li id="notification2_li">
+                        <% var numOfTrue = 0 %>
+                        <% for(var i=0;i<chat.length;i++){
+                            if(chat[i].body.isRead === false)
+                               numOfTrue = numOfTrue + 1
+                        }%>
+                        
+                        <% if(numOfTrue != 0) {%>
+                        <span id="notification_count2"><%= numOfTrue %></span>
                         <% } %>
-                    </li>
-                </div>
-            </ul>
-        </div>
-        
-        <div class="listings_channels">
-            <h2 class="listings_header">Friends</h2>
-            <ul class="channel_list">
-                <div>
-                    <% if(data.friendsList.length > 0) {%>
-                        <% data.friendsList.forEach(function(val){ %>
-                         <li class="channel">
-                          <a class="channel_name" href="/chat/@<%= val.friendName.replace(/ /g, "-") %>@<%= user.fullname.replace(/ /g, "-") %>">
-                              @<%= val.friendName %>
-                          </a>
-                          </li>
-                        <% }) %>
-                    <% } %>
-                    
-                </div>
-            </ul>
-        </div>
-        <div class="listings_direct-messages"></div>
-        
-        <div class="footer">
-            <div class="">
-                <span class=""></span>
-                <span class=""><%= user.fullname %></span>
-                <span class="">online</span>
-            </div>
+                        <a href="#" id="notificationLink2"><i class="fa fa-bell"></i></a>
+                            <div id="notificationContainer2">
+                                <div id="notificationTitle2">
+                                    Notifications
+                                </div>
+                                <div id="notificationsBody2" class="notifications">
+                                <% if(chat.length > 0) {%>
+                                   <% chat.forEach(function(val){ %>
+                                   <% if(user.username !== val.body.receiverName) {%>
+                                       <form method="POST" id="chatName">
+                                        <a href="/chat/@<%= val.body.receiverName %>@<%= user.username %>">
+                                        
+                                            <div class="media">
+                                               <span class="pull-left">
+                                                    <img class="media-object img-responsive img-circle" src="http://placehold.it/50x50" >
+                                                </span>
+                                                <div class="media-body"> 
+                                                    <div class="media-heading" style="">
+                                                        <strong>
+                                                        <% if(user.username !== val.body.receiverName) {%>
+                                                            <%= val.body.receiverName %>
+                                                        <% } else { %>
+                                                            <%= val.body.authorName %>
+                                                        <% } %>
+                                                        </strong>
+                                                    </div>
+                                                    
+                                                   
+                                                   <div class="media-text">
+                                                       <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
+                                                       <input type="hidden" name="clubName" id="clubName" value="<%= name %>">
+                                                       <% if(val.body.isRead == true){ %> 
+                                                           <p class="textRead"><%= val.body.body %></p>
+                                                       <% } else { %>
+                                                           <p class="textNotRead"><%= val.body.body %></p>
+                                                       <% } %>
+                                                   </div>
 
-        </div>
-        
-        
-    </div>
-    
-    <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <form action="" id="add_friend">
-            <input type="hidden" name="receiverName" id="receiverName" value="">
-            <button type="submit" id="" class="btn btn-primary add"><i class="fa fa-user"></i> Add Friend</button>
-        </form>
-    </div>
-    
-    <div class="listings2" id="main">
-        <div class="listings_channels">
-            <h2 class="listings_header">Online Club Fans</h2>
-            <ul class="channel_list">
-                <li class="channel">
-                    <a class="channel_name">
-                        <div onclick="openNav()" id="users"></div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+                                                </div>
+                                              </div>
+                                        </a>
+                                    </form>
+                                    
+                                    <% } else if(user.username !== val.body.authorName) {%>
+                                       <form method="POST" id="chatName">
+                                        <a href="/chat/@<%= val.body.authorName %>@<%= user.username %>">                        
+                                            <div class="media">
+                                                <span class="pull-left">
+                                                    <img class="media-object img-responsive img-circle" src="http://placehold.it/50x50" >
+                                                </span>
+                                                <div class="media-body">
+                                                    <div class="media-heading">
+                                                        <strong>
+                                                        <% if(user.username !== val.body.receiverName) {%>
+                                                            <%= val.body.receiverName %>
+                                                        <% } else { %>
+                                                            <%= val.body.authorName %>
+                                                        <% } %>
+                                                        </strong>
+                                                   </div>
+                                                   
+                                                   <div class="media-text">
+                                                       <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
+                                                       <input type="hidden" name="clubName" id="clubName" value="<%= name %>">
+                                                       <% if(val.body.isRead == true){ %> 
+                                                           <p class="textRead"><%= val.body.body %></p>
+                                                       <% } else { %>
+                                                           <p class="textNotRead"><%= val.body.body %></p>
+                                                       <% } %>
+                                                   </div>
+                                                   
 
-    </div>
-
-
-
-    
-<ol id="messages"></ol>
-
-<script id="message-template" type="text/template">
-    <div class="message-history">
-        <div>
-            <div class="message">
-                <a href="" class="message_profile-pic"></a>
-                <a href="" class="message_username">{{from}}</a>
-                <span class="message_content">{{text}}</span>
-            </div>
-        </div>
-    </div>
-</script>
-
-<div class="input-box">
-    <form action="" id="message-form">
-        <input type="hidden" name="sender" id="sender" class="" value="<%= user.fullname %>"><br>
-        <input type="hidden" name="roomName" id="roomName" value="<%= user.club %>">
-
-        <input type="text" name="message" class="input-box_text" id="msg" placeholder="Type your message" autofocus autocomplete="off">
-        <button class="btn btn-primary">Send</button>
-    </form>
-</div>
-
-
-
-
-<% if(typeof data.favClub !== 'undefined' && data.favClub !== null) {%>
-                        <% data.favClub.forEach(function(val){ %> 
-                              <li class="channel channel_lists">
-                                   <a href="/group/<%= val.favClubName %>" class="user-menu_username channel_name">
-                                      <i class="fa fa-futbol-o" aria-hidden="true"></i>
-                                       <%= val.favClubName %>
-                                   </a>
-                              </li>
-                        <% }) %>
-                    <% } else {%>
-                        <li class="channel channel_lists">
-                            <a href="#" class="user-menu_username channel_name">
-                                No Favourite Clubs
-                            </a>
-                        </li>
-                    <% } %>
-                    
-                    
-                    
-                    <% if(data.friendsList.length > 0) {%>
-                        <% data.friendsList.forEach(function(val){ %>
-                         <li class="channel channel_lists">
-                          <a class="channel_name " href="/chat/@<%= val.friendName.replace(/ /g, "-") %>@<%= user.username.replace(/ /g, "-") %>">
-                            <div class="imgName">
-                               <img src="http://placehold.it/27x27" width="27px" height="27px" class="img-responsive img-circle">
-                              <h3 class="">@<%= val.friendName %></h3> 
+                                                </div>
+                                              </div>
+                                        </a>
+                                        </form>
+                                    <% } %>
+                                        
+                                      <% }) %>
+                                  <% } %>
+                                  
+                                </div>
+                                <div id="notificationFooter2"></div>
                             </div>
-                             
-                          </a>
-                          </li>
-                        <% }) %>
-                    <% } else { %>
-                        <li class="channel channel_lists">
-                            <a href="#" class="user-menu_username channel_name">
-                                No Friends Yet
-                            </a>
                         </li>
-                    <% } %>
-                    
-                    
-                    <ul id="nav" class="navbar">
+                    </ul>
+                </span>
+
+                <form method="GET" class="navbar-form navbar-right navbar_form">
+                    <div class="form-group">
+                     <input type="hidden" name="clubName" id="club_Name" value="<%= name %>">
+                      <input type="text" name="search" id="search" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" id="searchBtn" class="btn btn-default">Submit</button>
+                </form>
+                
+                <span class="logoutBtn">
+                    <a href="/logout">Logout</a>
+                </span>
+
+              </div>
+            </div>
+          </div>
+
+      </div>
+    </nav>
+
+
+<% include ./partials/sidebar %>
+
+  <div class="chat__main">
+  
+
+    <!-- <div class="header" id="">
+
+    <div class="channel-menu">
+       
+        <span class="channel-menu_name">
+            @<%= name.replace(/ /g, "-") %>
+        </span>
+        
+        <span class="channel-menu_name">
+            <ul id="nav" class="navbar">
                 <li id="notification_li">
                 <% if(data.request.length > 0) {%>
                 <span id="notification_count"><%= data.request.length %></span>
@@ -206,19 +224,21 @@
                                         <img class="media-object img-responsive img-circle" src="http://placehold.it/50x50" >
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading">
+                                        <div class="media-heading">
                                             <strong>
                                                 <%= val.username %>
                                             </strong>
-                                        </h5>
+                                        </div>
                                         
-                                        <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
-                                       <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
-                                       <button type="submit" name="accept" id="accept_friend" class="btn btn-primary accept"><i class="fa fa-check"></i> Accept</button>
+                                        <div class="media-text">
+                                           <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
+                                           <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
+                                           <button type="submit" name="accept" id="accept_friend" class="btn btn-primary accept"><i class="fa fa-check"></i> Accept</button>
 
-                                       <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
+                                           <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
 
-                                       <button type="submit" name="cancel" id="cancel_friend" class="btn remove"><i class="fa fa-remove"></i> Cancel</button>
+                                           <button type="submit" name="cancel" id="cancel_friend" class="btn remove"><i class="fa fa-remove"></i> Cancel</button>
+                                        </div>
                                         
                                     </div>
                                   </div>
@@ -229,10 +249,256 @@
                           
                           
                         </div>
-                        <div id="notificationFooter"><a href="#">See All</a></div>
+                        <div id="notificationFooter"></div>
                     </div>
                 </li>
             </ul>
-</div>
+        </span> 
+        
+        <span class="channel-menu_name">
+            <ul id="nav2" class="navbar">
+                <li id="notification2_li">
+                <% var numOfTrue = 0 %>
+                <% for(var i=0;i<chat.length;i++){
+                    if(chat[i].body.isRead === false)
+                       numOfTrue = numOfTrue + 1
+                }%>
+                
+                <% if(numOfTrue != 0) {%>
+                <span id="notification_count2"><%= numOfTrue %></span>
+                <% } %>
+                <a href="#" id="notificationLink2"><i class="fa fa-bell"></i></a>
+                    <div id="notificationContainer2">
+                        <div id="notificationTitle2">
+                            Notifications
+                        </div>
+                        <div id="notificationsBody2" class="notifications">
+                        <% if(chat.length > 0) {%>
+                           <% chat.forEach(function(val){ %>
+                           <% if(user.username !== val.body.receiverName) {%>
+                               <form method="POST" id="chatName">
+                                <a href="/chat/@<%= val.body.receiverName %>@<%= user.username %>">
+                                
+                                    <div class="media">
+                                       <span class="pull-left">
+                                            <img class="media-object img-responsive img-circle" src="http://placehold.it/50x50" >
+                                        </span>
+                                        <div class="media-body"> 
+                                            <div class="media-heading" style="">
+                                                <strong>
+                                                <% if(user.username !== val.body.receiverName) {%>
+                                                    <%= val.body.receiverName %>
+                                                <% } else { %>
+                                                    <%= val.body.authorName %>
+                                                <% } %>
+                                                </strong>
+                                            </div>
+                                            
+                                           
+                                           <div class="media-text">
+                                               <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
+                                               <input type="hidden" name="clubName" id="clubName" value="<%= name %>">
+                                               <% if(val.body.isRead == true){ %> 
+                                                   <p class="textRead"><%= val.body.body %></p>
+                                               <% } else { %>
+                                                   <p class="textNotRead"><%= val.body.body %></p>
+                                               <% } %>
+                                           </div>
+
+                                        </div>
+                                      </div>
+                                </a>
+                            </form>
+                            
+                            <% } else if(user.username !== val.body.authorName) {%>
+                               <form method="POST" id="chatName">
+                                <a href="/chat/@<%= val.body.authorName %>@<%= user.username %>">                        
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object img-responsive img-circle" src="http://placehold.it/50x50" >
+                                        </span>
+                                        <div class="media-body">
+                                            <div class="media-heading">
+                                                <strong>
+                                                <% if(user.username !== val.body.receiverName) {%>
+                                                    <%= val.body.receiverName %>
+                                                <% } else { %>
+                                                    <%= val.body.authorName %>
+                                                <% } %>
+                                                </strong>
+                                           </div>
+                                           
+                                           <div class="media-text">
+                                               <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
+                                               <input type="hidden" name="clubName" id="clubName" value="<%= name %>">
+                                               <% if(val.body.isRead == true){ %> 
+                                                   <p class="textRead"><%= val.body.body %></p>
+                                               <% } else { %>
+                                                   <p class="textNotRead"><%= val.body.body %></p>
+                                               <% } %>
+                                           </div>
+                                           
+
+                                        </div>
+                                      </div>
+                                </a>
+                                </form>
+                            <% } %>
+                                
+                              <% }) %>
+                          <% } %>
+                          
+                        </div>
+                        <div id="notificationFooter2"></div>
+                    </div>
+                </li>
+            </ul>
+        </span>
+        
+        <form method="GET" class="navbar-form navbar-right navbar_form">
+            <div class="form-group">
+             <input type="hidden" name="clubName" id="club_Name" value="<%= name %>">
+              <input type="text" name="search" id="search" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" id="searchBtn" class="btn btn-default">Submit</button>
+        </form>
+        
+        <span class="logoutBtn">
+            <a href="/logout">Logout</a>
+        </span>
+        
+        
+        
+    </div>
+</div> -->
+
+    <!-- <ol id="messages" class="chat__messages"></ol>
+
+    <div class="chat__footer input-group">
+      
+    <form action="" id="message-form" style="width:100%; padding:0; margin:0;">
+        
+        <input type="hidden" name="sender" id="sender" class="" value="<%= user.username %>"><br>
+        <input type="hidden" name="roomName" id="roomName" value="<%= user.club %>">
+
+        <input type="text" name="message" class="input-box_text" id="msg" placeholder="Type your message" autofocus autocomplete="off">
+        <button class="btn btn-primary" id="send-message">Send</button>
+        
+    </form> -->
+      
+      
+    </div>
+
+  </div>
+
+
+    <div id="mySidenav" class="sidenav">
+    <h3 id="name"></h3>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <form action="" method="get" id="add_friend">
+        <input type="hidden" name="receiverName" id="receiverName" value="">
+        <button type="submit" class="btn btn-primary add"><i class="fa fa-user"></i> Add Friend</button>
+        
+        <a id="nameLink" class="btn btn-primary">View Profile</a>
+    </form>
+    
+    </div>
+  
+  <!-- <div class="listings2" id="main" style="">
+        <div class="listings_channels2">
+            <h2 class="listings_header2">Online Club Fans&nbsp;<span id="numValue"></span></h2>
+            <ul class="channel_list">
+                <li class="channel">
+                    <a class="channel_name">
+                        <div onclick="openNav()" id="users"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div> -->
+    
+    <script id="message-template" type="text/template">
+        <li class="message">
+            <a href="" class="message_profile" ></a>
+              <div class="message__title">
+                <h4 class="userFrom">{{from}}</h4>
+                <span>{{createdAt}}</span>
+              </div>
+
+              <div class="message__body">
+                <p class="userText" id="myId">{{text}}</p>
+              </div>
+         </li>
+    </script>
+
+
 
 <% include ./partials/footer %>
+</div>
+
+
+<script src="/js/search.js"></script>
+<script type="text/javascript" >
+$(document).ready(function(){
+    $("#notificationLink").click(function(){
+        $("#notificationContainer").fadeToggle(300);
+        $("#notification_count").fadeOut("slow");
+        return false;
+    });
+
+    //Document Click hiding the popup 
+    $('.chat').click(function(){
+        $("#notificationContainer").hide();
+         $("#notificationContainer2").hide();
+    });
+    
+    $("#notificationLink2").click(function(){
+        $("#notificationContainer2").fadeToggle(300);
+        $("#notification_count2").fadeOut("slow");
+        return false;
+    });
+
+    //Document Click hiding the popup 
+    $('.fa').click(function(){
+        $("#notificationContainer").hide();
+        $("#notificationContainer2").hide();
+    });
+    
+    $(document).on('click', '#chatName', function(){
+        
+        var chatId = $('#chatId').val();
+        var clubName = $('#clubName').val();
+        
+        $.ajax({
+            url: '/group/'+clubName,
+            type: 'POST',
+            data: {chatId: chatId, clubName:clubName},
+            success: function(){
+                
+            }
+        })
+    })
+    
+//    window.emojiPicker = new EmojiPicker({
+//        emojiable_selector: '[data-emojiable=true]',
+//        assetsPath: '/lib/img/',
+//        popupButtonClasses: 'fa fa-smile-o'
+//    });
+//    window.emojiPicker.discover();
+    
+//     $("#msg").emojioneArea({
+//        container: "#message-form",
+//        hideSource: false,
+//        useSprite: false
+//      });
+//    emojione.imagePathPNG = '/images/emojis'
+    // $("#msg").emojioneArea({
+    //     saveEmojisAs: true,
+    //     pickerPosition: "top",
+    // });
+    
+});
+</script>
+
+
