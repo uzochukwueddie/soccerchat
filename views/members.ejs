@@ -1,168 +1,200 @@
-<% layout('layout') %>
+<!DOCTYPE html>
 
-    <nav class="navbar navbar-default  profile-nav" role="navigation" style="border-radius:0px">
-        <div class="container">
-            <div class="navbar-header">
-                <button id="menu-toggle" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target= "#navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand nav_brand" id="home-logo" href="/home">Soccerchat</a>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>Web</title>
+
+
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300,400,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+
+    <div class="col-md-12 mob-clearfix margin-80">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-default" role="navigation">
+
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/home" style="color:white">Soccerchat</a>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span>Chats <span class="label label-primary nav-label-icon">16</span>
+                                    </a>
+
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-bell nav-glyphicon "></span>Notification <span class="label label-primary nav-label-icon">12</span>
+                                    </a>
+
+                                </li>
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-envelope nav-glyphicon "></span>Inbox <span class="label label-info nav-label-icon">32</span>
+                                    </a>
+
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span>Admin <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+                                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </nav>
+                </div>
             </div>
-
-            <div id="navbar-collapse" class = "collapse navbar-collapse" >
-              <ul class="nav navbar-nav navbar-right home-navbar">
-                   <li><a class=" nav_link" href="/members">Members</a></li>
-
-                   <li>
-                        <a class=" nav_link" href="/profile/<%= user.username %>">
-                            <img src="/images/profile-pic.png" width="35px" height="35px" class="img-responsive img-circle" alt="">
-                            <%= user.username %>
-                        </a>
-                    </li>
-                    <li class="dropdown nav_link">
-                        <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Profile <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/settings/profile">Manage Profile</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/logout">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-          </div>
-            
         </div>
-        
-    </nav>
-    
-    <div class="container home" style="margin:0 auto">
-      
-    <div class="row home-row">
-        
-        <div class="col-lg-12 displayText">
-            <h2>Members</h2>
+
+
+
+        <div class="col-md-12">
+
+            <h3 style="margin-bottom:20px">Members</h3>
+
         </div>
-        
-        <div class="col-xs-12 col-sm-4 col-md-3 " id="side_bar" role="navigation" >
-           <div class='thumb-nail' style='border:none; padding-top:5px;'>
-                <form method="POST" class="form-horizontal" id="" action="">
-                    <h2>Filter</h2>
-                    
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <select name="gender" id="gender" class="form-control">
-                               <option value="">Filter By Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
 
-                            <div class=" panel_footer">
-                            <button id="apply" class="">Filter By Gender</button>
-                        </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group" style="margin-top:35px;">
-                        <div class="col-sm-12">
-                            <select name="club" id="club" class="form-control">
-                               <option value="">Filter By Club</option>
-                                <% data.forEach(function(val){ %>
-                                    <option value="<%= val.club %>"><%= val.club %></option>
-                                <% }) %>
-                            </select>
+        <div class="col-md-12">
+            <div class="chat_container">
+            <input type="hidden" name="" id="name-user" value="<%= user.username %>">
+                <div class="row">
+                    <!-- LEFT -->
 
-                            <div class="panel_footer">
-                                <button id="apply" class="">Filter By Clubs</button>
+                    <div class="col-sm-4 col-md-3">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-container">
+                                    <div class="card">
+                                        <div class="front">
+
+                                            <div class="content">
+                                                <div class="main">
+                                                <form method="POST" class="form-horizontal" id="" action="">
+                                                    <p class="friends" style="margin-bottom:0px;color:#444">
+                                                        FILTER
+                                                    </p>
+                                                    <hr style="margin-top:10px" />
+                                                    <select class="selectpicker" name="gender" id="gender" data-style="btn-primary" style="padding:5px;width:100%">
+                                                        <option>Filter By Gender</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
+                                                    <div class="clearfix"></div>
+                                                    <button type="" id="apply" class="btn btn-default add-apply">Filter By Gender</button>
+
+
+                                                    <hr style="margin-top:10px" />
+                                                    <select class="selectpicker" name="club" id="club" data-style="btn-primary" style="padding:5px;width:100%">
+                                                        <option value="">Filter By Club</option>
+                                                        <% data.forEach(function(val){ %>
+                                                            <option value="<%= val.club %>"><%= val.club %></option>
+                                                        <% }) %>
+
+                                                    </select>
+                                                    <div class="clearfix"></div>
+                                                    <button type="" id="apply" class="btn btn-default add-apply">Filter By Club</button>
+                                                </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    
-               </form>
-            </div>
-        </div>
-  	
-        <div class="col-xs-12 col-sm-4 col-md-9 clubsDisplayDiv" id="">
-            <div class="col-xs-12">
-               <% if(data.length > 0) {%>
-                <% for(var i = 0; i < data.length; i++) {%>
-                    <form action="/members" method="post" id="members">
-                        <div class="col-md-4 col-sm-6">
-                            <div class="panel panel-default text-center" style="padding-bottom:10px;">
-                               <a href="/profile/<%= data[i].username %>">
 
-                                <div class="panel-heading">
-                                    <img src="/profileImages/<%= data[i].userImage %>" class="panelImage">
-                                </div>
-                                <div class="panel-body" style="padding-bottom: 7px;">
-                                    <h4><%= data[i].username %></h4>
-                                    <span><%= data[i].club %></span>
-                                    
-                                    <input type="hidden" name="id" id="id" value="<%= data[i]._id %>" class="form-control">
-                                    <input type="hidden" name="clubName" id="club_Name" value="<%= data[i].club %>" class="form-control">
 
+                    <!--RIGHT-->
+
+                    <div class="col-sm-8 col-md-9">
+                        <div class="">
+
+                            <div id="categories-list" class="">
+                                <div class="row">
+                                <% if(data.length > 0) {%>
+                                    <% for(var i = 0; i < data.length; i++) {%>
+                                    <form action="/members" method="post" id="members">
+                                    <div class="item col-md-4 col-sm-4">
+                                        <div class="thumbnail">
+                                        <a href="/profile/<%= data[i].username %>">
+                                            <!-- <img class="img-responsive meb-img" src="/profileImages/<%= data[i].userImage %>" width="180px" height="180px" alt=""  /> -->
+                                            <img class="img-responsive meb-img" src="/images/team.jpg" alt="" />
+                                            <hr />
+                                            <div class="caption">
+
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+
+                                                        <h4 class="group inner list-group-item-heading members-name">
+                                                            <%= data[i].username %>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <h4 class="group inner list-group-item-heading text-right members-club-name"><%= data[i].club %></h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        </div>
+                                    </div>
+                                    </form>
+                                    <% } %>
+                                    <% } else { %>
+                                        <h2>No records found</h2>
+                                    <% } %>
                                 </div>
-                                </a>
 
                             </div>
                         </div>
-                    </form>
-                <% } %>
-                <% } else { %>
-                    <h2>No records found</h2>
-                <% } %>
+
+                    </div>
+
+                </div>
+
             </div>
-            
-        </div>
-  </div>
-  
-</div>
-    
-<footer class="footer-distributed">
-    <div class="footer-left">
-        <h3>Soccerchat</h3>
-        <p class="footer-company-name">Soccerchat &copy; 2017</p>
-    </div>
-
-    <div class="footer-center">
-        <div>
-            <i class="fa fa-map-marker"></i>
-            <p><span>Akadeemia tee 7/2B</span> Tallinn, Estonia</p>
-        </div>
-
-        <div>
-            <i class="fa fa-phone"></i>
-            <p>+37258211057</p>
-        </div>
-
-        <div>
-            <i class="fa fa-envelope"></i>
-            <p><a href="mailto:support@company.com">support@company.com</a></p>
         </div>
 
     </div>
 
-    <div class="footer-right">
-        <p class="footer-company-about">
-            <span>About the company</span>
-            Soccerchat is an online chat application for soccer lovers.
-        </p>
 
-        <div class="footer-icons">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-github"></i></a>
-        </div>
-    </div>
-</footer>
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/home.js"></script>
+    <script src="/js/global.js"></script>
 
+</body>
 
-
-
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/home.js"></script>
+</html>

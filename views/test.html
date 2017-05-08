@@ -1,114 +1,161 @@
-<html lang="en"><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="img/favicon.png">
-    <title>Soccer Chat</title>
-    <!-- Bootstrap core CSS -->
-    <link href="/bootstrap.3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/font-awesome.4.6.1/css/font-awesome.min.css" rel="stylesheet">
-<!--    <link href="/assets/css/animate.min.css" rel="stylesheet">-->
-    <link href="/assets/css/timeline.css" rel="stylesheet">
-    <link href="/assets/css/login_register.css" rel="stylesheet">
-    <link href="/assets/css/forms.css" rel="stylesheet">
-    <link href="/assets/css/buttons.css" rel="stylesheet">
-    <script src="/assets/js/jquery.1.11.1.min.js"></script>
-    <script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
-    <script src="/assets/js/custom.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+<% layout('layout') %>
   
-</head>
-
-  <body cz-shortcut-listen="true">
-
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-fixed-top navbar-transparent" role="navigation">
-        <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header" style="">
-          <button id="menu-toggle" type="button" class="navbar-toggle collapsed" data-toggle = "collapse" data-target= "#navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar bar1"></span>
-            <span class="icon-bar bar2"></span>
-            <span class="icon-bar bar3"></span>
-          </button>
-          <a class= "navbar-brand" id="logo" href="/"></a>
-          
+  
+<nav class="navbar profile-nav navbar-fixed-top" role="navigation" style="border-radius:0px">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand nav_brand" href="/home">Soccerchat</a>
         </div>
-        
-        <div id="navbar-collapse" class = "collapse navbar-collapse">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li style="">
-                    <a class="navbar-brand" href="/signup">Register Here</a>
+               <a class="navbar-brand nav_link" href="/members">Members</a>
+               <a href="/profile/<%= user.username %>" class="img"><img src="/images/profile-pic.png" width="35px" height="35px" class="img-responsive img-circle" alt=""></a>
+               <a class="navbar-brand nav_link" href="/profile/<%= user.username %>"><%= user.username %></a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle button" data-toggle="dropdown" style="background:#4aa1f3">My Profile <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/settings/profile">Manage Profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
                 </li>
+
+
             </ul>
         </div>
 
-      </div>
-    </nav>
-    
-    <div class="wrapper">
-      <div class="parallax filter-black">
-          <div class="parallax-image"></div>             
-          <div class="small-info">
-            <div class="col-sm-10 col-sm-push-1 col-md-6 col-md-push-3 col-lg-6 col-lg-push-3">
-              <div class="card-group animated flipInX">
-               
-                <div class="card">
-                  <div class="card-block">
-                    <div class="center">
-                      <h4 class="m-b-0"><span class="icon-text">Login</span></h4>
-                      <p class="text-muted">Access your account</p>
-                    </div>
-                    
-                    <% if(hasErrors) {%>
-                       <div class="alert alert-danger">
-                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <% for(var i = 0; i < messages.length; i++) {%>
-                            <%= messages[i] %> <br>
-                        <% } %>
-                        
-                        </div>
-                    <% } %>
-                    
-                    
-                    <form action="/" method="post">
-                      <div class="form-group">
-                        <input type="email" name="email" class="form-control" placeholder="Email Address">
-                      </div>
-                      <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password">
-                        <a href="#" class="pull-xs-right">
-                          <small class="">Forgot your password?</small> |
-                          <small class=""><a href="/signup">Not Yet Registered?</a></small>
-                        </a>
-                        <div class="clearfix"></div>
-                      </div>
-                      <div class="center">
-                        <button type="submit" class="btn btn-azure">Login</button>
-                      </div>
-                    </form>
-                  </div>
+    </div>
+
+</nav> 
+
+<div class="container profile">
+      
+    <div class="row">
+        
+        <div class="col-xs-12 col-sm-4 col-md-3 " id="sidebar" role="navigation" >
+           <div class='thumbnail' style='border:none;'>
+                <div class="user-image" style="height: 170px;">
+                    <a href="#">
+                        <img src="/profileImages/<%= user.userImage %>" class="round_img" style="">
+                    </a>
                 </div>
                 
-              </div>
+                <ul class="nav">
+                  <li class="active"><a href="/settings/profile">Profile</a></li>
+                  <li><a href="/settings/interests">Interests</a></li>             
+                </ul>
             </div>
-          </div>
-      </div>
-
-      <footer class="footer">
-        <div class="container">
-          <p class="text-muted"> Copyright © Soccerchat - All rights reserved </p>
         </div>
-      </footer>
-    </div>
     
-</body>
-</html>
+        <div class="col-xs-12 col-sm-4 col-md-9 interestDiv" id="">
+                <div class="col-xs-12 teams">
+                <form method="POST" class="form-horizontal" id="" action="">
+                    <h2>Favourite National Teams</h2>
+                    
+                    <div class="item-list">
+                        <% user.favNationalTeam.forEach(function(val){%>
+                              <div class="item">
+                                <div class="item-label">
+                                    <input type="text" id="name" name="name" value="<%= val.teamName %>">
+                                </div>
+                              </div>
+                        <% }) %>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input id="national" class="form-control" name="national" type="text" style="">
+                        </div>
+                        <button for="" id="nationalTeam" class="col-sm-2 btn btn-primary text-center" style="font-weight:bold;">Add Team</button>
+                    </div>
+                    
+                    <h2 class="">Favourite Clubs</h2>
+                    
+                    <div class="item-list">
+                        <% user.favClub.forEach(function(val){%>
+                              <div class="item">
+                                <div class="item-label">
+                                  <input type="text" id="name" name="name" value="<%= val.favClubName %>">
+                                </div>
+                              </div>
+                        <% }) %>
+                    </div>
+                    
+                    <div class="form-group">
+                       
+                        <div class="col-sm-10">
+                            <input id="favClub" class="form-control" name="favClub" type="text" style="">
+                        </div>
+                        <button for="" id="favClubBtn" class="col-sm-2 btn btn-primary text-center" style="font-weight:bold;">Add Club</button>
+                    </div>
+                    
+                    <h2>Favourite Players</h2>
+                    
+                    <div class="item-list">
+                        <% user.favPlayers.forEach(function(val){%>
+                              <div class="item">
+                                <div class="item-label">
+                                  <input type="text" id="name" name="name" value="<%= val.favPlayersName %>">
+                                </div>
+                              </div>
+                        <% }) %>
+                    </div>
+                    
+                    <div class="form-group">
+                       
+                        <div class="col-sm-10">
+                            <input id="favPlayers" class="form-control" name="favPlayers" type="text" style="">
+                        </div>
+                        <button for="" id="favPlayersBtn" class="col-sm-2 btn btn-primary text-center" style="font-weight:bold;">Add Player</button>
+                    </div>
+
+                  </form>
+                </div>
+
+        </div>
+  </div>
+</div>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $(document).on('click', '#name', function(){
+        $(this).remove();
+        
+        var name = $(this).val();
+        
+        console.log(name)
+        
+        $.ajax({
+            url: '/settings/interests',
+            type: 'POST',
+            data: {name: name},
+            success: function(){
+                
+            }
+        })
+    })
+
+    var height = $('.round_img').height();
+    var width = $('.round_img').width();
+
+    var divHeight = $('.user-image').height();
+
+    // if(height  < divHeight){
+    //     $('.user-image').css({'height': 'auto'});
+    // }else if(width < 170){
+    //     $('.round_img').css({'width': '170px'});
+    // }
+})
+</script>
+
 
 

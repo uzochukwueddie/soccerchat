@@ -1,166 +1,290 @@
-<% layout('layout') %>
+<!DOCTYPE html>
 
-    <nav class="navbar navbar-default profile-nav" role="navigation" style="border-radius:0px">
-        <div class="container">
-          <div class="navbar-header" style="">
-            <button id="menu-toggle" type="button" class="navbar-toggle collapsed" data-toggle = "collapse" data-target= "#navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar bar1"></span>
-              <span class="icon-bar bar2"></span>
-              <span class="icon-bar bar3"></span>
-            </button>
-            <a class="navbar-brand nav_brand" id="home-logo" href="/home">Soccerchat</a>
-            
-          </div>
-          
-          <div id="navbar-collapse" class = "collapse navbar-collapse" >
-              <ul class="nav navbar-nav navbar-right home-navbar">
-                   <li><a class=" nav_link" href="/members">Members</a></li>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-                   <li>
-                        <a class=" nav_link" href="/profile/<%= user.username %>">
-                            <img src="/images/profile-pic.png" width="35px" height="35px" class="img-responsive img-circle" alt="">
-                            <%= user.username %>
-                        </a>
-                    </li>
-                    <li class="dropdown nav_link">
-                        <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Profile <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/settings/profile">Manage Profile</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/logout">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-          </div>
 
-      </div>
-    </nav>
-    
-    <div class="container home" style="margin:0 auto">
-      
-    <div class="row home-row">
-       <div class="col-lg-12 text-center">
-            <form method="POST" action="/results" class="navbar-form form-wrapper ">
-                <div class="form-group">
-                  <input type="text" name="country" id="search" class="form-control" placeholder="Club Name">
+    <title>Web</title>
+
+
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300,400,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+
+    <div class="col-md-12 mob-clearfix margin-80">
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-default" id="nav_bar" role="navigation">
+
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/home" style="color:white">Soccerchat</a>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="/members" class="dropdown-toggle">
+                                        <span class="nav-glyphicon "></span>Members
+                                    </a>
+                                </li>
+                                <!-- <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-bell nav-glyphicon "></span><b class="caret"></b> <span class="label label-primary nav-label-icon">12</span>
+                                    </a>
+                                    <ul class="dropdown-menu dmenu">
+                                        <li>
+                                            <div class="navbar-login">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="dropdown-tag">
+                                                            <h3 class="text-center dropdown-tag-head">
+                                                                Friend Requests
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left"><strong>Nombre Apellido</strong></p>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <button type="submit" class="btn btn-default drop-accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
+                                                                            </div>
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <button type="submit" class="btn btn-default drop-cancel"><i class="fa fa-times" aria-hidden="true"></i> Accept</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-envelope nav-glyphicon "></span><b class="caret"></b> <span class="label label-primary nav-label-icon">12</span>
+                                    </a>
+                                    <ul class="dropdown-menu dmenu">
+                                        <li>
+                                            <div class="navbar-login">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="dropdown-tag">
+                                                            <h3 class="text-center dropdown-tag-head">
+                                                                Notifications
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left drop-name"><strong>Johnny</strong></p>
+                                                                        <p class="drop-message">Ok</p>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="dropdown-divider" />
+                                                    
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </li> -->
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span><%= user.username %> <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+                                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="/logout""><span class="glyphicon glyphicon-off"></span>Logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </nav>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="go" id="submit">
+            </div>
+        </div>
+
+
+
+
+        <div class="col-md-12">
+        <form method="POST" action="/results" class="">
+            <div class="form-group ad-30" style="margin-top:8px;">
+                <div class="input-group search-style">
+                    <input class="form-control new-search-bar"  name="country" id="search" placeholder="Enter Your Club Name" type="text">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default input-btn" type="submit" id="submit">Search</button>
+                    </span>
                 </div>
+            </div>
             </form>
         </div>
-        
-        <div class="col-lg-12 displayText">
-            <h2>Available Chat Rooms</h2>
-        </div>
-        
-        <div class="col-xs-12 col-sm-4 col-md-3 " id="side_bar" role="navigation" >
-           <div class='thumb-nail' style='border:none; padding-top:5px;'>
-                <form method="POST" class="form-horizontal" id="" action="/results">
-                    <h2>Filter</h2>
-                    
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <select name="country" id="country" class="form-control">
-                               <option value="">Filter By Country</option>
-                                <% country.forEach(function(val){ %>
-                                    <option value="<%= val._id %>"><%= val._id %></option>
-                                <% }) %>
-                            </select>
-                        </div>
-                        
-                    </div>
-                    
-                    <div class="form-group panel_footer">
-                        <button id="apply" class="">Apply</button>
-                    </div>
-               </form>
-            </div>
-        </div>
-  	
-        <div class="col-xs-12 col-sm-4 col-md-9 clubsDisplayDiv">
-            <div class="col-xs-12">
-                
-                    <% for(var i = 0; i < data.length; i++){%>
-                      <div class="row">
-                       <% for(var j in data[i]) {%>
-                        <form action="/home" method="post" id="add-fav">
-                            <div class="col-md-4 col-sm-6">
-                                <div class="panel panel-default text-center">
-                                   <a href="/group/<%= data[i][j].name.replace(/ /g,"-") %>">
 
-                                    <div class="panel-heading">
-                                        <img src="/uploads/<%= data[i][j].image %>" width="200px" height="171px" class="">
-                                    </div>
-                                    <div class="panel-body">
-                                        <h4><%= data[i][j].name %></h4>
-                                        <span><%= data[i][j].country %></span>
-                                        <i class="fa fa-user"> <%= data[i][j].fans.length %></i>
-                                        <input type="hidden" name="id" id="id" value="<%= data[i][j]._id %>" class="form-control">
-                                        <input type="hidden" name="clubName" id="club_Name" value="<%= data[i][j].name %>" class="form-control">
+        <div class="col-md-12">
+            <h3 style="margin-bottom:20px">Available Chat Rooms</h3>
+            <input type="hidden" name="" id="name-user" value="<%= user.username %>">
+        </div>
+
+        <div class="col-md-12">
+            <div class="chat_container">
+                <div class="row">
+
+                    <div class="col-sm-4 col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-container">
+                                    <div class="card">
+                                        <div class="front">
+                                            <form method="POST" class="" id="" action="/results">
+                                            <div class="content">
+                                                <div class="main">
+                                                    <p class="friends" style="margin-bottom:0px;color:#444">
+                                                        FILTER
+                                                    </p>
+                                                    <hr style="margin-top:10px" />
+                                                    <select class="selectpicker" name="country" id="country" data-style="btn-primary" style="padding:5px;width:100%">
+                                                        <option>Filter By Country</option>
+                                                        <% country.forEach(function(val){ %>
+                                                            <option value="<%= val._id %>"><%= val._id %></option>
+                                                        <% }) %>
+
+                                                    </select>
+                                                    <div class="clearfix"></div>
+                                                    <button class="btn btn-default add-apply" id="apply">Apply</button>
+
+                                                </div>
+
+                                            </div>
+                                            </form>
+                                        </div>
 
                                     </div>
-                                    </a>
-
-                                    <button type="submit" id="add_fav" class="btn btn-primary">Add to favourite</button>
                                 </div>
                             </div>
-                        </form>
-                        <% } %>
                         </div>
-                    <% } %>
-                
+                    </div>
+
+
+                    <div class="col-sm-8 col-md-9">
+                        <div class="">
+                        <% for(var i = 0; i < data.length; i++){%>
+                            <div id="categories-list" class="">
+                            <div class="row">
+                            <% for(var j in data[i]) {%>
+                                
+                                <form action="/home" method="post" id="add-fav">
+                                    <div class="item col-md-4 col-sm-4">
+                                    <a href="/group/@<%= user.username%>/<%= data[i][j].name.replace(/ /g,"-") %>">
+                                        <div class="thumbnail">
+                                            <img class="img-responsive" src="/uploads/<%= data[i][j].image %>" width="200px" height="171px" alt="" />
+                                            <div class="caption">
+                                                <h4 class="group inner list-group-item-heading">
+                                                    <%= data[i][j].name %> (<%= data[i][j].fans.length %>)
+                                                </h4>
+                                                <!-- <p class="group inner list-group-item-text">
+                                                    Lorem asa ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet
+                                                </p> -->
+                                                
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <p class="lead" style="background: none !important; padding:0 !important; margin:0 !important">
+                                                            <%= data[i][j].country %>
+                                                            <!-- <span class="glyphicon glyphicon-user nav-glyphicon ic-name ic-001"></span> -->
+                                                            <span class="ic-002"></span>
+                                                            <input type="hidden" name="id" id="id" value="<%= data[i][j]._id %>" class="form-control">
+                                                            <input type="hidden" name="clubName" id="club_Name" value="<%= data[i][j].name %>" class="form-control">
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <button class="btn btn-default add-fav" id="add_fav" type="submit">Add to Favourite</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </a>
+                                    </div>
+                                    </form>
+                                
+                                <% } %>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
-            
-        </div>
-  </div>
-  
-</div>
-    
-<footer class="footer-distributed">
-    <div class="footer-left">
-        <h3>Soccerchat</h3>
-        <p class="footer-company-name">Soccerchat &copy; 2017</p>
-    </div>
-
-    <div class="footer-center">
-        <div>
-            <i class="fa fa-map-marker"></i>
-            <p><span>Akadeemia tee 7/2B</span> Tallinn, Estonia</p>
-        </div>
-
-        <div>
-            <i class="fa fa-phone"></i>
-            <p>+37258211057</p>
-        </div>
-
-        <div>
-            <i class="fa fa-envelope"></i>
-            <p><a href="mailto:support@company.com">support@company.com</a></p>
         </div>
 
     </div>
 
-    <div class="footer-right">
-        <p class="footer-company-about">
-            <span>About the company</span>
-            Soccerchat is an online chat application for soccer lovers.
-        </p>
 
-        <div class="footer-icons">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-github"></i></a>
-        </div>
-    </div>
-</footer>
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/home.js"></script>
+    <script src="/js/global.js"></script>
 
+</body>
 
-
-<!-- <link href="/bootstrap.3.3.6/css/bootstrap.min.css" rel="stylesheet"> -->
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/home.js"></script>
+</html>

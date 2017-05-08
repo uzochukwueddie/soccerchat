@@ -5,14 +5,52 @@ var async = require('async');
 var formidable = require('formidable');
 var path = require('path');
 var fs = require('fs');
+var Message = require('../models/message');
 
 
 
 module.exports = (app) => {
     
     app.get('/settings/profile', (req, res) => {
-        User.findOne({"fullname":req.user.fullname}, (err, result) => {
-            res.render('user/profile', {title: 'Profile Settings || Soccer Chat', user:req.user, data:result});
+        // User.findOne({"fullname":req.user.fullname}, (err, result) => {
+        //     res.render('user/profile', {title: 'Profile Settings || Soccer Chat', user:req.user, data:result});
+        // })
+
+        async.parallel([
+            function(callback){
+                Message.aggregate(
+                {$match:{$or:[{"authorName":req.user.username}, {"receiverName":req.user.username}]}},
+                {$sort:{'createdAt':-1}},
+                {
+                    $group:{"_id":{
+                    "last_message_between":{
+                        $cond:[
+                            {
+                                $lt:[
+                                {$substr:["$authorName",0,1]},
+                                {$substr:["$receiverName",0,1]}]
+                            },
+                            {$concat:["$authorName"," and ","$receiverName"]},
+                            {$concat:["$receiverName"," and ","$authorName"]}
+                        ]
+                    }
+                    },"body":{$first:"$$ROOT"}
+                    }
+                },function(err, newResult){
+                    callback(err, newResult);
+                })
+            },
+
+            function(callback){
+                User.findOne({"fullname":req.user.fullname}, (err, result) => {
+                    callback(err, result);
+                })
+            }
+        ], (err, results) => {
+            var result1 = results[0];
+            var result2 = results[1];
+
+            res.render('user/profile', {title: 'Profile Settings || Soccer Chat', user:req.user, message:result1, data:result2});
         })
     });
     
@@ -44,7 +82,7 @@ module.exports = (app) => {
         form.on('file', (field, file) => {
            fs.rename(file.path, path.join(form.uploadDir, file.name), (err) => {
                if(err){
-                   throw err
+                   throw err;
                }
                
                console.log('User file has been renamed');

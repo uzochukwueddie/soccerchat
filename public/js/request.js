@@ -12,7 +12,10 @@ $(document).ready(function(){
     var roomSplit = room.split('@');
     swap(roomSplit, 1, 2);
 
-    var room1 = '@'+roomSplit[1]+'@'+roomSplit[2]
+    var room1 = '@'+roomSplit[1]+'@'+roomSplit[2];
+
+    console.log('Room',room)
+    console.log('Room 1',room1)
 
     socket.on('connect', function() {
         console.log('Connected to PM server');
@@ -20,12 +23,21 @@ $(document).ready(function(){
         var newParams = {
             room: room,
             room1: room1,
-            name: sender
+            name: sender,
+            receiver: '@'+roomSplit[2]
         }
         
         socket.emit('joinPM', newParams, function(err){
-            console.log(newParams)
+            console.log('Sent!!!')
         });
+
+        socket.on('my message', function(message){
+            $('#re_load2').load(location.href + ' #re_load2');
+        });
+
+        // socket.on('new refresh', function(){
+        //     $('#re_load2').load(location.href + ' #re_load2');
+        // })
         
     });
 
@@ -33,12 +45,9 @@ $(document).ready(function(){
         console.log('Disconnected from server');
     });
 
-    socket.on('newMessage', function(message){
+    socket.on('new PM message', function(message){
+
         var template = $('#message-template').html();
-        
-//        setTimeout(function(){ 
-//            $('#notify').text(message.text); 
-//        }, 10000);
         
         var html = Mustache.render(template, {
             text: message.text,
@@ -47,45 +56,83 @@ $(document).ready(function(){
         });
 
         $('#messages').append(html);
-
-        $('.userText').linkify({
-            tagName: 'a', // The tag that should be used to wrap each URL. This is useful for cases where a tags might be innapropriate, or might syntax problems
-            newLine: '\n', // The character to replace new lines with. Replace with "<br>" to space out multi-line user content.
-            target: '_blank', // target attribute for each linkified tag.
-            linkClass: null, // The class to be added to each linkified tag. The extra .linkified class ensures that each link will be clickable, regardless of the value of tagName.
-            linkClasses: [],
-            linkAttributes: { // HTML attributes to add to each linkified tag. In the following example, the tabindex and rel attributes will be added to each link.
-            tabindex: 0,
-            rel: 'nofollow'
-            } 
-        });
         
         scrollToBottom();
         
     });
+
+    socket.on('my message', function(message){
+        $('#re_load2').load(location.href + ' #re_load2');
+    });
+
+    socket.on('new refresh', function(){
+        $('#re_load2').load(location.href + ' #re_load2');
+    });
+
+    if(room){
+        $('#span_lable').empty();
+        // $('#textNotRead').removeClass('textNotRead')
+    } 
+
+    // if(room1){
+    //     $('#textNotRead').removeClass('textNotRead')
+    // }
     
     
     $('#message_form').on('submit', function(e){
         e.preventDefault();
         
-        var msg = $('#message').val();
+        var msg = $('#msg').val();
         
-        socket.emit('private message', {
-            from: sender,
-            text: msg,
-            room: room,
-            room1: room1
-        }, function(){
-            $('#message').val('')
-        });
+        if((typeof msg === 'string' && msg.trim().length > 0)){
+            socket.emit('private message', {
+                from: sender,
+                text: msg,
+                room: room,
+                room1: room1
+            }, function(){
+                $('#msg').val('')
+            });
+        }
         
+    });
+
+    $('#msg').keypress(function(e){
+         var key = event.keyCode || event.which;
+        
+        var msg = $('#msg').val();
+    
+        if((key == 13 && typeof msg === 'string' && msg.trim().length > 0)){
+           socket.emit('private message', {
+                from: sender,
+                text: msg,
+                room: room
+            }, function(){
+                console.log('Got it!!!');
+                $('#msg').val('');
+            }); 
+
+           var roomName = $('#room_name').val();
+            var message = $('#msg').val();
+            
+            $.ajax({
+                url: '/chat/'+roomName,
+                type: 'POST',
+                data: {
+                    message: message
+                },
+                success: function(data){
+                    $('#msg').val('')
+                }
+            })
+        }
     });
     
     $('#chatMessage').on('click', function(e){
 //        e.preventDefault();
         
         var roomName = $('#room_name').val();
-        var message = $('#message').val();
+        var message = $('#msg').val();
         
         $.ajax({
             url: '/chat/'+roomName,
@@ -94,52 +141,16 @@ $(document).ready(function(){
                 message: message
             },
             success: function(data){
-                $('#message').val('')
+                $('#msg').val('')
             }
         })
         
     });
     
-//    $('#accept_friend').on('click', function(){
-//        
-//        var userId = $('#userId').val();
-//        var userName = $('#userName').val();
-//        var username = $('#user_name').val();
-//        var rm = $('#roomName').val();
-//        
-//        $(this).remove();
-//        $('#cancel_friend').remove();
-//        $('#senderName').remove();
-//        
-//        
-//        $.ajax({
-//            url: '/chat/'+rm,
-//            type: 'POST',
-//            data: {
-//                userId: userId,
-//                userName: userName,
-//                username: username
-//            },
-//            success: function(data){
-//                
-//            }
-//        })
-//        
-//        setTimeout(function(){
-////            $('.request').load(location.href + ' .request');
-//            window.location.reload(true);
-//        }, 200);
-//    });
-    
     $('#accept_friend').on('click', function(){
         
         var senderId = $('#senderId').val();
         var senderName = $('#senderName').val();
-        
-        
-        $(this).remove();
-        $('#cancel_friend').remove();
-        $('#senderName').remove();
         
         
         $.ajax({
@@ -150,13 +161,11 @@ $(document).ready(function(){
                 senderName: senderName
             },
             success: function(data){
-                
+                $(this).parent().eq(1).remove();
             }
         })
         
-        setTimeout(function(){
-            window.location.reload(true);
-        }, 200);
+        $('#re_load2').load(location.href + ' #re_load2');
     });
     
     $('#cancel_friend').on('click', function(){
@@ -176,43 +185,39 @@ $(document).ready(function(){
                 user_Id: user_Id
             },
             success: function(data){
-                
+                $(this).parent().eq(1).remove();
             }
         });
         
-        
-        setTimeout(function(){
-            window.location.reload(true);
-        }, 200);
+        $('#re_load2').load(location.href + ' #re_load2');
     });
-    
-//    $('#cancel_friend').on('click', function(){
-//        
-//        var user_Id = $('#user_Id').val();
-//        var rmm = $('#roomName').val();
-//        
-//        $(this).remove();
-//        $('#accept_friend').remove();
-//        $('#senderName').remove();
-//        
-//        
-//        $.ajax({
-//            url: '/chat/'+rmm,
-//            type: 'POST',
-//            data: {
-//                user_Id: user_Id
-//            },
-//            success: function(data){
-//                
-//            }
-//        });
-//        
-//        
-//        setTimeout(function(){
-////            $('.request').load(location.href + ' .request');
-//            window.location.reload(true);
-//        }, 200);
-//    });
+
+    $(document).on('click', '#link_click', function(e){
+        //e.preventDefault();
+
+        var chatId = $(this).data().value;
+
+        var new_params = {
+            room: room,
+            room1: room1
+        }
+
+        $.ajax({
+            url: '/chat/'+room1,
+            type: 'POST',
+            data: {
+                chatId: chatId
+            },
+            success: function(){
+                
+            }
+        });
+
+        socket.emit('refresh div', new_params, function(){
+            console.log('Good to go')
+        });
+        
+    });
 
 });
 
@@ -224,17 +229,5 @@ function swap(input, index_A, index_B) {
 }
 
 function scrollToBottom(){
-  var messages = $("#messages");
-  var newMessage = messages.children('li:last-child');
-
-  var clientHeight = messages.prop('clientHeight');
-  var scrollTop = messages.prop('scrollTop');
-  var scrollHeight = messages.prop('scrollHeight');
-  var newMessageHeight = newMessage.innerHeight();
-  var lastMessageHeight = newMessage.prev().innerHeight();
-
-  if(clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight){
-    messages.scrollTop(scrollHeight);
-  }
-
+    $('.chat_area').scrollTop($('.chat_area')[0].scrollHeight);
 }

@@ -28,16 +28,40 @@ module.exports = (app) => {
             
 
             
+            // function(callback){
+            //     Message.aggregate(
+            //     {$match:{$or:[{"authorName":req.user.username}, {"receiverName":req.user.username}]}},
+            //     {$sort:{'createdAt':-1}},
+            //     {
+            //         $group:{"_id":{
+            //         "last_message_between":{
+            //             $cond:[
+            //                 {
+            //                     $lt:[
+            //                     {$substr:["$authorName",0,1]},
+            //                     {$substr:["$receiverName",0,1]}]
+            //                 },
+            //                 {$concat:["$authorName"," and ","$receiverName"]},
+            //                 {$concat:["$receiverName"," and ","$authorName"]}
+            //             ]
+            //         }
+            //         },"body":{$first:"$$ROOT"}
+            //         }
+            //     },function(err, newResult){
+            //         callback(err, newResult);
+            //     });
+            // },
+
             function(callback){
                 Message.aggregate(
-                {$match:{$or:[{"authorName":req.user.username},                         {"receiverName":req.user.username}]}},
+                {$match:{$or:[{"authorName":req.user.username}, {"receiverName":req.user.username}]}},
                 {$sort:{'createdAt':-1}},
                 {
                     $group:{"_id":{
                     "last_message_between":{
                         $cond:[
                             {
-                                $lt:[
+                                $gt:[
                                 {$substr:["$authorName",0,1]},
                                 {$substr:["$receiverName",0,1]}]
                             },
@@ -49,19 +73,29 @@ module.exports = (app) => {
                     }
                 },function(err, newResult){
                     callback(err, newResult);
-                })
+                });
             },
             
         ], (err, results) => {
             var result = results[0];
             var resultdata = results[1];
             var data = results[2];
+
+            var val = ''
+
+            for(var i = 0; i < data.length; i++){
+                val = data[i].body.authorName;
+            }
+
+            console.log(val)
             
             Message.find({'$or': [{'author':req.user._id, 'receiver':resultdata._id}, {'author': resultdata._id, 'receiver':req.user._id}]}, (err, result3) => {
                 
-                res.render('chat', {title: '@'+nameParams+' | Soccer Chat', user:req.user, data:result, data1: resultdata, name: '@'+nameParams, chatNames:name_Params, chats:result3, chat:data, username:resultdata.username });
+                res.render('chat', {title: '@'+nameParams+' | Soccer Chat', user:req.user, data:result, 
+                  data1: resultdata, name: '@'+nameParams, chatNames:name_Params, chats:result3, 
+                  chat:data, username:resultdata.username, val:val });
             });
-        })
+        });
     });
     
     app.post('/chat/:name', (req, res, next) => {
@@ -92,20 +126,20 @@ module.exports = (app) => {
             },
         ]);
         
-        async.parallel([
-            function(callback){
-                Message.update({
-                    '_id':req.body.chatId
-                },
-                {
-                    "isRead": true
-                }, (err, done) => {
-                    callback(err, done);
+//         async.parallel([
+//             function(callback){
+//                 Message.update({
+//                     '_id':req.body.chatId
+//                 },
+//                 {
+//                     "isRead": true
+//                 }, (err, done) => {
+//                     callback(err, done);
 
-//                    res.redirect('/chat/'+req.params.name);
-                })
-            }
-        ])
+// //                    res.redirect('/chat/'+req.params.name);
+//                 })
+//             }
+//         ])
         
         
         async.parallel([
@@ -123,6 +157,27 @@ module.exports = (app) => {
                        $pull: {request: {
                             userId: req.body.senderId,
                             username: req.body.senderName
+                        }},
+                        $inc: {totalRequest: -1},
+                    }, (err, count) => {
+                       callback(err, count);
+                    })
+                }
+            },
+
+            function(callback){
+                if(req.body.senderId){
+                    User.update({
+                       '_id': req.body.senderId,
+                       'friendsList.friendId': {$ne: req.user._id}
+                    },
+                    {
+                       $push: {friendsList: {
+                           friendId: req.user._id,
+                           friendName: req.user.username
+                       }},
+                       $pull: {sentRequest: {
+                            username: req.user.username
                         }}
                     }, (err, count) => {
                        callback(err, count);
@@ -130,19 +185,21 @@ module.exports = (app) => {
                 }
             },
             
-            //This function is used to update the document of the receiver of the 
-            //friend request
+
             function(callback){
                 if(req.body.senderId){
                     User.update({
-                       '_id': req.body.userId,
+                       '_id': req.body.user_Id,
                        'friendsList.friendId': {$ne: req.user._id}
                     },
                     {
                        $push: {friendsList: {
                            friendId: req.user._id,
                            friendName: req.user.username
-                       }}
+                       }},
+                       $pull: {sentRequest: {
+                            username: req.user.username
+                        }}
                     }, (err, count) => {
                        callback(err, count);
                     })
@@ -158,12 +215,43 @@ module.exports = (app) => {
                     {
                        $pull: {request: {
                             userId: req.body.user_Id,
+                        }},
+                        $inc: {totalRequest: -1}
+                    }, (err, count) => {
+                        callback(err, count);
+                    })
+                }
+            },
+
+            function(callback){
+                if(req.body.user_Id){
+                    User.update({
+                       '_id': req.body.user_Id,
+                       'sentRequest.username': {$eq: req.user.username}
+                    },
+                    {
+                       $pull: {sentRequest: {
+                            username: req.user.username
                         }}
                     }, (err, count) => {
                         callback(err, count);
                     })
                 }
+            },
+
+            function(callback){
+                if(req.body.chatId){
+                    Message.update({
+                        '_id': req.body.chatId
+                    },
+                    {
+                        "isRead": true
+                    }, (err, done) => {
+                        callback(err, done)
+                    })
+                }
             }
+
         ], (err, results) => {
             res.redirect('/chat/'+req.params.name);
         })

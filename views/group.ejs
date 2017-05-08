@@ -1,343 +1,469 @@
-<% layout('layout') %>
+<!DOCTYPE html>
 
-<nav class="navbar navbar-default profile-nav" role="navigation" style="border-radius:0px; margin-bottom:0">
-        <div class="container">
-          <div class="navbar-header" style="">
-            <button id="menu-toggle" type="button" class="navbar-toggle collapsed" data-toggle = "collapse" data-target= "#navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar bar1"></span>
-              <span class="icon-bar bar2"></span>
-              <span class="icon-bar bar3"></span>
-            </button>
-            <a class="navbar-brand nav_brand" id="home-logo" href="/home">Soccerchat</a>
-            <!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><i class="fa fa-bars"></i></a> -->
-            
-          </div>
-          
-          <div id="navbar-collapse" class = "collapse navbar-collapse" >
-          
-            <div class="header" id="">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-              <div class="channel-menu">
-                
-                  <span class="channel-menu_name">
-                      @<%= name.replace(/ /g, "-") %>
-                  </span>
 
-                  <!-- <a href="#" id="notification_Link" ><i class="fa fa-user-plus" id="user_plus" style="display: none;"></i></a> -->
-                
-                  <!-- <span class="channel-menu_name">
-                      <ul id="nav" class="navbar">
-                          <li id="notification_li">
-                          <% if(data.request.length > 0) {%>
-                          <span id="notification_count"><%= data.request.length %></span>
-                          <% } %>
-                          <a href="#" id="notificationLink"><i class="fa fa-user-plus"></i></a>
-                              <div id="notificationContainer">
-                                   <div id="notificationTitle">
-                                      Friend Requests
-                                  </div> 
-                                  <div id="notificationsBody" class="notifications">
-                                     <% if(data.request.length > 0) {%>
-                                      <% data.request.forEach(function(val){ %>
-                                             <div class="media">
-                                              <span class="pull-left">
-                                                  <img class="media-object img-responsive img-circle" src="http://placehold.it/50x50" >
-                                              </span>
-                                              <div class="media-body">
-                                                  <div class="media-heading">
-                                                      <strong>
-                                                          <%= val.username %>
-                                                      </strong>
-                                                  </div>
-                                                  
-                                                  <div class="media-text">
-                                                     <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
-                                                     <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
-                                                     <button type="submit" name="accept" id="accept_friend" class="btn btn-primary accept"><i class="fa fa-check"></i> Accept</button>
+    <title>Soccerchat | <%= name %></title>
 
-                                                     <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
 
-                                                     <button type="submit" name="cancel" id="cancel_friend" class="btn remove"><i class="fa fa-remove"></i> Cancel</button>
-                                                  </div>
-                                                  
-                                              </div>
-                                            </div>
-                                    <% }) %>
-                                    <% } else{ %>
-                                        <h3 class="text-center">No Friend Request</h3>
-                                  <% } %>
-                                    
-                                    
-                                  </div>
-                                  <div id="notificationFooter"></div>
-                              </div>
-                          </li>
-                      </ul>
-                  </span> -->
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300,400,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="/css/style.css" rel="stylesheet">
 
-                  <span class="channel-menu_name">
-                    <ul id="nav2" class="navbar">
-                        <li id="notification2_li">
-                        <% var numOfTrue = 0 %>
-                        <% for(var i=0;i<chat.length;i++){
-                            if(chat[i].body.isRead === false)
-                               numOfTrue = numOfTrue + 1
-                        }%>
-                        
-                        <% if(numOfTrue != 0) {%>
-                        <span id="notification_count2"><%= numOfTrue %></span>
-                        <% } %>
-                        <a href="#" id="notificationLink2"><i class="fa fa-bell"></i></a>
-                            <div id="notificationContainer2">
-                                <div id="notificationTitle2">
-                                    Notifications
-                                </div>
-                                <div id="notificationsBody2" class="notifications">
-                                <% if(chat.length > 0) {%>
-                                   <% chat.forEach(function(val){ %>
-                                   <% if(user.username !== val.body.receiverName) {%>
-                                       <form method="POST" id="chatName">
-                                        <a href="/chat/@<%= val.body.receiverName %>@<%= user.username %>">
-                                        
-                                            <div class="media">
-                                               <span class="pull-left">
-                                                    <img class="media-object img-responsive img-circle" src="http://placehold.it/50x50" >
-                                                </span>
-                                                <div class="media-body"> 
-                                                    <div class="media-heading" style="">
-                                                        <strong>
-                                                        <% if(user.username !== val.body.receiverName) {%>
-                                                            <%= val.body.receiverName %>
-                                                        <% } else { %>
-                                                            <%= val.body.authorName %>
-                                                        <% } %>
-                                                        </strong>
+
+</head>
+
+<body>
+
+
+    <div class="col-md-12 margin-80">
+
+        <div class="col-md-12 mob-clearfix">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-default" id="nav_bar" role="navigation">
+
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/home" style="color:white">Soccerchat</a>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                            <ul class="nav navbar-nav navbar-right" id="re_load2">
+                                <li id="">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-bell nav-glyphicon "></span><b class="caret"></b> 
+                                        <% if(data.totalRequest > 0) {%>
+                                          <span class="label label-primary nav-label-icon"><%= data.request.length %></span>
+                                          
+                                        <% } else { %>
+                                            <span class="label label-primary nav-label-icon" style="display: none"></span>
+                                        <% } %>
+                                                                               
+                                    </a>
+
+                                    <ul class="dropdown-menu dmenu dmenu1">
+                                        <li>
+                                            <div class="navbar-login" id="requestBar">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="dropdown-tag">
+                                                            <h3 class="text-center dropdown-tag-head">
+                                                                Friend Requests
+                                                            </h3>
+                                                        </div>
                                                     </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                <% if(data.request.length > 0) {%>
+                                                    <% data.request.forEach(function(val){ %>
+                                                    <div class="row" id="row_div">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="/images/team.jpg" class="img-responsive dropdown-img" id="img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left">
+                                                                            <strong id=""><%= val.username %></strong>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
+                                                                                <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
+                                                                                <button type="submit" name="accept" id="accept_friend" class="btn btn-default drop-accept accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
+                                                                            </div>
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
+                                                                                <button type="submit" name="cancel" class="btn btn-default drop-cancel remove" id="cancel_friend">
+                                                                                <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <% }) %>
+                                                    <% } else{ %>
+                                                        <p class="text-center">No Friend Request</p>
+                                                  <% } %>
                                                     
-                                                   
-                                                   <div class="media-text">
-                                                       <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
-                                                       <input type="hidden" name="clubName" id="clubName" value="<%= name %>">
-                                                       <% if(val.body.isRead == true){ %> 
-                                                           <p class="textRead"><%= val.body.body %></p>
-                                                       <% } else { %>
-                                                           <p class="textNotRead"><%= val.body.body %></p>
-                                                       <% } %>
-                                                   </div>
-
                                                 </div>
-                                              </div>
-                                        </a>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </li> 
+                                <!-- END -->
+
+                                <li>
+                                <% var numOfTrue = 0 %>
+                                <% for(var i=0;i<chat.length;i++){
+                                    if(chat[i].body.isRead === false)
+                                       numOfTrue = numOfTrue + 1
+                                }%>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="fa fa-globe "></span> <b class="caret"></b> 
+                                        <% if(numOfTrue != 0) {%>
+                                            <span class="label label-primary nav-label-icon"><%= numOfTrue %></span>
+                                        <% } %>
+                                    </a>
+                                    <ul class="dropdown-menu dmenu">
+                                        <li>
+                                            <div class="navbar-login">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="dropdown-tag">
+                                                            <h3 class="text-center dropdown-tag-head">
+                                                                Notifications
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                <% if(chat.length > 0) {%>
+                                                <% chat.forEach(function(val){ %>
+                                                
+                                                    <a href="/chat/@<%= val.body.authorName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <p class="text-center">
+                                                                    <img src="/images/team.jpg" class="img-responsive dropdown-img" />
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-md-9 pleft-0">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 textRow" style="width:244px">
+                                                                        <div class="col-md-12" id="textRow">
+                                                                            <p class="text-left drop-name">
+                                                                                <% if(user.username !== val.body.receiverName) {%>
+                                                                                    <strong><%= val.body.receiverName %></strong>
+                                                                                <% } else { %>
+                                                                                    <strong><%= val.body.authorName %></strong>
+                                                                                <% } %>
+                                                                            </p>
+                                                                           <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
+                                                                           <input type="hidden" name="clubName" id="clubName" value="<%= name %>">
+                                                                           <% if(val.body.isRead == true){ %> 
+                                                                               <p class="textRead drop-message">
+                                                                               <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                               </p>
+                                                                           <% } else { %>
+                                                                               <p class="textNotRead drop-message">
+                                                                                <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                               </p>
+                                                                           <% } %>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <hr class="dropdown-divider" />
+                                                      <% }) %>
+                                                  <% } else { %>
+                                                        <p class="text-center">No Message Notification</p>
+                                                  <% } %>
+                                                    
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span> <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/settings/profile"><span class="glyphicon glyphicon-user" style="color: #4aa1f3 !important;"></span>  Profile</a></li>
+                                        <!-- <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li> -->
+                                        <li class="divider"></li>
+                                        <li><a href="/logout"><span class="glyphicon glyphicon-off" style="color: #4aa1f3 !important;"></span> Logout</a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <form method="GET" class="navbar-form navbar-right navbar_form" >
+                                        <div class="form-group">
+                                         <input type="hidden" name="clubName" id="club_Name" value="<%= name %>">
+                                          <input type="text" name="search" id="search" class="form-control" placeholder="Search">
+                                        </div>
+                                        <button type="submit" id="searchBtn send-message" class="btn btn-primary" style="background: #03A9F4; border: #3bb5ec; margin-right:10px;">Submit</button>
                                     </form>
-                                    
-                                    <% } else if(user.username !== val.body.authorName) {%>
-                                       <form method="POST" id="chatName">
-                                        <a href="/chat/@<%= val.body.authorName %>@<%= user.username %>">                        
-                                            <div class="media">
-                                                <span class="pull-left">
-                                                    <img class="media-object img-responsive img-circle" src="http://placehold.it/50x50" >
-                                                </span>
-                                                <div class="media-body">
-                                                    <div class="media-heading">
-                                                        <strong>
-                                                        <% if(user.username !== val.body.receiverName) {%>
-                                                            <%= val.body.receiverName %>
-                                                        <% } else { %>
-                                                            <%= val.body.authorName %>
-                                                        <% } %>
-                                                        </strong>
-                                                   </div>
-                                                   
-                                                   <div class="media-text">
-                                                       <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
-                                                       <input type="hidden" name="clubName" id="clubName" value="<%= name %>">
-                                                       <% if(val.body.isRead == true){ %> 
-                                                           <p class="textRead"><%= val.body.body %></p>
-                                                       <% } else { %>
-                                                           <p class="textNotRead"><%= val.body.body %></p>
-                                                       <% } %>
-                                                   </div>
-                                                   
+                                </li>
+                            </ul>
+                        </div>
 
-                                                </div>
-                                              </div>
-                                        </a>
-                                        </form>
-                                    <% } %>
-                                        
-                                      <% }) %>
-                                  <% } %>
-                                  
-                                </div>
-                                <div id="notificationFooter2"></div>
-                            </div>
-                        </li>
-                    </ul>
-                </span>
-
-                <!-- <form method="GET" class="navbar-form navbar-right navbar_form">
-                    <div class="form-group">
-                     <input type="hidden" name="clubName" id="club_Name" value="<%= name %>">
-                      <input type="text" name="search" id="search" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" id="searchBtn" class="btn btn-default">Submit</button>
-                </form>
-            
-                <span class="logoutBtn">
-                    <a href="/logout">Logout</a>
-                </span> -->
-              </div>
+                    </nav>
+                </div>
             </div>
-
-          </div>
-
-      </div>
-    </nav>
-
-    
-      <a href="#" id="notification_Link" class="btn btn-default" style="display: none;">Toggle Button</a>
-      <% include ./partials/friend-request %>
-
-      <a href="#menu-toggle" class="fa fa-bars" id="menu_toggle" style="display: none;"></a>
-      <% include ./partials/sidebar %>
-
-    
-
-  <div class="chat__main" id="">
-
-    <ol id="messages" class="chat__messages"></ol>
-
-    <div class="chat__footer input-group">
-      
-    <form action="" id="message-form" style="width:100%; padding:0; margin:0;">
-        
-        <input type="hidden" name="sender" id="sender" class="" value="<%= user.username %>"><br>
-        <input type="hidden" name="roomName" id="roomName" value="<%= user.club %>">
-
-        <input type="text" name="message" class="input-box_text" id="msg" placeholder="Type your message" autofocus autocomplete="off">
-        <button class="btn btn-primary" id="send-message">Send</button>
-        
-    </form>
-      
-    </div>
-
-  </div>
-
-
-    <div id="mySidenav" class="sidenav">
-    <h3 id="name"></h3>
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <form action="" method="get" id="add_friend">
-        <input type="hidden" name="receiverName" id="receiverName" value="">
-        <button type="submit" class="btn btn-primary add"><i class="fa fa-user"></i> Add Friend</button>
-        
-        <a id="nameLink" class="btn btn-primary">View Profile</a>
-    </form>
-    
-    </div>
-  
-  <div class="listings2" id="main" style="">
-        <div class="listings_channels2">
-            <h2 class="listings_header2">Online Club Fans&nbsp;<span id="numValue"></span></h2>
-            <ul class="channel_list">
-                <li class="channel">
-                    <a class="channel_name">
-                        <div onclick="openNav()" id="users"></div>
-                    </a>
-                </li>
-            </ul>
         </div>
 
+        <div class="col-md-12">
+            <div class="chat_container">
+                <div class="row">
+                    <!-- LEFT -->
+                    <div class="col-sm-4 col-md-3 mob-clearfix">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-container">
+                                    <div class="card">
+                                        <div class="front">
+                                            <div class="cover">
+                                                <img src="/images/pr.jpg" />
+                                            </div>
+                                            <div class="user">
+                                                <img class="img-circle" src="/images/team.jpg" />
+                                            </div>
+                                            <div class="content">
+                                                <div class="main">
+                                                    <h3 class="name">@<%= user.username %></h3>
+                                                    <p class="profession-online">
+                                                        <i class="fa fa-circle online" aria-hidden="true"></i>
+                                                        Online
+                                                    </p>
+                                                    <p class="text-center">
+                                                        "Hard work is key to success! Journey of thousand miles begin with a single step!"
+                                                    </p>
+                                                </div>
+                                                <div class="footer">
+                                                    <i class="fa fa-mail-forward"></i> 
+                                                    <a href="/settings/profile" style="color:#999999; text-decoration:none;font-weight:normal; font-size:16px;" id="user-name">
+                                                      View My Profile
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-12">
+                                <div class="card-container">
+                                    <div class="card">
+                                        <div class="front">
+
+                                            <div class="content main-scroll">
+                                                <div class="main" id="main_scroll">
+                                                    <p class="friends" style="margin-bottom:0px;">
+                                                        Online Friends <span id="numOfFriends"></span>
+                                                    </p>
+                                                    <hr style="margin-top:10px" />
+                                                    <% if(data.friendsList.length > 0) {%>
+                                                      <% data.friendsList.forEach(function(val){ %>
+                                                      <h3 class="friend" style="padding-top:15px;color:gray;font-size:14px" hidden>@<%= val.friendName %></h3>
+                                                        <!-- <div>
+                                                            <img src="/images/member1.jpg" class="pull-left img-circle" style="width:50px;margin-right:10px" />
+                                                            <p >
+                                                              <a href="/chat/@<%= val.friendName %>@<%= user.username %>">
+                                                                <h3 class="friend" style="padding-top:15px;color:gray;font-size:14px" >@<%= val.friendName %></h3>
+                                                                
+                                                                </a>
+                                                            </p>
+                                                        </div> -->
+                                                      <!-- <div class="clearfix"></div>
+                                                      <hr style=" margin-top: 14px; margin-bottom: 14px;" /> -->
+                                                      <% }) %>
+                                                    <% } else { %>
+                                                      <p>No friends yet</p>
+                                                    <% } %>
+                                                    
+                                                    <div class="onlineFriends"></div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--Middle-->
+                    <div class="col-sm-5 col-md-6 message_section">
+                        <div class="row">
+                            <div class="new_message_head">
+                                <div class="pull-left">
+                                <button class="club_name">
+                                  @<%= name.replace(/ /g, "-") %>
+                                </button>
+                                </div>
+                                <div class="pull-right">
+                                <input type="hidden" name="" id="name-user" value="<%= user.username %>">
+                                </div>
+                            </div>
+
+                            <div class="chat_area" id="mess">
+                                <ol class="list-unstyled chat_messages" id="messages"></ol>
+                            </div>
+
+                            <script id="message-template" type="text/template">
+                                <li class="left clearfix">
+                                    <span class="chat-img1 pull-left">
+                                        <img src="/images/team.jpg" alt="User Avatar" class="img-circle">
+                                    </span>
+                                    <div class="chat-body1 clearfix">
+                                        <p>
+                                            <span class="chat-name">{{from}}</span>
+                                            <br />
+                                            {{text}}
+                                        </p>
+                                            <div class="chat_time pull-right" style="font-size: 13px; color: black; font-weight: 600; letter-spacing: 0.8px;">{{createdAt}}
+                                            </div>
+                                    </div>
+                                </li>
+                            </script>
+
+                            <div class="message_write">
+                              <form action="" id="message-form" style="width:100%; padding:0; margin:0;">
+                                <input type="hidden" name="sender" id="sender" class="" value="<%= user.username %>"><br>
+                                  <input type="hidden" name="roomName" id="roomName" value="<%= name %>">
+
+                                  <textarea class="form-control" name="message" id="msg" placeholder="Type a message"></textarea>
+                                  <div class="clearfix"></div>
+                                  <div class="chat_bottom">
+                                      <button id="send-message" class="pull-right btn btn-primary" style="background: #4aa1f3; border: #4aa1f3; ">
+                                          Send
+                                      </button>
+                                  </div>
+                              </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--RIGHT-->
+                    <div class="col-sm-3 col-md-3 mob-50 mob-clearfix">
+
+
+                        <div class="new_message_head">
+                            <div class="pull-left">
+                                <button class="club_fans">
+                                    <i class="fa fa-users" aria-hidden="true" style="padding-right:15px; color:#4aa1f3 !important;"></i>
+                                    Online Club Fans <span id="numValue"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <% if(data.sentRequest.length > 0) {%>
+                            <% data.sentRequest.forEach(function(val){ %>
+                                <h3 class="sentTo" hidden>@<%= val.username %></h3>
+                            <% }) %>
+                        <% } %>
+
+
+
+                        <div class="gr-rightsidebar">
+                            <!-- <div id="mySidenav" class="sidenav">
+                                <h3 id="name"></h3>
+                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                                <form action="" method="get" id="add_friend">
+                                    <input type="hidden" name="receiverName" id="receiverName" value="">
+                                    <input type="hidden" name="sender-name" id="sender-name" value="<%= user.username %>">
+                                    <button type="submit" id="friend-add" class="btn btn-primary add"><i class="fa fa-user" data-text-swap="Friend Request Sent" data-text-original="Add Friend"></i> Add Friend</button>
+                                    
+                                    <a id="nameLink" class="btn btn-primary">View Profile</a>
+
+                                    <div id="myTest">
+                                        
+                                    </div>
+                                </form>
+        
+                            </div> -->
+
+                            <div id="myModal" class="modal fade" role="dialog">
+                              <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <!-- <h4 class="modal-title">Modal Header</h4> -->
+                                    <h3 class="modal-title" id="name"></h3>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="" method="get" id="add_friend">
+                                        <input type="hidden" name="receiverName" id="receiverName" value="">
+                                        <input type="hidden" name="sender-name" id="sender-name" value="<%= user.username %>">
+                                        <button type="submit" id="friend-add" class="btn add"><i class="fa fa-user"></i> Add Friend</button>
+                                        
+                                        <a id="nameLink" class="btn ">View Profile</a>
+
+                                        <div id="myTest">
+                                            
+                                        </div>
+                                    </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn_close" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+
+                            <div class="col-md-12"  id="main">
+                                <div id="users"></div>
+                                
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
     </div>
-    
-    <script id="message-template" type="text/template">
-        <li class="message">
-            <a href="" class="message_profile" ></a>
-              <div class="message__title">
-                <h4 class="userFrom">{{from}}</h4>
-                <span>{{createdAt}}</span>
-              </div>
 
-              <div class="message__body">
-                <p class="userText" id="myId">{{text}}</p>
-              </div>
-         </li>
-    </script>
+    </div>
 
 
+    <!-- jQuery -->
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/chat.js"></script>
+    <script src="/js/global.js"></script>
+    <!-- <script src="/js/request.js"></script> -->
+    <script src="/js/deparam.js"></script>
+    <script src="/js/myDeparam.js"></script>
+    <script src="/js/ejs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
 
-<% include ./partials/footer %>
-</div>
+</body>
 
+</html>
 
-<script src="/js/search.js"></script>
-<script type="text/javascript" >
-$(document).ready(function(){
-    $("#notificationLink").click(function(){
-        $("#notificationContainer").fadeToggle(300);
-        $("#notification_count").fadeOut("slow");
-        return false;
-    });
-
-    //Document Click hiding the popup 
-    $('.chat').click(function(){
-        $("#notificationContainer").hide();
-         $("#notificationContainer2").hide();
-    });
-    
-    $("#notificationLink2").click(function(){
-        $("#notificationContainer2").fadeToggle(300);
-        $("#notification_count2").fadeOut("slow");
-        return false;
-    });
-
-    //Document Click hiding the popup 
-    $('.fa').click(function(){
-        $("#notificationContainer").hide();
-        $("#notificationContainer2").hide();
-    });
-    
-    $(document).on('click', '#chatName', function(){
-        
-        var chatId = $('#chatId').val();
-        var clubName = $('#clubName').val();
-        
-        $.ajax({
-            url: '/group/'+clubName,
-            type: 'POST',
-            data: {chatId: chatId, clubName:clubName},
-            success: function(){
-                
-            }
-        })
-    });
-
-    // $('#menu_toggle').click(function(event){
-    //      $('.chat__sidebar').toggle();
-
-    //      $( ".chat__main" ).animate({
-    //         right: "-=1px",
-    //         width: "toggle"
-    //       }, 400, function() {
-    //         // Animation complete.
-    //       });
-         
-    // });
-
-    $('#notification_Link').click(function(event){
-         $('.friend_request').toggle();
-
-         // $( ".chat__sidebar" ).animate({
-         //    top: "-=10px",
-         //    width: "toggle"
-         //  }, 400, function() {
-         //    // Animation complete.
-         //  });
-         
-    });
-    
-});
-</script>
 
 

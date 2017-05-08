@@ -12,6 +12,9 @@ var userSchema = mongoose.Schema({
     password: {type: String},
     club: {type: String},
     userImage: {type: String, default: 'defaultPic.png'},
+    sentRequest: [{
+        username: {type: String, default: ''}
+    }],
     request: [{
         userId: {type: String, default: ''},
         username: {type: String, default: ''},
@@ -20,6 +23,7 @@ var userSchema = mongoose.Schema({
         friendId: {type: String, default: ''},
         friendName: {type: String, default: ''}
     }], 
+    totalRequest: {type: Number, default: 0},
     favClub: [{
         favClubName: {type: String, default: ''}
     }],

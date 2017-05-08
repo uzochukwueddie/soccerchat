@@ -1,131 +1,420 @@
-<% layout('layout') %>
-  
-  
-<nav class="navbar profile-nav navbar-fixed-top" role="navigation" style="border-radius:0px">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand nav_brand" href="/home">Soccerchat</a>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>Soccerchat - User Profile Display</title>
+
+
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300,400,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+
+    <div class="col-md-12 mob-clearfix margin-80">
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-default" role="navigation">
+
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="/home" style="color:white">Soccerchat</a>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-bell nav-glyphicon "></span>Inbox <b class="caret"></b> <span class="label label-primary nav-label-icon">12</span>
+                                    </a>
+                                    <ul class="dropdown-menu dmenu">
+                                        <li>
+                                            <div class="navbar-login">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="dropdown-tag">
+                                                            <h3 class="text-center dropdown-tag-head">
+                                                                Friend Requests
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left"><strong>Nombre Apellido</strong></p>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <button type="submit" class="btn btn-default drop-accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
+                                                                            </div>
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <button type="submit" class="btn btn-default drop-cancel"><i class="fa fa-times" aria-hidden="true"></i> Accept</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left"><strong>Nombre Apellido</strong></p>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <button type="submit" class="btn btn-default drop-accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
+                                                                            </div>
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <button type="submit" class="btn btn-default drop-cancel"><i class="fa fa-times" aria-hidden="true"></i> Accept</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left"><strong>Nombre Apellido</strong></p>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <button type="submit" class="btn btn-default drop-accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
+                                                                            </div>
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <button type="submit" class="btn btn-default drop-cancel"><i class="fa fa-times" aria-hidden="true"></i> Accept</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span>Chats <span class="label label-primary nav-label-icon">16</span>
+                                    </a>
+
+                                </li>
+
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-envelope nav-glyphicon "></span>Notification <b class="caret"></b> <span class="label label-primary nav-label-icon">12</span>
+                                    </a>
+                                    <ul class="dropdown-menu dmenu">
+                                        <li>
+                                            <div class="navbar-login">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="dropdown-tag">
+                                                            <h3 class="text-center dropdown-tag-head">
+                                                                Notifications
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left drop-name"><strong>Johnny</strong></p>
+                                                                        <p class="drop-message">Ok</p>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="dropdown-divider" />
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left drop-name"><strong>Johnny</strong></p>
+                                                                        <p class="drop-message">nothing much..</p>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="dropdown-divider" />
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left drop-name"><strong>Johnny</strong></p>
+                                                                        <p class="drop-message">Hows everyone..</p>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="dropdown-divider" />
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left drop-name"><strong>Johnny</strong></p>
+                                                                        <p class="drop-message">nothing much..</p>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="dropdown-divider" />
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left drop-name"><strong>Johnny</strong></p>
+                                                                        <p class="drop-message">Hows everyone..</p>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span>Admin <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+                                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </nav>
+                </div>
+            </div>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-               <a class="navbar-brand nav_link" href="/members">Members</a>
-               <a href="/profile/<%= user.username %>" class="img"><img src="/images/profile-pic.png" width="35px" height="35px" class="img-responsive img-circle" alt=""></a>
-               <a class="navbar-brand nav_link" href="/profile/<%= user.username %>"><%= user.username %></a>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle button" data-toggle="dropdown" style="background:#4aa1f3">My Profile <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/settings/profile">Manage Profile</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="/logout">Logout</a></li>
-                    </ul>
-                </li>
+
+        <div class="col-md-12">
+            <div class="chat_container">
+            <input type="hidden" name="" id="name-user" value="<%= user.username %>">
+                <div class="row">
+
+                    <!-- LEFT -->
+
+                    <div class="col-sm-4 col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card-container">
+                                    <div class="card">
+                                        <div class="front">
+                                            <div class="cover">
+                                                <img src="images/pr.jpg" />
+                                            </div>
+                                            <div class="user">
+                                                <img class="img-circle" src="/profileImages/<%= data.userImage %>" />
+                                            </div>
+                                            <div class="content">
+                                                <div class="main">
+                                                    <h3 class="text-center"><%= data.fullname %></h3>
+                                                    <h3 class="name dis-name">@<%= data.username %></h3>
+                                                    <h3 class="dis-loc"> <%= data.city %></h3>
+                                                    <p class="text-center" style="margin-top:25px;">
+                                                        <%= data.description %>
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
-            </ul>
+                    </div>
+
+
+                    <!--RIGHT-->
+
+                    <div class="col-sm-8 col-md-9">
+                        <div class="">
+                            <div class="user-display">
+
+                                <h3 class="user-display-head">Favourite Soccer National Teams</h3>
+                                <hr />
+                                <% if(data.favNationalTeam.length > 0) {%>
+                                <% data.favNationalTeam.forEach(function(val){%>
+                                  <p>
+                                    <span class="glyphicon glyphicon-check"></span>
+                                    <%= val.teamName %>
+                                  </p>
+                                <% }) %>
+                                <% } else { %>
+                                    <h3>No Team Added Yet</h3>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:20px">
+                            <div class="user-display">
+
+                                <h3 class="user-display-head">Favourite Clubs</h3>
+                                <hr />
+                                
+                                <% if(data.favClub.length > 0) {%>
+                                <% data.favClub.forEach(function(val){%>
+                                    <p>
+                                        <span class="glyphicon glyphicon-check"></span>
+                                        <%= val.favClubName %>
+                                    </p>
+                                <% }) %>
+                                <% } else { %>
+                                    <h3>No Club Added Yet</h3>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:20px">
+                            <div class="user-display">
+
+                                <h3 class="user-display-head">Favourite Players</h3>
+                                <hr />
+                                
+                                <% if(data.favPlayers.length > 0) {%>
+                                <% data.favPlayers.forEach(function(val){%>
+                                    <p>
+                                        <span class="glyphicon glyphicon-check"></span>
+                                        <%= val.favPlayersName %>
+                                    </p>
+                                <% }) %>
+                                <% } else { %>
+                                    <h3>No Player Added Yet</h3>
+                                <% } %>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
         </div>
 
     </div>
 
-</nav> 
 
-<div class="container profile">
-    <a href="/chat/@<%= data.username %>@@<%= user.username %>" class="btn btn-primary" style="background-color:#4aa1f3">Message</a>
-    <div class="row">
-        
-        <div class="col-xs-12 col-sm-4 col-md-3 " id="sidebar" role="navigation" >
-           <div class='thumbnail' style='border:none; padding-top:5px;'>
-                <div class="user-image" style="height: 170px;">
-                    <a href="#">
-                        <img src="/profileImages/<%= data.userImage %>" class="sqr_img" style="">
-                    </a>
-                </div>
-                
-                <h1><%= data.fullname %></h1>
-                <h2>@<%= data.username %></h2>
-                <h3><%= data.city %></h3>
-                <span>About me</span><p><%= data.description %></p>
-            </div>
-        </div>
-  	
-        <div class="col-xs-12 col-sm-4 col-md-9 interestDiv" id="profileDiv">
-            <div class="col-xs-12 teams">
-                <h2>Favourite Soccer National Teams</h2>
-                <div class="item-list">
-                   <% if(data.favNationalTeam.length > 0) {%>
-                    <% data.favNationalTeam.forEach(function(val){%>
-                          <div class="item">
-                            <div class="item-label">
-                              <%= val.teamName %>
-                            </div>
-                          </div>
-                    <% }) %>
-                    <% } else { %>
-                        <h3>No Team Added Yet</h3>
-                    <% } %>
-                </div>
-            </div>
+    <!-- jQuery -->
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/global.js"></script>
 
-            <div class="col-xs-12 teams">
-                <h2>Favourite Clubs</h2>
-                <div class="item-list">
-                   <% if(data.favClub.length > 0) {%>
-                    <% data.favClub.forEach(function(val){%>
-                          <div class="item">
-                            <div class="item-label">
-                              <%= val.favClubName %>
-                            </div>
-                          </div>
-                    <% }) %>
-                    <% } else { %>
-                        <h3>No Club Added Yet</h3>
-                    <% } %>
-                </div>
-            </div>
+</body>
 
-            <div class="col-xs-12 teams">
-                <h2>Favourite Players</h2>
-                <div class="item-list">
-                   <% if(data.favPlayers.length > 0) {%>
-                    <% data.favPlayers.forEach(function(val){%>
-                          <div class="item">
-                            <div class="item-label">
-                              <%= val.favPlayersName %>
-                            </div>
-                          </div>
-                    <% }) %>
-                    <% } else { %>
-                        <h3>No Player Added Yet</h3>
-                    <% } %>
-                </div>
-            </div>
-        </div>
-  </div>
-</div>
-
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
-
-<script>
-    $(document).ready(function(){
-        var height = $('.sqr_img').height();
-        var width = $('.sqr_img').width();
-
-        var divHeight = $('.user-image').height();
-
-        // if(height  < divHeight){
-        //     $('.user-image').css({'height': 'auto'});
-        // }else if(width < 170){
-        //     $('.sqr_img').css({'width': '170px'});
-        // }
-    })
-
-
-</script>
-
-
+</html>

@@ -1,0 +1,135 @@
+/*@media only screen and (min-width: 480px){
+	.navbar{
+		position: absolute;
+	}
+
+	.navbar-header .navbar-brand{
+        margin-left: 10px;
+        padding: 0;
+        display: inline-block;
+    }
+
+    #logo{
+	    width: 200px;
+	    height: 35px;
+	    background-image: url("/images/logo.png");
+	    background-size: cover;
+	    margin: 7px 0px 50px 10px;
+	    padding: 0;
+	}
+
+	.collapse{
+		height: 10%;
+		background-color: #e7e7e7 !important;
+	}
+
+	.nav > li > a{
+		margin: 0;
+		padding: 0;
+		width: 80% !important;
+		float: none !important;
+		z-index: 1000;
+		color: #4aa1f3 !important;
+	}
+
+	a:hover{
+		background-color: #e7e7e7 !important;
+	}
+
+	.parallax {
+	  width: 100%;
+	  height: 450px;
+	  overflow: hidden;
+	  display: block;
+	}
+
+	.parallax .small-info {
+		margin-bottom: 100px !important;
+		text-align: center;
+		width: 100%;
+		top: 20%;
+		z-index: 1000;
+	}
+
+	.alert{
+		width: 100%;
+		font-size: 11px;
+	}
+
+	.footer{
+		display: none !important;
+	}
+    
+}*/
+
+/* ----------- iPhone 4 and 4S ----------- */
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+  	.navbar{
+		position: absolute;
+	}
+
+	.navbar-header .navbar-brand{
+        margin-left: 10px;
+        padding: 0;
+        display: inline-block;
+    }
+
+    #logo{
+	    width: 200px;
+	    height: 35px;
+	    background-image: url("/images/logo.png");
+	    background-size: cover;
+	    margin: 7px 0px 50px 10px;
+	    padding: 0;
+	}
+
+	.collapse{
+		height: 10%;
+		background-color: #e7e7e7 !important;
+	}
+
+	.nav > li > a{
+		margin: 0;
+		padding: 0;
+		width: 80% !important;
+		float: none !important;
+		z-index: 1000;
+		color: #4aa1f3 !important;
+	}
+
+	a:hover{
+		background-color: #e7e7e7 !important;
+	}
+
+	.parallax {
+	  width: 100%;
+	  height: 450px;
+	  overflow: hidden;
+	  display: block;
+	}
+
+	.parallax .small-info {
+		margin-bottom: 25% !important;
+		/*position: absolute;*/
+		text-align: center;
+		width: 100%;
+	}
+
+	.alert{
+		width: 100%;
+		font-size: 11px;
+	}
+
+	.footer{
+		display: none !important;
+	}
+}
+
+
+
+
+

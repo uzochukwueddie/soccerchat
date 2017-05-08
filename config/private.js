@@ -14,13 +14,14 @@ module.exports = (io) => {
             
             socket.join(newParams.room);
             socket.join(newParams.room1);
+            // socket.join(newParams.receiver);
             
         });
         
         
         socket.on('private message', function(message, callback) {
             
-            io.to(message.room).emit('newMessage', { 
+            io.to(message.room).emit('new PM message', { 
                 text : message.text, 
                 from : message.from,
                 receiver: message.receiver,
@@ -28,9 +29,19 @@ module.exports = (io) => {
                 room1: message.room1,
                 createdAt: new Date()
             });
+
+            io.emit('my message', {})
             
             callback();
         });
+
+        socket.on('refresh div', function(refresh, callback){
+            console.log(refresh)
+            io.to(refresh.room).emit('new refresh', {})
+            io.to(refresh.room1).emit('new refresh', {})
+
+            callback()
+        })
         
         
         socket.on('disconnect', () => {

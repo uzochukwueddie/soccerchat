@@ -1,4 +1,22 @@
 $(document).ready(function(){
+    // var socket = io();
+
+    // socket.on('connect', function(){
+    //     console.log('First connection');
+
+    //     var room = 'FirstRoom'
+    //     var name = $('#user-name').val()
+
+    //     console.log(room)
+    //     console.log(name)
+
+    //     socket.emit('first room', {
+    //         room: room,
+    //         name: name
+    //     }, function(){
+
+    //     })
+    // })
 
     
     $('#add_fav').on('submit', function(e){

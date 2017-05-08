@@ -1,17 +1,14 @@
-<html lang="en"><head>
+<!-- <html lang="en"><head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="author" content="">
     <link rel="icon" href="img/favicon.png">
     <title><%= title %></title>
-    <!-- Bootstrap core CSS -->
     <link href="/bootstrap.3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="/font-awesome.4.6.1/css/font-awesome.min.css" rel="stylesheet">
-<!--    <link href="/assets/css/animate.min.css" rel="stylesheet">-->
     <link href="/assets/css/timeline.css" rel="stylesheet">
     <link href="/assets/css/login_register.css" rel="stylesheet">
     <link href="/assets/css/forms.css" rel="stylesheet">
@@ -26,10 +23,8 @@
 
   <body cz-shortcut-listen="true">
 
-    <!-- Fixed navbar -->
     <nav class="navbar navbar-fixed-top navbar-transparent" role="navigation">
         <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <button id="menu-toggle" type="button" class="navbar-toggle collapsed" data-toggle = "collapse" data-target= "#navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -116,6 +111,102 @@
     </div>
     
 </body>
+</html> -->
+
+
+
+
+ <!DOCTYPE html>
+<html>
+<head>
+
+    <title>Web</title>
+    <meta charset="utf-8">
+    <link href="css/login.css" rel='stylesheet' type='text/css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text.css' />
+
+</head>
+
+<body>
+
+
+    <div class="container logo-container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="logo-div">
+                    <a href="/">Soccerchat</a>
+                </h1>
+                
+            </div>
+            <div class="col-md-6 text-right">
+                <h2 class="reg-div">
+                    <a href="/">
+                        Login Here
+                    </a>
+                </h2>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main">
+
+        <form action="/signup" method="post">
+
+            <h1>
+                Register
+            </h1>
+
+            <div class="inset">
+                <% if(hasErrors) {%>
+                     <div class="alert alert-danger">
+                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                      <% for(var i = 0; i < errors.length; i++) {%>
+                          <%= errors[i] %> <br>
+                      <% } %>
+                      
+                      </div>
+                  <% } %>
+
+                <p>
+                  
+                  <select name="club" id="club" class=" select">
+                     <option value="">Select Your Club</option>
+                      <% data.forEach(function(val){%>
+                          <option value="<%= val.name %>"><%= val.name %></option>
+                      <% }) %>
+                  </select>
+                </p>
+
+                <p>
+                  <label for="username">USERNAME</label>
+                  <input type="text" name="username" class="" placeholder="">
+                </p>
+
+                <p>
+                    <label for="email">EMAIL ADDRESS</label>
+                    <input type="text" name="email" placeholder="" />
+                </p>
+                <p>
+                    <label for="password">PASSWORD</label>
+                    <input type="password" name="password" placeholder="" />
+                </p>
+
+            </div>
+
+            <p class="p-container">
+                <span><a href="#">Forgot password?</a></span>
+                <span><a href="" style="color:white;padding-left:10px;padding-right:10px">|</a></span>
+                <span><a href="/">Login</a></span>
+                <input type="submit" class="login-log" style=" background: #03A9F4; border: #3bb5ec;" value="Register">
+            </p>
+        </form>
+    </div>
+
+
+</body>
 </html>
-
-

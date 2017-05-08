@@ -6,7 +6,11 @@ var passport = require('passport');
 var async = require('async');
 var {validate} = require('../config/validation');
 
-module.exports = (app) => {
+var {Users} = require('../config/users');
+
+var clients = new Users();
+
+module.exports = (app, io) => {
     
     app.get('/', (req, res) => {
         var errors = req.flash('error');
@@ -101,8 +105,12 @@ module.exports = (app) => {
         })
     });
     
-    app.get('/group/:name', isLoggedIn, (req, res) => {
-        var nameParams = req.params.name
+    app.get('/group/:username/:name', isLoggedIn, (req, res) => {
+        var nameParams = req.params.name;
+        // var user = req.params.username.split('@');
+        // var username = user[1];
+
+        // var user_name = req.params.username;
         
         if (req.query.search) {
            const regex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -132,7 +140,8 @@ module.exports = (app) => {
                 
                 if(data){
                     var resultData = data.name.replace(/ /g, "-")
-                    res.redirect('/group/'+resultData)
+                    // res.redirect('/group/'+resultData)
+                    res.redirect('/group/'+req.params.username+'/'+resultData)
                     //res.render('group', {title: nameParams+' | Soccer Chat', user:req.user, chat:data3, data:req.user, name: nameParams });
                     
                 }else if(data2){
@@ -141,7 +150,7 @@ module.exports = (app) => {
                     var value = '@'+val1+'@'+val2;
                     res.redirect('/chat/'+value);
                 }else{
-                    res.redirect('/group/'+req.params.name)
+                    res.redirect('/group/'+req.params.username+'/'+req.params.name)
 //                    User.findOne({'username':req.user.username}, (err, result) => {
 //                        res.render('group', {title: nameParams+' | Soccer Chat', user:req.user, chat:data3, data:result, name: nameParams });
 //                    });
@@ -154,7 +163,7 @@ module.exports = (app) => {
             async.parallel([
                 function(callback){
                     Message.aggregate(
-                    {$match:{$or:[{"authorName":req.user.username},                         {"receiverName":req.user.username}]}},
+                    {$match:{$or:[{"authorName":req.user.username}, {"receiverName":req.user.username}]}},
                     {$sort:{'createdAt':-1}},
                     {
                         $group:{"_id":{
@@ -172,8 +181,6 @@ module.exports = (app) => {
                         },"body":{$first:"$$ROOT"}
                         }
                     },function(err, newResult){
-//                            console.log(newResult);
-
                         callback(err, newResult);
                     })
                 },
@@ -192,7 +199,7 @@ module.exports = (app) => {
         }
     });
     
-    app.post('/group/:name', (req, res) => {
+    app.post('/group/:username/:name', (req, res) => {
 //        var nameParams = req.params.name.replace(/ /g," ");
         var nameParams = req.params.name;
         
@@ -201,33 +208,51 @@ module.exports = (app) => {
                if(req.body.receiverName){
                    User.update({
                        'username': req.body.receiverName,
-                       'request.userId': {$ne: req.user._id}
+                       'request.userId': {$ne: req.user._id},
+                       'friendsList.friendId': {$ne: req.user._id}
                    },
                    {
                        $push: {request: {
                            userId: req.user._id,
                            username: req.user.username
-                       }}
+                       }},
+                       $inc: {totalRequest: 1},
                    }, (err, count) => {
                        callback(err, count);
-
-//                       res.redirect('/group/'+req.params.name);
                    })
                }
            },
-            
+
            function(callback){
-               Message.update({
-                   '_id':req.body.chatId
-               },
-               {
-                   "isRead": true
-               }, (err, done) => {
-                   callback(err, done);
-               })
+                if(req.body.receiverName){
+                   User.update({
+                       'username': req.user.username,
+                       'sentRequest.username': {$ne: req.body.receiverName}
+                       // 'friendsList.friendId': {$ne: req.user._id}
+                   },
+                   {
+                       $push: {sentRequest: {
+                           username: req.body.receiverName
+                       }}
+                   }, (err, count) => {
+                       callback(err, count);
+                   })
+               }
            }
+            
+           // function(callback){
+           //     Message.update({
+           //         '_id':req.body.chatId
+           //     },
+           //     {
+           //         "isRead": true
+           //     }, (err, done) => {
+           //         callback(err, done);
+           //     })
+           // }
         ], (err, results) => {
-            res.redirect('/group/'+req.params.name);
+            // res.redirect('/group/'+req.params.name);
+            res.redirect('/group/'+req.params.username+'/'+req.params.name)
         });
         
         async.parallel([
@@ -246,7 +271,8 @@ module.exports = (app) => {
                        $pull: {request: {
                             userId: req.body.senderId,
                             username: req.body.senderName
-                        }}
+                        }},
+                        $inc: {totalRequest: -1},
                     }, (err, count) => {
                        callback(err, count);
                     })
@@ -265,7 +291,10 @@ module.exports = (app) => {
                        $push: {friendsList: {
                            friendId: req.user._id,
                            friendName: req.user.username
-                       }}
+                       }},
+                       $pull: {sentRequest: {
+                            username: req.user.username
+                        }}
                     }, (err, count) => {
                        callback(err, count);
                     })
@@ -281,14 +310,46 @@ module.exports = (app) => {
                     {
                        $pull: {request: {
                             userId: req.body.user_Id,
+                        }},
+                        $inc: {totalRequest: -1}
+                    }, (err, count) => {
+                        callback(err, count);
+                    })
+                }
+            },
+
+            //This is used to update the sentRequest array for the sender of the friend request
+            function(callback){
+                if(req.body.user_Id){
+                    User.update({
+                       '_id': req.body.user_Id,
+                       'sentRequest.username': {$eq: req.user.username}
+                    },
+                    {
+                       $pull: {sentRequest: {
+                            username: req.user.username
                         }}
                     }, (err, count) => {
                         callback(err, count);
                     })
                 }
+            },
+
+            function(callback){
+                if(req.body.chatId){
+                    Message.update({
+                        '_id': req.body.chatId
+                    },
+                    {
+                        "isRead": true
+                    }, (err, done) => {
+                        callback(err, done)
+                    })
+                }
             }
         ], (err, results) => {
-            res.redirect('/group/'+req.params.name);
+            // res.redirect('/group/'+req.params.name);
+            res.redirect('/group/'+req.params.username+'/'+req.params.name)
         });
     });
     

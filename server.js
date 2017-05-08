@@ -13,6 +13,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
 var moment = require('moment');
+var cutstring = require('./functions/func');
 
 
 var port = process.env.PORT || 3000;
@@ -58,15 +59,17 @@ app.use(passport.session());
 
 var server = http.createServer(app);
 var io = socketIO(server);
-var sio = io.of('/chat');
 
 app.locals.moment = moment;
+app.locals.cutstring = cutstring;
             
 
 require('./config/socket')(io);
 require('./config/private')(io);
 require('./config/msg')(io);
-require('./routes/user')(app);
+require('./config/friend')(io);
+require('./config/login')(io);
+require('./routes/user')(app, io);
 require('./routes/admin')(app);
 require('./routes/profile')(app);
 require('./routes/chat')(app);
