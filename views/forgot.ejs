@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title><%= title %></title>
+    <meta charset="utf-8">
+    <link href="/css/login.css" rel='stylesheet' type='text/css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text.css' />
+
+</head>
+
+<body>
+
+
+    <div class="container logo-container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="logo-div">
+                    <a href="/">Soccerchat</a>
+                </h1>
+                
+            </div>
+            <div class="col-md-6 text-right">
+                <h2 class="reg-div">
+                    <a href="/signup">
+                        Register Here
+                    </a>
+                </h2>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+<div id="parallax" class="parallax-image">
+
+    <div class="main">
+        <form action="/forgot_password" method="post">
+
+            <h1>Enter Email</h1>
+
+            <div class="inset">
+                <% if(hasErrors) {%>
+                    <% for(var i = 0; i < messages.length; i++) {%>
+                        <div class="alert alert-danger text-center">
+                           <a href="#" class="close" data-dismiss="alert" aria-label="close">
+                               &times;
+                           </a>
+                           <%= messages[i] %>
+                            
+                        </div>
+                    <% } %>
+                <% } %>
+                
+                <% if(noErrors) {%>
+                    <div class="alert alert-info text-center">
+                       <a href="#" class="close" data-dismiss="alert" aria-label="close">
+                           &times;
+                       </a>
+                       <%= info %>
+
+                    </div>
+                <% } %>
+
+                <p>
+                    <label for="email">EMAIL ADDRESS</label>
+                    <input type="text" name="email" placeholder="" />
+                </p>
+
+            </div>
+
+            <p class="p-container">
+                <span><a href="/">Already reset your password?</a></span>
+                <input type="submit" class="login-log" style=" background: #03A9F4; border: #3bb5ec;" name="Submit" value="Send">
+            </p>
+        </form>
+    </div>
+
+</div>
+
+<footer class="footer">
+      <div class="container">
+        <p class="text-muted"> Copyright &copy; Soccerchat - All rights reserved </p>
+      </div>
+    </footer>
+
+
+<script src="/assets/js/jquery.1.11.1.min.js"></script>
+<script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>

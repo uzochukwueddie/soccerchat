@@ -96,41 +96,71 @@ img {
 
 body {
     font-family: 'Open Sans', sans-serif;
-    background: url(../images/bg.jpg) no-repeat center fixed;
+    /*background: url(../images/background.png) no-repeat center center fixed;*/
+    /*-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-size: 90% 90%;*/
+}
+
+#parallax {
+  width: 100%;
+  height: 570px;
+  overflow: hidden;
+  display: block;
+  border-top: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+#parallax-footer {
+  width: 100%;
+  height: 670px;
+  overflow: hidden;
+  display: block;
+  border-top: 1px solid #e7e7e7;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.parallax-image {
+    background: url(../images/background.png);    
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background-size: 100% 100%;
+    background-size: 50% 50%;
+}
+
+.parallax-image img {
+  width: 100%;
+  position: relative;
 }
 
 .logo-container{
-    margin-bottom:60px
+    margin-bottom:5px
 }
 
-.logo-div{
-    color:white;
+.logo-div a{
+    color:#4aa1f3 !important;
+    text-decoration: none !important;
 }
 
 .reg-div a{
-    color:white;
-    /*text-decoration:none;*/
+    color: #4aa1f3 !important;
     text-align:right;
     font-size:18px;
-    text-decoration:underline
-
+    text-decoration:none !important;
 }
 
 .main {
     /*margin: 13em auto 0;*/
     width: 36%;
-    margin:0 auto
+    margin:0 auto;
+    margin-top: 80px;
 }
 
 form {
-    background: #0A192A;
-    border-radius: 0.4em;
-    border: 1px solid #0A192A;
+    background: #fff;
     overflow: hidden;
     position: relative;
     box-shadow: 0 5px 10px 5px rgba(0,0,0,0.2);
@@ -174,20 +204,20 @@ form {
 form h1 {
     text-align: center;
     padding: 18px 0;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #e7e7e7;
     position: relative;
     margin-top:0px
 }
 
 
 form h1 {
-    color: #fff;
-    text-shadow: 0 1px 0 #000;
+    color: #4aa1f3;
+    /*text-shadow: 0 1px 0 #000;*/
     font-size: 35px;
     font-weight: 600;
     text-align: center;
     padding: 18px 0;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #e7e7e7;
     position: relative;
 }
 
@@ -197,7 +227,8 @@ form h1 span {
 }
 
 label {
-    color: rgba(137, 192, 243, 0.8);
+    /*color: rgba(137, 192, 243, 0.8);*/
+    color: #858585;
     display: block;
     font-size: 13px;
     padding-bottom: 9px;
@@ -209,21 +240,30 @@ input[type=password],
     font-family: 'Open Sans', sans-serif;
     width: 100%;
     padding: 8px 5px;
-    background: rgb(167,167,167); /* Old browsers */
-    background: -moz-linear-gradient(top, rgba(167,167,167,1) 0%, rgba(181,181,181,1) 21%, rgba(228,228,228,1) 79%, rgba(242,242,242,1) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(167,167,167,1)), color-stop(21%,rgba(181,181,181,1)), color-stop(79%,rgba(228,228,228,1)), color-stop(100%,rgba(242,242,242,1))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(167,167,167,1) 0%,rgba(181,181,181,1) 21%,rgba(228,228,228,1) 79%,rgba(242,242,242,1) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(167,167,167,1) 0%,rgba(181,181,181,1) 21%,rgba(228,228,228,1) 79%,rgba(242,242,242,1) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(167,167,167,1) 0%,rgba(181,181,181,1) 21%,rgba(228,228,228,1) 79%,rgba(242,242,242,1) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(167,167,167,1) 0%,rgba(181,181,181,1) 21%,rgba(228,228,228,1) 79%,rgba(242,242,242,1) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a7a7a7', endColorstr='#f2f2f2',GradientType=0 ); /* IE6-9 */
-    border: 1px solid #222;
+    /*background: rgb(167,167,167);*/
+    /*background: -moz-linear-gradient(top, rgba(167,167,167,1) 0%, rgba(181,181,181,1) 21%, rgba(228,228,228,1) 79%, rgba(242,242,242,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(167,167,167,1)), color-stop(21%,rgba(181,181,181,1)), color-stop(79%,rgba(228,228,228,1)), color-stop(100%,rgba(242,242,242,1)));
+    background: -webkit-linear-gradient(top, rgba(167,167,167,1) 0%,rgba(181,181,181,1) 21%,rgba(228,228,228,1) 79%,rgba(242,242,242,1) 100%); 
+    background: -o-linear-gradient(top, rgba(167,167,167,1) 0%,rgba(181,181,181,1) 21%,rgba(228,228,228,1) 79%,rgba(242,242,242,1) 100%); 
+    background: -ms-linear-gradient(top, rgba(167,167,167,1) 0%,rgba(181,181,181,1) 21%,rgba(228,228,228,1) 79%,rgba(242,242,242,1) 100%);
+    background: linear-gradient(to bottom, rgba(167,167,167,1) 0%,rgba(181,181,181,1) 21%,rgba(228,228,228,1) 79%,rgba(242,242,242,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a7a7a7', endColorstr='#f2f2f2',GradientType=0 );*/
+    border: 1px solid #e7e7e7;
     box-shadow: 0 1px 0 rgba(255,255,255,0.1);
-    border-radius: 0.3em;
     margin-bottom: 20px;
-    color: #000;
+    color: #858585;
     font-size: 15px;
     outline: none;
+    background-color: #fbfbfb;
+    border: 1px solid #d5d5d5;
+    font-family: inherit;
+    -webkit-transition: -webkit-box-shadow .45s, border-color .45s ease-in-out;
+    -moz-transition: -moz-box-shadow .45s, border-color .45s ease-in-out;
+    -o-transition: box-shadow .45s, border-color .45s ease-in-out;
+    transition: box-shadow .45s, border-color .45s ease-in-out;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none
 }
 
 label[for=remember] {
@@ -290,10 +330,28 @@ input[type=submit] {
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66ae3f', endColorstr='#8ac754',GradientType=0 ); /* IE6-9 */
     }
 
+footer.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #fff;
+}
+
+footer .container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
 @media only screen and (max-width:1440px) {
     .main {
         /*margin: 11em auto 0;*/
         width: 24%;
+        margin-top: 40px;
     }
 
     .copy-right p {
@@ -303,8 +361,8 @@ input[type=submit] {
 
 @media only screen and (max-width:1366px) {
     .main {
-        /*margin: 10em auto 0;*/
         width: 35%;
+        margin-top: 40px;
     }
 
     .copy-right p {
@@ -314,8 +372,8 @@ input[type=submit] {
 
 @media only screen and (max-width:1280px) {
     .main {
-        /*margin: 11em auto 0;*/
         width: 35%;
+        margin-top: 40px;
     }
 
     .copy-right p {
@@ -325,35 +383,47 @@ input[type=submit] {
 
 @media only screen and (max-width:1024px) {
     .main {
-        /*margin: 12em auto 0;*/
         width: 50%;
+        margin-top: 40px;
     }
 
     .copy-right p {
         padding: 6em 0;
+    }
+
+    footer.footer, footer.reg-footer {
+        display: none;
     }
 }
 
 @media only screen and (max-width:768px) {
     .main {
-        /*margin: 14em auto 0;*/
         width: 60%;
-        margin-bottom:70px
+        margin-bottom:70px;
+        margin-top: 70px;
     }
 
     .copy-right p {
         padding: 6em 0;
+    }
+
+    footer.footer, footer.reg-footer {
+        display: none;
     }
 }
 
 @media only screen and (max-width:640px) {
     .main {
-        /*margin: 14em auto 0;*/
         width: 60%;
+        margin-top: 40px;
     }
 
     .copy-right p {
         padding: 6em 0;
+    }
+
+    footer.footer, footer.reg-footer {
+        display: none;
     }
 }
 
@@ -361,6 +431,7 @@ input[type=submit] {
     .main {
         /*margin: 12em auto 0;*/
         width: 80%;
+        margin-top: 40px;
     }
 
     .copy-right p {
@@ -369,6 +440,30 @@ input[type=submit] {
 
     .login-log{
         margin-top:20px
+    }
+
+    .logo-container{
+        /*margin-bottom: 0px;*/
+        height: 120px;
+    }
+
+    .parallax-image {
+        background: url(../images/background.png);    
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-size: 40% 40%;
+    }
+
+    .parallax-image img {
+      width: 100%;
+      position: relative;
+    }
+
+    
+    footer.footer, footer.reg-footer {
+        display: none;
     }
 }
 

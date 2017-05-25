@@ -36,7 +36,6 @@ module.exports = (io) => {
         });
 
         socket.on('refresh div', function(refresh, callback){
-            console.log(refresh)
             io.to(refresh.room).emit('new refresh', {})
             io.to(refresh.room1).emit('new refresh', {})
 

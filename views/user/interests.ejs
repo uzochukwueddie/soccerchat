@@ -27,7 +27,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <nav class="navbar navbar-default" role="navigation">
+                    <nav class="navbar navbar-default" id="nav_bar" role="navigation">
 
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -36,16 +36,26 @@
                             <a class="navbar-brand" href="/home" style="color:white">Soccerchat</a>
                         </div>
 
+                        
+
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                            <ul class="nav navbar-nav navbar-right">
-                                <li>
+                            <ul class="nav navbar-nav navbar-right" id="re_load2">
+                                <li id="">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-bell nav-glyphicon "></span>Inbox <b class="caret"></b> <span class="label label-primary nav-label-icon">12</span>
+                                        <span class="glyphicon glyphicon-bell nav-glyphicon "></span><b class="caret"></b> 
+                                        <% if(data.totalRequest > 0) {%>
+                                          <span class="label label-primary nav-label-icon"><%= data.request.length %></span>
+                                          
+                                        <% } else { %>
+                                            <span class="label label-primary nav-label-icon" style="display: none"></span>
+                                        <% } %>
+                                                                               
                                     </a>
-                                    <ul class="dropdown-menu dmenu">
+
+                                    <ul class="dropdown-menu dmenu dmenu1">
                                         <li>
-                                            <div class="navbar-login">
+                                            <div class="navbar-login" id="requestBar">
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div class="dropdown-tag">
@@ -56,25 +66,34 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <div class="row">
+                                                <% if(data.request.length > 0) {%>
+                                                    <% data.request.forEach(function(val){ %>
+                                                    <div class="row" id="row_div">
                                                         <div class="col-md-3">
                                                             <p class="text-center">
-                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
+                                                                <img src="/images/team.jpg" class="img-responsive dropdown-img" id="img" />
                                                             </p>
                                                         </div>
                                                         <div class="col-md-9 pleft-0">
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="col-md-12">
-                                                                        <p class="text-left"><strong>Nombre Apellido</strong></p>
+                                                                        <p class="text-left">
+                                                                            <strong id=""><%= val.username %></strong>
+                                                                        </p>
                                                                     </div>
                                                                     <div class="col-md-12">
                                                                         <div class="row">
                                                                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                                                                <button type="submit" class="btn btn-default drop-accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
+                                                                                <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
+                                                                                <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
+                                                                                <button type="submit" name="accept" id="accept_friend" class="btn btn-default drop-accept accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
                                                                             </div>
                                                                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                                                                <button type="submit" class="btn btn-default drop-cancel"><i class="fa fa-times" aria-hidden="true"></i> Accept</button>
+                                                                                <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
+                                                                                <button type="submit" name="cancel" class="btn drop-cancel remove" id="cancel_friend">
+                                                                                <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                                                                </button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -84,79 +103,31 @@
                                                         </div>
                                                     </div>
                                                     <hr />
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <p class="text-center">
-                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-9 pleft-0">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="col-md-12">
-                                                                        <p class="text-left"><strong>Nombre Apellido</strong></p>
-                                                                    </div>
-                                                                    <div class="col-md-12">
-                                                                        <div class="row">
-                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
-                                                                                <button type="submit" class="btn btn-default drop-accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
-                                                                            </div>
-                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
-                                                                                <button type="submit" class="btn btn-default drop-cancel"><i class="fa fa-times" aria-hidden="true"></i> Accept</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <hr />
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <p class="text-center">
-                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-9 pleft-0">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="col-md-12">
-                                                                        <p class="text-left"><strong>Nombre Apellido</strong></p>
-                                                                    </div>
-                                                                    <div class="col-md-12">
-                                                                        <div class="row">
-                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
-                                                                                <button type="submit" class="btn btn-default drop-accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
-                                                                            </div>
-                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
-                                                                                <button type="submit" class="btn btn-default drop-cancel"><i class="fa fa-times" aria-hidden="true"></i> Accept</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <% }) %>
+                                                    <% } else{ %>
+                                                        <p class="text-center">No Friend Request</p>
+                                                  <% } %>
+                                                    
                                                 </div>
                                             </div>
                                         </li>
 
                                     </ul>
 
-                                </li>
+                                </li> 
+                                <!-- END -->
 
                                 <li>
+                                <% var numOfTrue = 0 %>
+                                <% for(var i=0;i<message.length;i++){
+                                    if(message[i].body.isRead === false)
+                                       numOfTrue = numOfTrue + 1
+                                }%>
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span>Chats <span class="label label-primary nav-label-icon">16</span>
-                                    </a>
-
-                                </li>
-
-                                <li>
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-envelope nav-glyphicon "></span>Notification <b class="caret"></b> <span class="label label-primary nav-label-icon">12</span>
+                                        <span class="fa fa-globe "></span> <b class="caret"></b> 
+                                        <% if(numOfTrue != 0) {%>
+                                            <span class="label label-primary nav-label-icon"><%= numOfTrue %></span>
+                                        <% } %>
                                     </a>
                                     <ul class="dropdown-menu dmenu">
                                         <li>
@@ -171,105 +142,95 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <p class="text-center">
-                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-9 pleft-0">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="col-md-12">
-                                                                        <p class="text-left drop-name"><strong>Johnny</strong></p>
-                                                                        <p class="drop-message">Ok</p>
+                                                <% if(message.length > 0) {%>
+                                                <% message.forEach(function(val){ %>
+                                                <% if(user.username !== val.body.authorName) {%>
+                                                <input type="hidden" name="" id="chat_names" value="@<%= val.body.authorName %>@<%= user.username %>">
+                                                
+                                                    <a href="/chat/@<%= val.body.authorName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <p class="text-center">
+                                                                    <img src="/images/team.jpg" class="img-responsive dropdown-img" />
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-md-9 pleft-0">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 textRow" style="width:244px">
+                                                                        <div class="col-md-12" id="textRow">
+                                                                            <p class="text-left drop-name">
+                                                                                <% if(user.username !== val.body.receiverName) {%>
+                                                                                    <strong><%= val.body.receiverName %></strong>
+                                                                                <% } else { %>
+                                                                                    <strong><%= val.body.authorName %></strong>
+                                                                                <% } %>
+                                                                            </p>
+                                                                           <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
+                                                                           
+                                                                           <% if(val.body.isRead == true){ %> 
+                                                                               <p class="textRead drop-message">
+                                                                               <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                               </p>
+                                                                           <% } else { %>
+                                                                               <p class="textNotRead drop-message">
+                                                                                <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                               </p>
+                                                                           <% } %>
+                                                                        </div>
+
+
                                                                     </div>
-
-
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </a>
+                                                    <% } else { %>
+                                                        <input type="hidden" name="" id="chat_names" value="@<%= val.body.receiverName %>@<%= user.username %>">
+                                                
+                                                        <a href="/chat/@<%= val.body.receiverName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>">
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <p class="text-center">
+                                                                        <img src="/images/team.jpg" class="img-responsive dropdown-img" />
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-md-9 pleft-0">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 textRow" style="width:244px">
+                                                                            <div class="col-md-12" id="textRow">
+                                                                                <p class="text-left drop-name">
+                                                                                    <% if(user.username !== val.body.receiverName) {%>
+                                                                                        <strong><%= val.body.receiverName %></strong>
+                                                                                    <% } else { %>
+                                                                                        <strong><%= val.body.authorName %></strong>
+                                                                                    <% } %>
+                                                                                </p>
+                                                                               <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
+                                                                               
+                                                                               <% if(val.body.isRead == true){ %> 
+                                                                                   <p class="textRead drop-message">
+                                                                                   <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                                   </p>
+                                                                               <% } else { %>
+                                                                                   <p class="textNotRead drop-message">
+                                                                                    <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                                   </p>
+                                                                               <% } %>
+                                                                            </div>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    <% } %>
                                                     <hr class="dropdown-divider" />
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <p class="text-center">
-                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-9 pleft-0">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="col-md-12">
-                                                                        <p class="text-left drop-name"><strong>Johnny</strong></p>
-                                                                        <p class="drop-message">nothing much..</p>
-                                                                    </div>
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <hr class="dropdown-divider" />
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <p class="text-center">
-                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-9 pleft-0">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="col-md-12">
-                                                                        <p class="text-left drop-name"><strong>Johnny</strong></p>
-                                                                        <p class="drop-message">Hows everyone..</p>
-                                                                    </div>
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <hr class="dropdown-divider" />
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <p class="text-center">
-                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-9 pleft-0">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="col-md-12">
-                                                                        <p class="text-left drop-name"><strong>Johnny</strong></p>
-                                                                        <p class="drop-message">nothing much..</p>
-                                                                    </div>
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <hr class="dropdown-divider" />
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <p class="text-center">
-                                                                <img src="images/team.jpg" class="img-responsive dropdown-img" />
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-md-9 pleft-0">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="col-md-12">
-                                                                        <p class="text-left drop-name"><strong>Johnny</strong></p>
-                                                                        <p class="drop-message">Hows everyone..</p>
-                                                                    </div>
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                      <% }) %>
+                                                  <% } else { %>
+                                                        <p class="text-center">No Message Notification</p>
+                                                  <% } %>
+                                                    
                                                 </div>
                                             </div>
                                         </li>
@@ -280,17 +241,17 @@
 
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span>Admin <b class="caret"></b>
+                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span> <b class="caret"></b>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-                                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
+                                        <li><a href="/settings/profile"><span class="glyphicon glyphicon-user" style="color: #4aa1f3 !important;"></span>  Profile</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="#"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
+                                        <li><a href="/logout"><span class="glyphicon glyphicon-off" style="color: #4aa1f3 !important;"></span> Logout</a></li>
                                     </ul>
                                 </li>
                             </ul>
-                        </div>
+                        </div>                        
+
 
                     </nav>
                 </div>
@@ -305,62 +266,42 @@
 
                     <div class="col-sm-4 col-md-3">
 
-
-
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="profile-sidebar">
-
-                                    <% if(typeof user.userImage !== 'undefined' || user.userImage != '') {%>
-                                        <div class="profile-userpic circular">
-                                            <img src="/profileImages/<%= user.userImage %>" class="img-responsive" alt="">
-                                        </div>
-                                    <% } else {%>
-                                        <div class="profile-userpic circular">
-                                            <img src="/uploads/defaultPic.png" class="img-responsive" alt="">
-                                        </div>
-                                    <% } %>
+                                    <div class="img-container">
+                                        <img src="/profileImages/<%= user.userImage %>" class="img-responsive" alt="">
+                                    </div>
                               
                                     <div class="profile-usertitle">
                                         <div class="profile-usertitle-name">
-                                            My Name
+                                            <%= data.fullname %>
                                         </div>
                                         <div class="profile-usertitle-job">
-                                            Developer
+                                            @<%= data.username %>
                                         </div>
                                     </div>
-                                
-                                    <!-- <div class="profile-userbuttons">
-                                        <button type="button" class="btn btn-success btn-sm">Follow</button>
-                                        <button type="button" class="btn btn-danger btn-sm">Message</button>
-                                    </div> -->
                                  
                                     <div class="profile-usermenu">
                                         <ul class="nav">
-                                            <li class="active">
-                                                <a href="/profile/<%= user.username %>">
-                                                    <i class="glyphicon glyphicon-home"></i>
+                                            <li>
+                                                <a href="/profile/<%= user.username %>" style="color:#4aa1f3 !important">
+                                                    <i class="glyphicon glyphicon-home" style="color:#4aa1f3 !important"></i>
                                                     Overview
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="/settings/profile">
-                                                    <i class="glyphicon glyphicon-user"></i>
+                                                <a href="/settings/profile" style="color:#4aa1f3 !important">
+                                                    <i class="glyphicon glyphicon-user" style="color:#4aa1f3 !important"></i>
                                                     Profile
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="/settings/interests" target="_blank">
-                                                    <i class="glyphicon glyphicon-ok"></i>
+                                            <li class="active">
+                                                <a href="/settings/interests" style="color:#4aa1f3 !important">
+                                                    <i class="glyphicon glyphicon-ok" style="color:#4aa1f3 !important"></i>
                                                     Interests
                                                 </a>
                                             </li>
-                                            <!-- <li>
-                                                <a href="#">
-                                                    <i class="glyphicon glyphicon-cog"></i>
-                                                    Settings
-                                                </a>
-                                            </li> -->
                                         </ul>
                                     </div>
 
@@ -378,7 +319,7 @@
                         <div class="">
                             <div class="user-display">
                                 
-                                    <h3 class="user-display-head">Favourite Soccer National Teams</h3>
+                                    <h3 class="user-display-head" style="color:#4aa1f3 !important">Favourite National Soccer Teams</h3>
                                     <hr />
                                     <% user.favNationalTeam.forEach(function(val){%>
                                         <p>
@@ -392,7 +333,7 @@
                                             <input id="national" class="form-control add-items" name="national" type="text">
 
                                             <span class="input-group-btn">
-                                                <button id="nationalTeam" class="btn btn-default add-items-btn" style="font-weight:bold;">Add Team</button>
+                                                <button id="nationalTeam" class="btn btn-default add-items-btn" style="font-weight:bold; background-color:#4aa1f3">Add Team</button>
                                             </span>
                                         </div>
                                     </div>
@@ -403,7 +344,7 @@
                         <div style="margin-top:20px">
                             <div class="user-display">
 
-                                <h3 class="user-display-head">Favourite Clubs</h3>
+                                <h3 class="user-display-head" style="color:#4aa1f3 !important">Favourite Clubs</h3>
                                 <hr />
                                 <% user.favClub.forEach(function(val){%>
                                     <p>
@@ -417,7 +358,7 @@
                                     <input id="favClub" class="form-control add-items" name="favClub" type="text" style="">
                                         
                                         <span class="input-group-btn">
-                                            <button class="btn btn-default add-items-btn" id="favClubBtn">Add Club</button>
+                                            <button class="btn btn-default add-items-btn" id="favClubBtn" style="font-weight:bold; background-color:#4aa1f3">Add Club</button>
                                         </span>
                                     </div>
                                 </div>
@@ -427,7 +368,7 @@
                         <div style="margin-top:20px">
                             <div class="user-display">
 
-                                <h3 class="user-display-head">Favourite Players</h3>
+                                <h3 class="user-display-head" style="color:#4aa1f3">Favourite Players</h3>
                                 <hr />
                                 <% user.favPlayers.forEach(function(val){%>
                                     <p>
@@ -440,7 +381,7 @@
                                     <div class="input-group">
                                         <input id="favPlayers" name="favPlayers" class="form-control add-items" type="text">
                                         <span class="input-group-btn">
-                                            <button id="favPlayersBtn" class="btn btn-default add-items-btn">Add Player</button>
+                                            <button id="favPlayersBtn" class="btn btn-default add-items-btn" style="font-weight:bold; background-color:#4aa1f3">Add Player</button>
                                         </span>
                                     </div>
                                 </div>
@@ -462,6 +403,7 @@
     <script src="/js/jquery-1.11.3.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/interests.js"></script>
     <script src="/js/global.js"></script>
 
 </body>

@@ -89,7 +89,7 @@
                                                                             </div>
                                                                             <div class="col-md-6 col-sm-6 col-xs-6">
                                                                                 <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
-                                                                                <button type="submit" name="cancel" class="btn btn-default drop-cancel remove" id="cancel_friend">
+                                                                                <button type="submit" name="cancel" class="btn drop-cancel remove" id="cancel_friend">
                                                                                 <i class="fa fa-times" aria-hidden="true"></i> Cancel
                                                                                 </button>
                                                                             </div>
@@ -144,9 +144,11 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                 <% if(chat.length > 0) {%>
+
                                                 <% chat.forEach(function(val){ %>
                                                 <% if(user.username !== val.body.authorName) {%>
-                                                    <a href="/chat/@<%= val.body.authorName %>@<%= user.username %>" data-value="<%= val.body._id %>" id="link_click">
+                                                <input type="hidden" name="authorname" id="authorName" value="<%= val.body.authorName %>">
+                                                    <a href="/chat/@<%= val.body.authorName %>@<%= user.username %>" data-value="<%= val.body._id %>" id="link_click" class="click-link">
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                             <p class="text-center">
@@ -161,7 +163,7 @@
                                                                         <% if(user.username !== val.body.receiverName) {%>
                                                                             <strong><%= val.body.receiverName %></strong>
                                                                         <% } else { %>
-                                                                            <strong><%= val.body.authorName %></strong>
+                                                                            <strong class="author_name"><%= val.body.authorName %></strong>
                                                                         <% } %>
                                                                         
                                                                         </p>
@@ -172,7 +174,7 @@
                                                                                <%= cutstring.cutString(val.body.body, 10) %>...
                                                                                </p>
                                                                            <% } else { %>
-                                                                               <p class="textNotRead drop-message" id="textNotRead">
+                                                                               <p class="textNotRead drop-message" id="textNot">
                                                                                    <%= cutstring.cutString(val.body.body, 10) %>...
                                                                                </p>
                                                                            <% } %>
@@ -185,7 +187,7 @@
                                                     </div>
                                                     </a>
                                                     <% } else if(user.username === val.body.authorName) {%>
-                                                    <a href="/chat/@<%= val.body.receiverName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>">
+                                                    <a href="/chat/@<%= val.body.receiverName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>" class="click-link">>
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <p class="text-center">
@@ -209,7 +211,7 @@
                                                                                <%= cutstring.cutString(val.body.body, 10) %>...
                                                                                </p>
                                                                            <% } else { %>
-                                                                               <p class="textNotRead drop-message" id="TextNotRead">
+                                                                               <p class="textNotRead drop-message" id="">
                                                                                 <%= cutstring.cutString(val.body.body, 10) %>...
                                                                                </p>
                                                                            <% } %>
@@ -263,7 +265,7 @@
 
         <div class="col-md-12">
             <div class="chat_container">
-            <input type="hidden" name="" id="name-user" value="<%= user.username %>">
+            <input type="hidden" name="name_user" id="name-user" value="<%= user.username %>">
                 <div class="row">
                     <!-- LEFT -->
 
@@ -276,29 +278,24 @@
                                             <div class="cover">
                                                 <img src="/images/pr.jpg" />
                                             </div>
-                                            <div class="user">
-                                                <img class="img-circle" src="/images/team.jpg" />
+                                            <div class="user cover-img">
+                                                <img class="img-circle" src="/profileImages/<%= data1.userImage %>" />
                                             </div>
                                             <div class="content">
                                                 <div class="main">
                                                     <h3 class="name">
-                                                    @<%= user.username %>
-                                                        <!-- <a href="/settings/profile" style="text-decoration:none;font-weight:normal; font-size:16px;">
-                                                            @<%= user.username %>
-                                                        </a> -->
+                                                    @<%= data1.username %>
                                                     </h3>
                                                     <p class="profession-online">
-                                                        <!-- <i class="fa fa-circle online" aria-hidden="true"></i>
-                                                        Online -->
                                                     </p>
-                                                    <p class="text-center">
+                                                    <!-- <p class="text-center">
                                                         "Hard work is key to success! Journey of thousand miles begin with a single step!"
-                                                    </p>
+                                                    </p> -->
                                                 </div>
                                                 <div class="footer">
                                                     <i class="fa fa-mail-forward"></i>
-                                                    <a href="/settings/profile" style="color:#999999; text-decoration:none;font-weight:normal; font-size:16px;" id="user-name">
-                                                      View My Profile
+                                                    <a href="/profile/<%= data1.username %>" style="color:#999999; text-decoration:none;font-weight:normal; font-size:16px;" id="user-name">
+                                                      View Profile
                                                     </a>
                                                 </div>
                                             </div>
@@ -324,16 +321,6 @@
                                                     <% if(data.friendsList.length > 0) {%>
                                                       <% data.friendsList.forEach(function(val){ %>
                                                         <h3 class="friend" style="padding-top:15px;color:gray;font-size:14px" hidden>@<%= val.friendName %></h3>
-                                                        <!-- <div>
-                                                            <img src="/images/member1.jpg" class="pull-left img-circle" style="width:50px;margin-right:10px" />
-                                                            <p style="padding-top:15px;color:gray;font-size:14px">
-                                                              <a class="" href="/chat/@<%= val.friendName %>@<%= user.username %>">
-                                                                @<%= val.friendName %>
-                                                                </a>
-                                                            </p>
-                                                        </div>
-                                                      <div class="clearfix"></div>
-                                                      <hr style=" margin-top: 14px; margin-bottom: 14px;" /> -->
                                                       <% }) %>
                                                     <% } else { %>
                                                       <p>No friends yet</p>
@@ -362,6 +349,7 @@
 
                                 </div>
                             </div>
+                            <input type="hidden" name="user_chat_name" id="user_chat_name" value="<%= name %>">
 
                             <div class="chat_area">
                                 <ul id="messages" class="list-unstyled">
@@ -406,7 +394,9 @@
                                     
                                     <input type="hidden" name="receiverId" id="receiverId" class="" value="<%= data1._id %>">
 
-                                    <textarea class="form-control" name="message" id="msg" placeholder="Type a message"></textarea>
+                                    <input type="hidden" name="chat_id" id="my_id" value="<%= id %>">
+
+                                    <textarea class="form-control" name="message" id="msg" placeholder="Type a message" data-value="<%= id %>"></textarea>
                                       <div class="clearfix"></div>
                                       <div class="chat_bottom">
                                           <button id="chatMessage" class="pull-right btn btn-primary" style="background: #4aa1f3; border: #4aa1f3; ">

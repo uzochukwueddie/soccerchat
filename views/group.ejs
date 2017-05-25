@@ -39,6 +39,7 @@
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                             <ul class="nav navbar-nav navbar-right" id="re_load2">
+
                                 <li id="">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <span class="glyphicon glyphicon-bell nav-glyphicon "></span><b class="caret"></b> 
@@ -57,7 +58,7 @@
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div class="dropdown-tag">
-                                                            <h3 class="text-center dropdown-tag-head">
+                                                            <h3 class="text-center dropdown-tag-head" >
                                                                 Friend Requests
                                                             </h3>
                                                         </div>
@@ -89,7 +90,7 @@
                                                                             </div>
                                                                             <div class="col-md-6 col-sm-6 col-xs-6">
                                                                                 <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
-                                                                                <button type="submit" name="cancel" class="btn btn-default drop-cancel remove" id="cancel_friend">
+                                                                                <button type="submit" name="cancel" class="btn drop-cancel remove" id="cancel_friend">
                                                                                 <i class="fa fa-times" aria-hidden="true"></i> Cancel
                                                                                 </button>
                                                                             </div>
@@ -236,8 +237,8 @@
                                             <div class="cover">
                                                 <img src="/images/pr.jpg" />
                                             </div>
-                                            <div class="user">
-                                                <img class="img-circle" src="/images/team.jpg" />
+                                            <div class="user cover-img">
+                                                <img class="img-circle" src="/profileImages/<%= user.userImage %>" />
                                             </div>
                                             <div class="content">
                                                 <div class="main">
@@ -279,17 +280,6 @@
                                                     <% if(data.friendsList.length > 0) {%>
                                                       <% data.friendsList.forEach(function(val){ %>
                                                       <h3 class="friend" style="padding-top:15px;color:gray;font-size:14px" hidden>@<%= val.friendName %></h3>
-                                                        <!-- <div>
-                                                            <img src="/images/member1.jpg" class="pull-left img-circle" style="width:50px;margin-right:10px" />
-                                                            <p >
-                                                              <a href="/chat/@<%= val.friendName %>@<%= user.username %>">
-                                                                <h3 class="friend" style="padding-top:15px;color:gray;font-size:14px" >@<%= val.friendName %></h3>
-                                                                
-                                                                </a>
-                                                            </p>
-                                                        </div> -->
-                                                      <!-- <div class="clearfix"></div>
-                                                      <hr style=" margin-top: 14px; margin-bottom: 14px;" /> -->
                                                       <% }) %>
                                                     <% } else { %>
                                                       <p>No friends yet</p>
@@ -333,11 +323,11 @@
                                         <img src="/images/team.jpg" alt="User Avatar" class="img-circle">
                                     </span>
                                     <div class="chat-body1 clearfix">
-                                        <p>
+                                        
                                             <span class="chat-name">{{from}}</span>
                                             <br />
-                                            {{text}}
-                                        </p>
+                                            <span>{{text}}</span>
+                                        
                                             <div class="chat_time pull-right" style="font-size: 13px; color: black; font-weight: 600; letter-spacing: 0.8px;">{{createdAt}}
                                             </div>
                                     </div>
@@ -383,22 +373,6 @@
 
 
                         <div class="gr-rightsidebar">
-                            <!-- <div id="mySidenav" class="sidenav">
-                                <h3 id="name"></h3>
-                                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                                <form action="" method="get" id="add_friend">
-                                    <input type="hidden" name="receiverName" id="receiverName" value="">
-                                    <input type="hidden" name="sender-name" id="sender-name" value="<%= user.username %>">
-                                    <button type="submit" id="friend-add" class="btn btn-primary add"><i class="fa fa-user" data-text-swap="Friend Request Sent" data-text-original="Add Friend"></i> Add Friend</button>
-                                    
-                                    <a id="nameLink" class="btn btn-primary">View Profile</a>
-
-                                    <div id="myTest">
-                                        
-                                    </div>
-                                </form>
-        
-                            </div> -->
 
                             <div id="myModal" class="modal fade" role="dialog">
                               <div class="modal-dialog">

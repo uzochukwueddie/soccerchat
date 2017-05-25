@@ -1,7 +1,6 @@
 var Club = require('../models/clubs');
 var User = require('../models/user');
 var Message = require('../models/message');
-var Conversation = require('../models/conversation');
 var passport = require('passport');
 var async = require('async');
 var {validate} = require('../config/validation');
@@ -14,7 +13,10 @@ module.exports = (app, io) => {
     
     app.get('/', (req, res) => {
         var errors = req.flash('error');
-        res.render('index', {title: 'Soccer Chat', messages: errors, hasErrors: errors.length > 0});
+        var success = req.flash('success');
+
+        res.render('index', {title: 'Soccer Chat', messages: errors, hasErrors: errors.length > 0, 
+          success:success, noErrors:success.length > 0});
     });
     
     app.post('/', loginValidation, passport.authenticate('local.login', {
@@ -53,11 +55,37 @@ module.exports = (app, io) => {
                     }
                 },function(err, newResult){
                     callback(err, newResult);
+                });
+            },
+
+            function(callback){
+                Message.aggregate(
+                {$match:{$or:[{"authorName":req.user.username}, {"receiverName":req.user.username}]}},
+                {$sort:{'createdAt':-1}},
+                {
+                    $group:{"_id":{
+                    "last_message_between":{
+                        $cond:[
+                            {
+                                $lt:[
+                                {$substr:["$authorName",0,1]},
+                                {$substr:["$receiverName",0,1]}]
+                            },
+                            {$concat:["$authorName"," and ","$receiverName"]},
+                            {$concat:["$receiverName"," and ","$authorName"]}
+                        ]
+                    }
+                    },"body":{$first:"$$ROOT"}
+                    }
+                },function(err, newResult){
+                    callback(err, newResult);
                 })
-            }
+            },
+
         ], (err, results) => {
             var res1 = results[0];
             var res2 = results[1];
+            var res3 = results[2];
             
             var productChunks = [];
             var chunkSize = 3;
@@ -65,11 +93,13 @@ module.exports = (app, io) => {
                 productChunks.push(res1.slice(i, i+chunkSize));
             }
             
-            res.render('home', {title: 'SoccerChat | Chat With Friends', user:req.user, data:productChunks, country:res2});
+            res.render('home', {title: 'SoccerChat | Chat With Friends', user:req.user, data:productChunks, country:res2, chat:res3});
         })
     });
     
     app.post('/home', (req, res) => {
+        PostRequest(req, res, '/home');
+
         async.parallel([
             function(callback){
                 User.update({
@@ -353,40 +383,35 @@ module.exports = (app, io) => {
         });
     });
     
+    
     app.get('/results', isLoggedIn, (req, res) => {
-        var regex = new RegExp(req.body.country, 'gi');
+        // var regex = new RegExp(req.body.country, 'gi');
         
-        async.parallel([
-            function(callback){
-                Club.find({'country':regex}, (err, result) => {
-                    callback(err, result)
-                })
-            },
+        // async.parallel([
+        //     function(callback){
+        //         Club.find({'country':regex}, (err, result) => {
+        //             callback(err, result)
+        //         })
+        //     },
             
-            function(callback){
-                Club.aggregate(
-                {
-                    $group: {
-                        _id: "$country",
-                    }
-                },function(err, newResult){
-                    callback(err, newResult);
-                })
-            }
-        ], (err, results) => {
-            var res1 = results[0];
-            var res2 = results[1];
-
-            console.log(res1)
-
-            var productChunks = [];
-            var chunkSize = 3;
-            for(var i=0; i < res1.length; i += chunkSize){
-                productChunks.push(res1.slice(i, i+chunkSize));
-            }
+        //     function(callback){
+        //         Club.aggregate(
+        //         {
+        //             $group: {
+        //                 _id: "$country",
+        //             }
+        //         },function(err, newResult){
+        //             callback(err, newResult);
+        //         })
+        //     }
+        // ], (err, results) => {
+        //     var res1 = results[0];
+        //     var res2 = results[1];
             
-            res.render('results', {title: 'SoccerChat | Chat With Friends', user:req.user, data:productChunks, country:res2});
-        })
+        //     res.render('results', {title: 'SoccerChat | Chat With Friends', user:req.user, data:res1, country:res2});
+        // })
+
+        res.redirect('/home');
     });
     
     app.post('/results', (req, res) => {
@@ -412,8 +437,15 @@ module.exports = (app, io) => {
         ], (err, results) => {
             var res1 = results[0];
             var res2 = results[1];
+
+            var productChunks = [];
+            var chunkSize = 3;
+            for(var i=0; i < res1.length; i += chunkSize){
+                productChunks.push(res1.slice(i, i+chunkSize));
+            }
             
-            res.render('results', {title: 'SoccerChat | Chat With Friends', user:req.user, data:res1, country:res2});
+            res.render('results', {title: 'SoccerChat | Chat With Friends', user:req.user, data:productChunks, country:res2, chat: ''});
+            //res.redirect('/results')
         });
     });
     
@@ -426,24 +458,70 @@ module.exports = (app, io) => {
                     callback(err, result)
                 })
             },
+
+            function(callback){
+                Message.aggregate(
+                {$match:{$or:[{"authorName":req.user.username}, {"receiverName":req.user.username}]}},
+                {$sort:{'createdAt':-1}},
+                {
+                    $group:{"_id":{
+                    "last_message_between":{
+                        $cond:[
+                            {
+                                $lt:[
+                                {$substr:["$authorName",0,1]},
+                                {$substr:["$receiverName",0,1]}]
+                            },
+                            {$concat:["$authorName"," and ","$receiverName"]},
+                            {$concat:["$receiverName"," and ","$authorName"]}
+                        ]
+                    }
+                    },"body":{$first:"$$ROOT"}
+                    }
+                },function(err, newResult){
+                    callback(err, newResult);
+                })
+            },
+
+            function(callback){
+                Club.find({}, (err, clubresult) => {
+                    callback(err, clubresult)
+                }).sort({'name': 1})
+            },
+
         ], (err, results) => {
             var res1 = results[0];
+            var res2 = results[1];
+            var res3 = results[2];
 
-            // var memberChunks = [];
-            // var chunkSize = 4;
-            // for(var i=0; i < res1.length; i += chunkSize){
-            //     memberChunks.push(res1.slice(i, i+chunkSize));
-            // }
-            
-            res.render('members', {title: 'SoccerChat | Members', user:req.user, data:res1});
+            var memberChunks = [];
+            var chunkSize = 3;
+            for(var i=0; i < res1.length; i += chunkSize){
+                memberChunks.push(res1.slice(i, i+chunkSize));
+            }
+
+                        
+            res.render('members', {title: 'SoccerChat | Members', user:req.user, data:memberChunks, chat:res2, clubs:res3});
         })
     });
     
     app.post('/members', (req, res) => {
+        var regex1 = new RegExp(escapeRegex(req.body.gender), 'gi');
+        var regex2 = new RegExp(escapeRegex(req.body.club), 'gi');
         
         User.find({"$or": [{'gender':req.body.gender}, {'club':req.body.club}]}, (err, result) => {
-            res.render('members', {title: 'SoccerChat | Members', user:req.user, data:result});
-        })
+            var members = [];
+            var chunkSize = 3;
+            for(var i=0; i < result.length; i += chunkSize){
+                members.push(result.slice(i, i+chunkSize));
+            }
+
+            console.log(members);
+
+            res.render('members', {title: 'SoccerChat | Members', user:req.user, data:members, chat:'', clubs: ''});
+        });
+
+        PostRequest(req, res, '/members');
     });
     
     app.get('/logout', (req, res) => {
@@ -486,3 +564,101 @@ function isLoggedIn(req, res, next){
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
+
+function PostRequest(req, res, link){
+    async.parallel([
+        function(callback){
+            if(req.body.senderId){
+                //This function is used to update the document of the receiver of the friend request
+                User.update({
+                   '_id': req.user._id,
+                   'friendsList.friendId': {$ne: req.body.senderId}
+                },
+                {
+                   $push: {friendsList: {
+                       friendId: req.body.senderId,
+                       friendName: req.body.senderName
+                   }},
+                   $pull: {request: {
+                        userId: req.body.senderId,
+                        username: req.body.senderName
+                    }},
+                    $inc: {totalRequest: -1},
+                }, (err, count) => {
+                   callback(err, count);
+                })
+            }
+        },
+        
+        //This function is used to update the document of the sender of the 
+        //friend request
+        function(callback){
+            if(req.body.senderId){
+                User.update({
+                   '_id': req.body.senderId,
+                   'friendsList.friendId': {$ne: req.user._id}
+                },
+                {
+                   $push: {friendsList: {
+                       friendId: req.user._id,
+                       friendName: req.user.username
+                   }},
+                   $pull: {sentRequest: {
+                        username: req.user.username
+                    }}
+                }, (err, count) => {
+                   callback(err, count);
+                })
+            }
+        },
+        
+        function(callback){
+            if(req.body.user_Id){
+                User.update({
+                   '_id': req.user._id,
+                   'request.userId': {$eq: req.body.user_Id}
+                },
+                {
+                   $pull: {request: {
+                        userId: req.body.user_Id,
+                    }},
+                    $inc: {totalRequest: -1}
+                }, (err, count) => {
+                    callback(err, count);
+                })
+            }
+        },
+
+        //This is used to update the sentRequest array for the sender of the friend request
+        function(callback){
+            if(req.body.user_Id){
+                User.update({
+                   '_id': req.body.user_Id,
+                   'sentRequest.username': {$eq: req.user.username}
+                },
+                {
+                   $pull: {sentRequest: {
+                        username: req.user.username
+                    }}
+                }, (err, count) => {
+                    callback(err, count);
+                })
+            }
+        },
+
+        function(callback){
+            if(req.body.chatId){
+                Message.update({
+                    '_id': req.body.chatId
+                },
+                {
+                    "isRead": true
+                }, (err, done) => {
+                    callback(err, done)
+                })
+            }
+        }
+    ], (err, results) => {
+        res.redirect(link)
+    });
+}

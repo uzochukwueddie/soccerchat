@@ -1,122 +1,4 @@
-<!-- <html lang="en"><head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="img/favicon.png">
-    <title><%= title %></title>
-    <link href="/bootstrap.3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/font-awesome.4.6.1/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/assets/css/timeline.css" rel="stylesheet">
-    <link href="/assets/css/login_register.css" rel="stylesheet">
-    <link href="/assets/css/forms.css" rel="stylesheet">
-    <link href="/assets/css/buttons.css" rel="stylesheet">
-    <script src="/assets/js/jquery.1.11.1.min.js"></script>
-    <script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
-    <script src="/assets/js/custom.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="/css/responsive.css">
-  
-</head>
-
-  <body cz-shortcut-listen="true">
-
-    <nav class="navbar navbar-fixed-top navbar-transparent" role="navigation">
-        <div class="container">
-        <div class="navbar-header">
-          <button id="menu-toggle" type="button" class="navbar-toggle collapsed" data-toggle = "collapse" data-target= "#navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar bar1"></span>
-            <span class="icon-bar bar2"></span>
-            <span class="icon-bar bar3"></span>
-          </button>
-          <a class="navbar-brand" id="logo" href="/"></a>
-        </div>
-
-        <div id="navbar-collapse" class = "collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li style="">
-                    <a class="navbar-brand" href="/">Login Here</a>
-                </li>
-            </ul>
-        </div>
-        
-      </div>
-    </nav>
-    <div class="wrapper">
-      <div class="parallax filter-black">
-          <div class="parallax-image"></div>             
-          <div class="small-info">
-            <div class="col-sm-10 col-sm-push-1 col-md-6 col-md-push-3 col-lg-6 col-lg-push-3">
-              <div class="card-group animated flipInX">
-                
-                <div class="card">
-                  
-                  <div class="card-block center">
-                    <h4 class="m-b-0">
-                      <span class="icon-text">Sign Up</span>
-                    </h4>
-                    <p class="text-muted">Create a new account</p>
-                    
-                    <% if(hasErrors) {%>
-                       <div class="alert alert-danger">
-                       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <% for(var i = 0; i < errors.length; i++) {%>
-                            <%= errors[i] %> <br>
-                        <% } %>
-                        
-                        </div>
-                    <% } %>
-                    
-                    <form action="/signup" method="post">
-                      <div class="form-group">
-                        <select name="club" id="club" class="form-control">
-                           <option value="">Select Your Club</option>
-                            <% data.forEach(function(val){%>
-                                <option value="<%= val.name %>"><%= val.name %></option>
-                            <% }) %>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <input type="text" name="username" class="form-control" placeholder="Username">
-                      </div>
-                      <div class="form-group">
-                        <input type="email" name="email" class="form-control" placeholder="Email">
-                      </div>
-                      <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password">
-                        <a href="/" class="pull-xs-right">
-                          <small class="">Already Registered? Login</small>
-                        </a>
-                        <div class="clearfix"></div>
-                      </div>
-                      <button type="submit" class="btn btn-azure">Register</button>
-                    </form>
-                    
-                  </div>
-                  
-                </div>
-              </div>
-            </div>
-          </div>
-      </div>
-
-      <footer class="footer">
-        <div class="container">
-          <p class="text-muted"> Copyright © Soccerchat - All rights reserved </p>
-        </div>
-      </footer>
-    </div>
-    
-</body>
-</html> -->
-
-
-
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -152,6 +34,8 @@
 
         </div>
     </div>
+
+<div id="parallax-footer" class="parallax-image">
 
     <div class="main">
 
@@ -199,13 +83,26 @@
             </div>
 
             <p class="p-container">
-                <span><a href="#">Forgot password?</a></span>
+                <span><a href="/forgot_password">Forgot password?</a></span>
                 <span><a href="" style="color:white;padding-left:10px;padding-right:10px">|</a></span>
                 <span><a href="/">Login</a></span>
                 <input type="submit" class="login-log" style=" background: #03A9F4; border: #3bb5ec;" value="Register">
             </p>
         </form>
     </div>
+
+</div>
+
+<footer class="reg-footer">
+    <div class="container">
+      <p class="text-muted"> Copyright &copy; Soccerchat - All rights reserved </p>
+    </div>
+</footer>
+
+
+
+<script src="/assets/js/jquery.1.11.1.min.js"></script>
+<script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
 
 
 </body>

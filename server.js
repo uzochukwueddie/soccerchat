@@ -14,11 +14,17 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var moment = require('moment');
 var cutstring = require('./functions/func');
+var helmet = require('helmet');
+var secret = require('./secret/secret');
+
+
 
 
 var port = process.env.PORT || 3000;
 
 var app = express();
+
+app.use(helmet());
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/soccerchat');
@@ -44,7 +50,7 @@ app.use(validator({
 }))
 
 app.use(session({
-    secret: 'Thisismytestkey',
+    secret: secret.cookieSecret,
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({mongooseConnection: mongoose.connection})
@@ -56,6 +62,8 @@ app.locals.ejs = ejs;
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
 
 var server = http.createServer(app);
 var io = socketIO(server);
@@ -73,6 +81,7 @@ require('./routes/user')(app, io);
 require('./routes/admin')(app);
 require('./routes/profile')(app);
 require('./routes/chat')(app);
+require('./routes/reset')(app);
 
 server.listen(port, () => {
   console.log('Listening on Port 3000');

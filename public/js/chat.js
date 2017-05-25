@@ -56,6 +56,8 @@ $(document).ready(function(){
 
         var sentTo = $('.sentTo').text();
         var sentToName = sentTo.split('@');
+
+        console.log(sentToName)
         
 
         for(var i = 0; i < users.length; i++){
@@ -80,10 +82,15 @@ $(document).ready(function(){
 
                 var rec = $('#receiverName').val();
 
-                if(f.indexOf(rec) > -1 || f.indexOf(getUsername) > -1){
-                    $('#friend-add').attr('disabled', 'disabled');
-                    $('#friend-add').html('Friends');
-                    $('#friend-add').removeClass('btn-primary')
+                if(f.length > 1){
+                    if(f.indexOf(rec) > -1 || f.indexOf(getUsername) > -1){
+                        $('#friend-add').attr('disabled', 'disabled');
+                        $('#friend-add').html('Friends');
+                        $('#friend-add').removeClass('btn-primary')
+                    }
+                }else {
+                    $('#friend-add').css('background-color', '#4aa1f3')
+                    $('#friend-add').css('color', 'white')
                 }
 
                 if(sentToName.indexOf(rec) > -1){
@@ -92,6 +99,10 @@ $(document).ready(function(){
                 }  
                 
             });
+
+            $(document).on('click', '#friend-add', function(){
+                $('#friend-add').html('Friend Request Sent');
+            })
 
             
         }
@@ -136,7 +147,7 @@ $(document).ready(function(){
                     senderName: senderName
                 },
                 success: function(data){
-                    $('#main_scroll').load(window.location.href + ' #main_scroll');
+                    
                     $(this).parent().eq(1).remove();
                 }
             });
@@ -169,12 +180,6 @@ $(document).ready(function(){
     socket.on('my message', function(message){
         $('#re_load2').load(location.href + ' #re_load2');
     });
-
-    //setInterval(function(){
-        //$('#main_scroll').load(window.location.href + ' #main_scroll');
-    //}, 2000);
-
-
     
     
     $('#message-form').on('submit', function(e){
@@ -245,6 +250,8 @@ $(document).ready(function(){
             }
         });
 
+        //$('#friend-add').load(window.location.href + ' #friend-add');
+
         
     });
     
@@ -304,10 +311,6 @@ $(document).ready(function(){
                 
             }
         });
-
-        // setTimeout(function(){
-        //     $('#re_load2').load(location.href + ' #re_load2');
-        // }, 1000);
     });
 
 });

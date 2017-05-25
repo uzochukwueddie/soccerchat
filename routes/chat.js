@@ -1,8 +1,9 @@
 var Club = require('../models/clubs');
 var User = require('../models/user');
 var Message = require('../models/message');
-var Conversation = require('../models/conversation');
 var async = require('async');
+var ObjectId = require('mongodb').ObjectID;
+var mongoose = require('mongoose')
 
 module.exports = (app) => {
     
@@ -25,32 +26,6 @@ module.exports = (app) => {
                     callback(err, result2);
                 });
             }, 
-            
-
-            
-            // function(callback){
-            //     Message.aggregate(
-            //     {$match:{$or:[{"authorName":req.user.username}, {"receiverName":req.user.username}]}},
-            //     {$sort:{'createdAt':-1}},
-            //     {
-            //         $group:{"_id":{
-            //         "last_message_between":{
-            //             $cond:[
-            //                 {
-            //                     $lt:[
-            //                     {$substr:["$authorName",0,1]},
-            //                     {$substr:["$receiverName",0,1]}]
-            //                 },
-            //                 {$concat:["$authorName"," and ","$receiverName"]},
-            //                 {$concat:["$receiverName"," and ","$authorName"]}
-            //             ]
-            //         }
-            //         },"body":{$first:"$$ROOT"}
-            //         }
-            //     },function(err, newResult){
-            //         callback(err, newResult);
-            //     });
-            // },
 
             function(callback){
                 Message.aggregate(
@@ -82,64 +57,68 @@ module.exports = (app) => {
             var data = results[2];
 
             var val = ''
+            var id = new ObjectId(resultdata._id)
 
             for(var i = 0; i < data.length; i++){
                 val = data[i].body.authorName;
             }
-
-            console.log(val)
             
-            Message.find({'$or': [{'author':req.user._id, 'receiver':resultdata._id}, {'author': resultdata._id, 'receiver':req.user._id}]}, (err, result3) => {
-                
+            Message.find({'$or': [{'author':req.user._id, 'receiver':resultdata._id}, 
+              {'author': resultdata._id, 'receiver':req.user._id}]}, (err, result3) => {
                 res.render('chat', {title: '@'+nameParams+' | Soccer Chat', user:req.user, data:result, 
                   data1: resultdata, name: '@'+nameParams, chatNames:name_Params, chats:result3, 
-                  chat:data, username:resultdata.username, val:val });
+                  chat:data, username:resultdata.username, val:val, id: id });
             });
         });
     });
     
     app.post('/chat/:name', (req, res, next) => {
-        var nameParams = req.params.name
+        // var nameParams = req.params.name
         
-        var paramsName = req.params.name.split('@')
+        var paramsName = req.params.name.split('@');
         var nameParams = paramsName[1];
         
         async.parallel([
             function(callback){
                 User.findOne({'username':nameParams}, (err, data) => {
-                    var newMessage = new Message();
-                    newMessage.author = req.user._id;
-                    newMessage.receiver = data._id;
-                    newMessage.authorName = req.user.username;
-                    newMessage.receiverName = data.username;
-                    newMessage.body = req.body.message;
-                    newMessage.createdAt = new Date();
+                   if(err){
+                      console.log('Error:',err)
+                    }else{
+                        var newMessage = new Message();
+                        newMessage.author = req.user._id;
+                        newMessage.receiver = data._id;
+                        newMessage.authorName = req.user.username;
+                        newMessage.receiverName = nameParams;
+                        newMessage.body = req.body.message;
+                        newMessage.createdAt = new Date();
 
-                    newMessage.save((err, newMessage) => {
-                      if (err) {
-                        res.send({ error: err });
-                        return next(err);
-                      }
-                       res.redirect('/chat/'+req.params.name);
-                    });
+                        newMessage.save((err, newMessage) => {
+                          if (err) {
+                            //res.send({ error: err });
+                            // return next(err);
+                            console.log('Save error:',err)
+                          }
+                          callback(err, newMessage)
+                           res.redirect('/chat/'+req.params.name);
+                        });
+                    }
                 })
             },
         ]);
         
-//         async.parallel([
-//             function(callback){
-//                 Message.update({
-//                     '_id':req.body.chatId
-//                 },
-//                 {
-//                     "isRead": true
-//                 }, (err, done) => {
-//                     callback(err, done);
-
-// //                    res.redirect('/chat/'+req.params.name);
-//                 })
-//             }
-//         ])
+        // async.parallel([
+        //     function(callback){
+        //         Message.update({
+        //             '':req.body.chat_id
+        //         },
+        //         {
+        //             "isRead": true
+        //         }, (err, done) => {
+        //           console.log('Doneeeeeeeeeeeeeeeeeeeee')
+        //             callback(err, done);
+        //         })
+        //     }
+        // ])
         
         
         async.parallel([
@@ -250,15 +229,29 @@ module.exports = (app) => {
                         callback(err, done)
                     })
                 }
+            },
+
+            function(callback){
+                if(req.body.chat_id){
+                    Message.update({
+                        'author': req.body.chat_id
+                    },
+                    {
+                        "isRead": true
+                    }, 
+                    {
+                        // multi: true
+                    },(err, done) => {
+                      console.log('Done', req.body.chat_id)
+                       callback(err, done);
+                    })
+                }
             }
 
         ], (err, results) => {
             res.redirect('/chat/'+req.params.name);
         })
     });
-    
-    
-
     
     app.get('/logout', (req, res) => {
         req.logout();

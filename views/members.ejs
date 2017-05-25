@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <title>Web</title>
+    <title><%= title %></title>
 
 
     <link href='http://fonts.googleapis.com/css?family=Raleway:300,400,700,800' rel='stylesheet' type='text/css'>
@@ -26,7 +26,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <nav class="navbar navbar-default" role="navigation">
+                    <nav class="navbar navbar-default" id="nav_bar" role="navigation">
 
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -37,36 +37,181 @@
 
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                            <ul class="nav navbar-nav navbar-right">
+                            <ul class="nav navbar-nav navbar-right" id="re_load2">
                                 <li>
+                                    <a href="/members" class="dropdown-toggle" style="color:white !important">
+                                        <span class="nav-glyphicon "></span>Members
+                                    </a>
+                                </li>
+                                
+                                <li id="">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span>Chats <span class="label label-primary nav-label-icon">16</span>
+                                        <span class="glyphicon glyphicon-bell nav-glyphicon "></span><b class="caret"></b> 
+                                        <% if(user.totalRequest > 0) {%>
+                                          <span class="label label-primary nav-label-icon"><%= user.request.length %></span>
+                                          
+                                        <% } else { %>
+                                            <span class="label label-primary nav-label-icon" style="display: none"></span>
+                                        <% } %>
+                                                                               
                                     </a>
 
-                                </li>
+                                    <ul class="dropdown-menu dmenu dmenu1">
+                                        <li>
+                                            <div class="navbar-login" id="requestBar">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="dropdown-tag">
+                                                            <h3 class="text-center dropdown-tag-head">
+                                                                Friend Requests
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                <% if(user.request.length > 0) {%>
+                                                    <% user.request.forEach(function(val){ %>
+                                                    <div class="row" id="row_div">
+                                                        <div class="col-md-3">
+                                                            <p class="text-center">
+                                                                <img src="/images/team.jpg" class="img-responsive dropdown-img" id="img" />
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-9 pleft-0">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="col-md-12">
+                                                                        <p class="text-left">
+                                                                            <strong id=""><%= val.username %></strong>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
+                                                                                <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
+                                                                                <button type="submit" name="accept" id="accept_friend" class="btn btn-default drop-accept accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
+                                                                            </div>
+                                                                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                                                                <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
+                                                                                <button type="submit" name="cancel" class="btn drop-cancel remove" id="cancel_friend">
+                                                                                <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <% }) %>
+                                                    <% } else{ %>
+                                                        <p class="text-center">No Friend Request</p>
+                                                  <% } %>
+                                                    
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </li> 
+                                <!-- END -->
+
                                 <li>
+                                <% var numOfTrue = 0 %>
+                                <% for(var i=0;i<chat.length;i++){
+                                    if(chat[i].body.isRead === false)
+                                       numOfTrue = numOfTrue + 1
+                                }%>
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-bell nav-glyphicon "></span>Notification <span class="label label-primary nav-label-icon">12</span>
+                                        <span class="fa fa-globe "></span> <b class="caret"></b> 
+                                        <% if(numOfTrue != 0) {%>
+                                            <span class="label label-primary nav-label-icon"><%= numOfTrue %></span>
+                                        <% } %>
                                     </a>
+                                    <ul class="dropdown-menu dmenu">
+                                        <li>
+                                            <div class="navbar-login">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="dropdown-tag">
+                                                            <h3 class="text-center dropdown-tag-head">
+                                                                Notifications
+                                                            </h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                <% if(chat.length > 0) {%>
+                                                <% chat.forEach(function(val){ %>
+                                                <input type="hidden" name="" id="chat_names" value="@<%= val.body.authorName %>@<%= user.username %>">
+                                                
+                                                    <a href="/chat/@<%= val.body.authorName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <p class="text-center">
+                                                                    <img src="/images/team.jpg" class="img-responsive dropdown-img" />
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-md-9 pleft-0">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 textRow" style="width:244px">
+                                                                        <div class="col-md-12" id="textRow">
+                                                                            <p class="text-left drop-name">
+                                                                                <% if(user.username !== val.body.receiverName) {%>
+                                                                                    <strong><%= val.body.receiverName %></strong>
+                                                                                <% } else { %>
+                                                                                    <strong><%= val.body.authorName %></strong>
+                                                                                <% } %>
+                                                                            </p>
+                                                                           <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
+                                                                           <% if(val.body.isRead == true){ %> 
+                                                                               <p class="textRead drop-message">
+                                                                               <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                               </p>
+                                                                           <% } else { %>
+                                                                               <p class="textNotRead drop-message">
+                                                                                <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                               </p>
+                                                                           <% } %>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <hr class="dropdown-divider" />
+                                                      <% }) %>
+                                                  <% } else { %>
+                                                        <p class="text-center">No Message Notification</p>
+                                                  <% } %>
+                                                    
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
 
                                 </li>
-                                <li>
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-envelope nav-glyphicon "></span>Inbox <span class="label label-info nav-label-icon">32</span>
-                                    </a>
 
-                                </li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span>Admin <b class="caret"></b>
+                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span> <b class="caret"></b>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-                                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
+                                        <li><a href="/settings/profile"><span class="glyphicon glyphicon-user" style="color: #4aa1f3 !important;"></span>  Profile</a></li>
+                                        <!-- <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li> -->
                                         <li class="divider"></li>
-                                        <li><a href="#"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
+                                        <li><a href="/logout"><span class="glyphicon glyphicon-off" style="color: #4aa1f3 !important;"></span> Logout</a></li>
                                     </ul>
                                 </li>
+
+                                
                             </ul>
                         </div>
 
@@ -110,19 +255,25 @@
                                                         <option value="Female">Female</option>
                                                     </select>
                                                     <div class="clearfix"></div>
-                                                    <button type="" id="apply" class="btn btn-default add-apply">Filter By Gender</button>
+                                                    <button type="" id="apply" class="btn add-apply">Filter By Gender</button>
 
 
                                                     <hr style="margin-top:10px" />
                                                     <select class="selectpicker" name="club" id="club" data-style="btn-primary" style="padding:5px;width:100%">
                                                         <option value="">Filter By Club</option>
-                                                        <% data.forEach(function(val){ %>
+                                                        <!-- <% data.forEach(function(val){ %>
                                                             <option value="<%= val.club %>"><%= val.club %></option>
-                                                        <% }) %>
+                                                        <% }) %> -->
+
+                                                        <% for(var i = 0; i < data.length; i++){ %>
+                                                            <% for(var j = 0; j < data[i].length; j++){ %>
+                                                                <option value="<%= data[i][j].club %>"><%= data[i][j].club %></option>
+                                                            <% } %>
+                                                        <% } %>
 
                                                     </select>
                                                     <div class="clearfix"></div>
-                                                    <button type="" id="apply" class="btn btn-default add-apply">Filter By Club</button>
+                                                    <button type="" id="apply" class="btn add-apply">Filter By Club</button>
                                                 </form>
                                                 </div>
 
@@ -140,46 +291,46 @@
 
                     <div class="col-sm-8 col-md-9">
                         <div class="">
-
+                        <% for(var i = 0; i < data.length; i++){%>
                             <div id="categories-list" class="">
-                                <div class="row">
-                                <% if(data.length > 0) {%>
-                                    <% for(var i = 0; i < data.length; i++) {%>
-                                    <form action="/members" method="post" id="members">
+                            <div class="row">
+                            <% for(var j in data[i]) {%>
+                                
+                                <form action="/members" method="post" id="members">
                                     <div class="item col-md-4 col-sm-4">
+                                    <a style="text-decoration:none !important" href="/profile/<%= data[i][j].username %>">
                                         <div class="thumbnail">
-                                        <a href="/profile/<%= data[i].username %>">
-                                            <!-- <img class="img-responsive meb-img" src="/profileImages/<%= data[i].userImage %>" width="180px" height="180px" alt=""  /> -->
-                                            <img class="img-responsive meb-img" src="/images/team.jpg" alt="" />
-                                            <hr />
-                                            <div class="caption">
+                                            <div class="img-container" style="margin-top:15px;">
+                                                <img class="img-responsive" src="/profileImages/<%= data[i][j].userImage %>" alt="" />
+                                            </div>
 
+                                            <div class="caption">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-md-6">
 
                                                         <h4 class="group inner list-group-item-heading members-name">
-                                                            <%= data[i].username %>
+                                                            @<%= data[i][j].username %>
                                                         </h4>
                                                     </div>
                                                     <div class="col-xs-12 col-md-6">
-                                                        <h4 class="group inner list-group-item-heading text-right members-club-name"><%= data[i].club %></h4>
+                                                        <h4 class="group inner list-group-item-heading text-right members-club-name"><%= data[i][j].club %></h4>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </a>
                                         </div>
+                                        </a>
                                     </div>
                                     </form>
-                                    <% } %>
-                                    <% } else { %>
-                                        <h2>No records found</h2>
-                                    <% } %>
+                                
+                                <% } %>
                                 </div>
-
                             </div>
+                            <% } %>
                         </div>
 
                     </div>
+
+
 
                 </div>
 

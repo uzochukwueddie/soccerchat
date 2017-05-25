@@ -2,9 +2,6 @@ $(document).ready(function(){
     var socket = io(); 
     
     var sender = $('#sender').val();
-
-//    var param = $.myDeparam(window.location.pathname);
-//    var room = decodeURIComponent(param);
     
     
     var room = $('#room_name').val()
@@ -13,9 +10,6 @@ $(document).ready(function(){
     swap(roomSplit, 1, 2);
 
     var room1 = '@'+roomSplit[1]+'@'+roomSplit[2];
-
-    console.log('Room',room)
-    console.log('Room 1',room1)
 
     socket.on('connect', function() {
         console.log('Connected to PM server');
@@ -34,10 +28,6 @@ $(document).ready(function(){
         socket.on('my message', function(message){
             $('#re_load2').load(location.href + ' #re_load2');
         });
-
-        // socket.on('new refresh', function(){
-        //     $('#re_load2').load(location.href + ' #re_load2');
-        // })
         
     });
 
@@ -71,12 +61,7 @@ $(document).ready(function(){
 
     if(room){
         $('#span_lable').empty();
-        // $('#textNotRead').removeClass('textNotRead')
     } 
-
-    // if(room1){
-    //     $('#textNotRead').removeClass('textNotRead')
-    // }
     
     
     $('#message_form').on('submit', function(e){
@@ -97,8 +82,27 @@ $(document).ready(function(){
         
     });
 
+    $("#msg").focusin(function() {
+
+        var chat_id = $(this).data().value;
+
+        $.ajax({
+            url: '/chat/'+room1,
+            type: 'POST',
+            data: {
+                chat_id: chat_id
+            },
+            success: function(){
+                
+                $('#re_load2').load(location.href + ' #re_load2');
+            }
+        });
+            
+    })
+
     $('#msg').keypress(function(e){
-         var key = event.keyCode || event.which;
+
+        var key = event.keyCode || event.which;
         
         var msg = $('#msg').val();
     
