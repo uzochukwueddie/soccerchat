@@ -3,6 +3,7 @@ var User = require('../models/user');
 var Message = require('../models/message');
 var passport = require('passport');
 var async = require('async');
+var _ = require('underscore');
 var {validate} = require('../config/validation');
 
 var {Users} = require('../config/users');
@@ -39,15 +40,17 @@ module.exports = (app, io) => {
         Club.find({}, (err, result) => {
             var errors = req.flash('error');
             
-            res.render('signup', {title: 'Soccer Chat || Sign Up', data:result, errors: errors, hasErrors: errors.length > 0});
+            res.render('signup', {title: 'Soccer Chat | Sign Up', data:result, errors: errors, hasErrors: errors.length > 0});
         }).sort({'name': 1});
     });
 
     app.post('/signup', validate,  passport.authenticate('local.signup', {
-        successRedirect: '/home',
+//        successRedirect: '/home',
         failureRedirect: '/signup',
         failureFlash: true
-    }));
+    }), (req, res) => {
+        res.redirect('/home')
+    });
     
     app.get('/home', isLoggedIn, (req, res) => {
         async.parallel([
@@ -65,7 +68,7 @@ module.exports = (app, io) => {
                     }
                 },function(err, newResult){
                     callback(err, newResult);
-                });
+                })
             },
 
             function(callback){
@@ -97,13 +100,15 @@ module.exports = (app, io) => {
             var res2 = results[1];
             var res3 = results[2];
             
+            var countrySort =  _.sortBy( res2, '_id' );
+            
             var productChunks = [];
             var chunkSize = 3;
             for(var i=0; i < res1.length; i += chunkSize){
                 productChunks.push(res1.slice(i, i+chunkSize));
             }
             
-            res.render('home', {title: 'SoccerChat | Chat With Friends', user:req.user, data:productChunks, country:res2, chat:res3});
+            res.render('home', {title: 'SoccerChat | Chat With Friends', user:req.user, data:productChunks, country:countrySort, chat:res3});
         })
     });
     
@@ -147,10 +152,7 @@ module.exports = (app, io) => {
     
     app.get('/group/:username/:name', isLoggedIn, (req, res) => {
         var nameParams = req.params.name;
-        // var user = req.params.username.split('@');
-        // var username = user[1];
-
-        // var user_name = req.params.username;
+        
         
         if (req.query.search) {
            const regex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -419,7 +421,7 @@ module.exports = (app, io) => {
         //     var res2 = results[1];
             
         //     res.render('results', {title: 'SoccerChat | Chat With Friends', user:req.user, data:res1, country:res2});
-        // })
+        // });
 
         res.redirect('/home');
     });

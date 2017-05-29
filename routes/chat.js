@@ -94,17 +94,17 @@ module.exports = (app) => {
 
                         newMessage.save((err, newMessage) => {
                           if (err) {
-                            //res.send({ error: err });
-                            // return next(err);
-                            console.log('Save error:',err)
+                            console.log('Save error:',err);
                           }
                           callback(err, newMessage)
-                           res.redirect('/chat/'+req.params.name);
+//                           res.redirect('/chat/'+req.params.name);
                         });
                     }
                 })
             },
-        ]);
+        ], (err, result) => {
+            res.redirect('/chat/'+req.params.name);
+        });
         
         // async.parallel([
         //     function(callback){

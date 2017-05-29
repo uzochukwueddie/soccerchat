@@ -201,7 +201,7 @@ $(document).ready(function(){
     });
 
     $('#msg').keypress(function(e){
-         var key = event.keyCode || event.which;
+         var key = e.keyCode || e.which ;
         
         var msg = $('#msg').val();
     

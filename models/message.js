@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var messageSchema = mongoose.Schema({
-    body: {type: String, required: [true, 'Message body is required'], default: ''},
+    body: {type: String},
     author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     receiver: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     authorName: {type: String},

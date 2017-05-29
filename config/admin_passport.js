@@ -3,13 +3,13 @@ var Admin = require('../models/admin');
 var LocalStrategy = require('passport-local').Strategy;
 var async = require('async');
 
-passport.serializeUser((user, done) => {
-    done(null, user.id);
+passport.serializeUser((admin, done) => {
+    done(null, admin.id);
 });
 
 passport.deserializeUser((id, done) => {
-    Admin.findById(id, (err, user) => {
-        done(err, user);
+    Admin.findById(id, (err, admin) => {
+        done(err, admin);
     });
 });
 
@@ -19,12 +19,12 @@ passport.use('local.sign_up', new LocalStrategy({
     passReqToCallback: true
 }, (req, email, password, done) => {
 
-    Admin.findOne({'email':email}, (err, user) => {
+    Admin.findOne({'email':email}, (err, admin) => {
         if(err){
             return done(err);
         }
 
-        if(user){
+        if(admin){
             return done(null, false, req.flash('error', 'Email Already Exist.'));
         }
         
@@ -45,19 +45,19 @@ passport.use('local.log_in', new LocalStrategy({
     passReqToCallback: true
 }, (req, email, password, done) => {
 
-    Admin.findOne({'email':email}, (err, user) => {
+    Admin.findOne({'email':email}, (err, admin) => {
         if(err){
             return done(err);
         }
 
         var messages = [];
             
-        if(!user.validPassword(password)){
+        if(!admin.validPassword(password)){
             messages.push('Password is Invalid')
             return done(null, false, req.flash('error', messages));
         }
         
-        return done(null, user); 
+        return done(null, admin); 
         
         
     });

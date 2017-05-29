@@ -53,10 +53,14 @@ passport.use('local.signup', new LocalStrategy({
                 newUser.club = req.body.club;
 
                 newUser.save((err) => {
-                    return done(null, newUser);
+                    callback(err, newUser)
+//                    return done(null, newUser);
                 });
             }
-        ]);
+        ], (err, result) => {
+            var newUser = result[1];
+            return done(null, newUser);
+        });
     })
 }));
 

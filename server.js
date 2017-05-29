@@ -28,6 +28,12 @@ app.use(helmet());
 mongoose.Promise = global.Promise;
 mongoose.connect(secret.database.host);
 
+//mongoose.connect(secret.database.host, function(err){
+//    if(!err) {
+//        console.log("We are connected");
+//    }
+//})
+
 
 var server = http.createServer(app);
 var io = socketIO(server);
@@ -35,7 +41,7 @@ var io = socketIO(server);
 
 
 require('./config/passport');
-require('./config/admin_passport');
+
 
 app.use(express.static('public'));
 app.engine('ejs', engine);
@@ -53,7 +59,7 @@ app.use(validator({
         return value.trim().length > 0
     }
  }
-}))
+}));
 
 app.use(session({
     secret: secret.cookieSecret,
@@ -84,6 +90,8 @@ require('./routes/admin')(app);
 require('./routes/profile')(app);
 require('./routes/chat')(app);
 require('./routes/reset')(app);
+
+require('./config/admin_passport');
 
 server.listen(secret.database.port, () => {
   console.log('Listening on Port 3000');

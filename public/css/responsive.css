@@ -1,4 +1,6 @@
-
+@media only screen and (max-width:1920px) {
+    
+}
 
 @media only screen and (max-width:1440px) {
     
@@ -18,7 +20,7 @@
     }
 
     .my-add-fav{
-        width: 205px;
+        width: 200px;
         margin-right: 10px !important;
         margin-top: 10px;
     }

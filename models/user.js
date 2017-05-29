@@ -36,7 +36,7 @@ var userSchema = mongoose.Schema({
         favPlayersName: {type: String, default: '', required: true},
     }],
     passwordResetToken: {type: String, default: ''},
-    passwordResetExpires: {type: Date, default: Date.now}
+    passwordResetExpires: {type: Date, default: ''}
 });
 
 userSchema.methods.encryptPassword = (password) => {
