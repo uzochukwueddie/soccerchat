@@ -16,20 +16,26 @@ var moment = require('moment');
 var cutstring = require('./functions/func');
 var helmet = require('helmet');
 var secret = require('./secret/secret');
+var MongoClient = require('mongodb').MongoClient;
 
 
-
-
-var port = process.env.PORT || 3000;
 
 var app = express();
+
 
 app.use(helmet());
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/soccerchat');
+mongoose.connect(secret.database.host);
+
+
+var server = http.createServer(app);
+var io = socketIO(server);
+
+
 
 require('./config/passport');
+require('./config/admin_passport');
 
 app.use(express.static('public'));
 app.engine('ejs', engine);
@@ -64,10 +70,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
-var server = http.createServer(app);
-var io = socketIO(server);
-
 app.locals.moment = moment;
 app.locals.cutstring = cutstring;
             
@@ -83,6 +85,10 @@ require('./routes/profile')(app);
 require('./routes/chat')(app);
 require('./routes/reset')(app);
 
-server.listen(port, () => {
+server.listen(secret.database.port, () => {
   console.log('Listening on Port 3000');
+});
+
+app.use(function(req, res){
+	res.render('404');
 });

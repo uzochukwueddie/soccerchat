@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <title>Web</title>
+    <title><%= title %></title>
 
 
     <link href='http://fonts.googleapis.com/css?family=Raleway:300,400,700,800' rel='stylesheet' type='text/css'>
@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/responsive.css" rel="stylesheet">
 
 
 </head>
@@ -38,7 +39,7 @@
 
                         
 
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <div class="collapse navbar-collapse navbar_collapse" id="bs-example-navbar-collapse-1">
 
                             <ul class="nav navbar-nav navbar-right" id="re_load2">
                                 <li id="">
@@ -315,17 +316,24 @@
 
                     <!--RIGHT-->
                     <div class="col-sm-8 col-md-9 mob-50">
-                    <form method="POST" class="" id="" action="">
+                    <form method="POST">
                         <div class="">
                             <div class="user-display">
                                 
                                     <h3 class="user-display-head" style="color:#4aa1f3 !important">Favourite National Soccer Teams</h3>
                                     <hr />
                                     <% user.favNationalTeam.forEach(function(val){%>
-                                        <p>
+                                    <form method="post" id="team">
+                                        <p style="margin-bottom:30px;">
                                             <span class="glyphicon glyphicon-check"></span>
+                                            
+                                            <input type="hidden" name="team_id" id="team_id" value="<%= val._id %>">
                                             <%= val.teamName %>
+                                            <button id="teamBtn" class="btn btn-danger" data-value="<%= val._id%>" style="float:right">Delete</button>
+                                            
                                         </p>
+
+                                    </form>
                                     <% }) %>
 
                                     <div class="form-group ad-30" style="margin-top:18px;">
@@ -347,10 +355,18 @@
                                 <h3 class="user-display-head" style="color:#4aa1f3 !important">Favourite Clubs</h3>
                                 <hr />
                                 <% user.favClub.forEach(function(val){%>
-                                    <p>
+                                <form method="post" id="clubs">
+                                    <p style="margin-bottom:30px;">
                                         <span class="glyphicon glyphicon-check"></span>
-                                        <%= val.favClubName %>
+                                        
+                                        <span id="spanTag">
+                                            <input type="hidden" name="club_id" id="club_id" value="<%= val._id %>">
+                                            <%= val.favClubName %>
+                                            <button id="" class="btn btn-danger" data-value="<%= val._id %>" style="float:right">Delete</button>
+                                        </span>
+                                        
                                     </p>
+                                </form>
                                 <% }) %>
 
                                 <div class="form-group ad-30" style="margin-top:18px;">
@@ -371,10 +387,15 @@
                                 <h3 class="user-display-head" style="color:#4aa1f3">Favourite Players</h3>
                                 <hr />
                                 <% user.favPlayers.forEach(function(val){%>
-                                    <p>
+                                <form method="post" id="players">
+                                    <p style="margin-bottom:30px;">
                                         <span class="glyphicon glyphicon-check"></span>
+                                        
+                                        <input type="hidden" name="player_id" id="player_id" value="<%= val._id %>">
                                         <%= val.favPlayersName %>
+                                        <button class="btn btn-danger" data-value="<%= val._id %>" style="float:right">Delete</button>
                                     </p>
+                                </form>
                                 <% }) %>
 
                                 <div class="form-group ad-30" style="margin-top:18px;">
@@ -404,6 +425,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/interests.js"></script>
+    <script src="/js/edit_interests.js"></script>
     <script src="/js/global.js"></script>
 
 </body>

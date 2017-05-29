@@ -2,9 +2,9 @@
 <html>
 <head>
 
-    <title>Web</title>
+    <title><%= title %></title>
     <meta charset="utf-8">
-    <link href="css/login.css" rel='stylesheet' type='text/css' />
+    <link href="/css/login.css" rel='stylesheet' type='text/css' />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -15,27 +15,57 @@
 
 <body>
 
-
     <div class="container logo-container">
         <div class="row">
-            <div class="col-md-6">
-                <h1 class="logo-div">
-                    <a href="/">Soccerchat</a>
-                </h1>
-                
-            </div>
-            <div class="col-md-6 text-right">
-                <h2 class="reg-div">
-                    <a href="/">
-                        Login Here
-                    </a>
-                </h2>
-            </div>
+            <div class="col-md-12">
+                    <nav class="navbar" id="nav_bar" role="navigation">
+
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle navbar_icon" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span> 
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <h1 class="logo-div">
+                                <a href="/">Soccerchat</a>
+                            </h1>
+                        </div>
+
+
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li style="padding-right: 50px;">
+                                    <h2 class="reg-div">
+                                        <a href="/">
+                                            Login
+                                        </a>
+
+                                        <a href="/signup" class="reg_link" style="display: none;">
+                                            | Register
+                                        </a>
+                                    </h2>
+
+                                </li>
+
+
+                                <li class="reg_link2">
+                                    <h2 class="reg-div">
+                                        <a href="/signup">
+                                            Register
+                                        </a>
+                                    </h2>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </nav>
+                </div>
 
         </div>
     </div>
-
-<div id="parallax-footer" class="parallax-image">
 
     <div class="main">
 
@@ -47,7 +77,7 @@
 
             <div class="inset">
                 <% if(hasErrors) {%>
-                     <div class="alert alert-danger">
+                     <div class="alert alert-danger text-center">
                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                       <% for(var i = 0; i < errors.length; i++) {%>
                           <%= errors[i] %> <br>
@@ -91,11 +121,11 @@
         </form>
     </div>
 
-</div>
+<!-- </div> -->
 
 <footer class="reg-footer">
     <div class="container">
-      <p class="text-muted"> Copyright &copy; Soccerchat - All rights reserved </p>
+      <p class="text-muted" style="color: #4aa1f3"> Copyright &copy; Soccerchat - All rights reserved </p>
     </div>
 </footer>
 

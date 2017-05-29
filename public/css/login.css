@@ -97,14 +97,16 @@ img {
 body {
     font-family: 'Open Sans', sans-serif;
     /*background: url(../images/background.png) no-repeat center center fixed;*/
-    /*-webkit-background-size: cover;
+    -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background-size: 90% 90%;*/
+    background-size: 90% 90%;
+    background: #4aa1f3 !important;
+    color: white !important;
 }
 
-#parallax {
+/*#parallax {
   width: 100%;
   height: 570px;
   overflow: hidden;
@@ -134,20 +136,20 @@ body {
 .parallax-image img {
   width: 100%;
   position: relative;
-}
+}*/
 
 .logo-container{
     margin-bottom:5px
 }
 
 .logo-div a{
-    color:#4aa1f3 !important;
+    color:white !important;
     text-decoration: none !important;
 }
 
 .reg-div a{
-    color: #4aa1f3 !important;
-    text-align:right;
+    color: white !important;
+    /*text-align:right;*/
     font-size:18px;
     text-decoration:none !important;
 }
@@ -197,7 +199,7 @@ form {
 }
 
 .inset {
-    padding: 20px;
+    padding: 20px 20px 0px 20px;
     /*border-top: 1px solid #000;*/
 }
 
@@ -231,7 +233,7 @@ label {
     color: #858585;
     display: block;
     font-size: 13px;
-    padding-bottom: 9px;
+    /*padding-bottom: 9px;*/
 }
 
 input[type=text],
@@ -266,15 +268,25 @@ input[type=password],
     box-shadow: none
 }
 
-label[for=remember] {
-    color: #fff;
+/*label[for=remember] {
+    color: #858585;
     display: inline-block;
-    font-size: 13px;
+    font-size: 14px;
+
+}*/
+
+.remember{
+    color: #858585;
+    font-size: 14px;
+    display: inline-block;
+    vertical-align: middle !important;
+    font-weight: normal !important;
 }
 
 input[type=checkbox] {
+    width: 16px;
+    height: 16px;
     display: inline-block;
-    vertical-align: middle;
 }
 
 .p-container {
@@ -390,10 +402,6 @@ footer .container .text-muted {
     .copy-right p {
         padding: 6em 0;
     }
-
-    footer.footer, footer.reg-footer {
-        display: none;
-    }
 }
 
 @media only screen and (max-width:768px) {
@@ -407,8 +415,8 @@ footer .container .text-muted {
         padding: 6em 0;
     }
 
-    footer.footer, footer.reg-footer {
-        display: none;
+    .icon-bar{
+        background-color: white !important;
     }
 }
 
@@ -422,14 +430,13 @@ footer .container .text-muted {
         padding: 6em 0;
     }
 
-    footer.footer, footer.reg-footer {
-        display: none;
+    .icon-bar{
+        background-color: white !important;
     }
 }
 
 @media only screen and (max-width:480px) {
     .main {
-        /*margin: 12em auto 0;*/
         width: 80%;
         margin-top: 40px;
     }
@@ -443,38 +450,63 @@ footer .container .text-muted {
     }
 
     .logo-container{
-        /*margin-bottom: 0px;*/
         height: 120px;
     }
 
-    .parallax-image {
-        background: url(../images/background.png);    
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        background-size: 40% 40%;
+    .icon-bar{
+        background-color: white !important;
     }
 
-    .parallax-image img {
-      width: 100%;
-      position: relative;
+    .navbar_icon{
+        margin-right: -15px !important;
     }
 
-    
-    footer.footer, footer.reg-footer {
-        display: none;
+    .icon-bar{
+        background-color: white !important;
+        margin-top:8px !important;   
+    }
+
+    .navbar-right > li{
+        z-index: 1000 !important;
+    }
+
+    .reg_link{
+        display: inline-block !important;
+    }
+
+    .reg_link2{
+        display: none !important;
     }
 }
 
 @media only screen and (max-width:320px) {
     .main {
-        /*margin: 7em auto 0;*/
         width: 96%;
     }
 
     .copy-right p {
         padding: 1em 0;
+    }
+
+    .navbar_icon{
+        margin-right: -20px !important;
+    }
+
+    .icon-bar{
+        background-color: white !important;
+        margin-top:8px !important;   
+    }
+
+    .navbar-right{
+        z-index: -1 !important;
+    }
+
+    .reg_link{
+        display: inline-block !important;
+    }
+
+    .reg_link2{
+        display: none !important;
     }
 }
 

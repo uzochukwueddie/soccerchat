@@ -15,15 +15,25 @@ module.exports = (app, io) => {
         var errors = req.flash('error');
         var success = req.flash('success');
 
-        res.render('index', {title: 'Soccer Chat', messages: errors, hasErrors: errors.length > 0, 
-          success:success, noErrors:success.length > 0});
+        if(req.session.cookie.originalMaxAge !== null){
+            res.redirect('/home');
+        }else{
+            res.render('index', {title: 'Soccer Chat', messages: errors, hasErrors: errors.length > 0, 
+                                success:success, noErrors:success.length > 0});
+        }
     });
-    
+
     app.post('/', loginValidation, passport.authenticate('local.login', {
-        successRedirect: '/home',
         failureRedirect: '/',
         failureFlash : true
-    }));
+    }), (req, res) => {
+        if(req.body.rememberme){
+            req.session.cookie.maxAge = 30*24*60*60*1000; // 30 days
+        }else{
+            req.session.cookie.expires = null;
+        }
+        res.redirect('/home');
+    });
     
     app.get('/signup', (req, res) => {
         Club.find({}, (err, result) => {
@@ -526,7 +536,9 @@ module.exports = (app, io) => {
     
     app.get('/logout', (req, res) => {
         req.logout();
-        res.redirect('/');
+        req.session.destroy((err) => {
+            res.redirect('/');
+        });
     });
 }
 

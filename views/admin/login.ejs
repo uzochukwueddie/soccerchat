@@ -29,7 +29,7 @@
                                 <span class="icon-bar"></span>
                             </button>
                             <h1 class="logo-div">
-                                <a class="" href="/">Soccerchat</a>
+                                <a class="" href="/admin/login">Soccerchat</a>
                             </h1>
                         </div>
 
@@ -40,12 +40,12 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <li style="padding-right: 50px;">
                                     <h2 class="reg-div">
-                                        <a href="/">
-                                            Login
+                                        <a href="/admin/login">
+                                            Admin Login
                                         </a>
 
-                                        <a href="/signup" class="reg_link" style="display: none;">
-                                            | Register
+                                        <a href="/admin/signup" class="reg_link" style="display: none;">
+                                            | Admin Register
                                         </a>
                                     </h2>
 
@@ -54,8 +54,8 @@
 
                                 <li class="reg_link2">
                                     <h2 class="reg-div">
-                                        <a href="/signup">
-                                            Register
+                                        <a href="/admin/signup">
+                                            Admin Register
                                         </a>
                                     </h2>
                                 </li>
@@ -71,15 +71,15 @@
 
     <div class="main">
 
-        <form action="/" method="post">
+        <form action="/admin/login" method="post">
 
             <h1>
-                Login
+                Admin Login
             </h1>
 
             <div class="inset">
                 <% if(hasErrors) {%>
-                     <div class="alert alert-danger text-center">
+                     <div class="alert alert-danger">
                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                       <% for(var i = 0; i < messages.length; i++) {%>
                           <%= messages[i] %> <br>
@@ -87,18 +87,6 @@
                       
                       </div>
                   <% } %>
-
-                  <% if(noErrors) {%>
-                    <div class="alert alert-success text-center">
-                       <a href="#" class="close" data-dismiss="alert" aria-label="close">
-                           &times;
-                       </a>
-                       <%= success %>
-
-                    </div>
-                <% } %>
-
-                  <input type="hidden" name="firstRoom" id="firstRoom" value="FirstRoom">
 
                 <p>
                     <label for="email">EMAIL ADDRESS</label>
@@ -111,32 +99,19 @@
 
             </div>
 
-            <div class="p-container text-center">
-                <input type="checkbox" name="rememberme" value="yes">&nbsp;<label class="remember">REMEMBER ME</label>
-            </div>
-
             <p class="p-container">
-                <span><a href="/forgot_password">Forgot password?</a></span>
-                <span><a href="" style="color:white;padding-left:10px;padding-right:10px">|</a></span>
-                <span><a href="/signup">Not Yet Register?</a></span>
+                <!-- <span><a href="/forgot_password">Forgot password?</a></span>
+                <span><a href="" style="color:white;padding-left:10px;padding-right:10px">|</a></span> -->
+                <span><a href="/admin/signup">Not Yet Register?</a></span>
                 <input type="submit" class="login-log" style=" background: #03A9F4; border: #3bb5ec;" value="Login">
             </p>
         </form>
     </div>
-  <!-- </div> -->
 
-
-    <!-- <footer class="footer">
-      <div class="container">
-        <p class="text-muted"> Copyright &copy; Soccerchat - All rights reserved </p>
-      </div>
-    </footer> -->
 
 
 <script src="/assets/js/jquery.1.11.1.min.js"></script>
 <script src="/bootstrap.3.3.6/js/bootstrap.min.js"></script>
-<!-- <script src="/socket.io/socket.io.js"></script>
-<script src="/js/login.js"></script> -->
 
 </body>
 </html>

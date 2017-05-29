@@ -282,103 +282,66 @@ module.exports = (app) => {
             res.redirect('/settings/interests');
         });
 
+        async.parallel([
+            function(callback){
+                if(req.body.team_id){
+                    User.update({
+                       '_id': req.user._id
+                    },
+                    {
+                       $pull: {favNationalTeam: {
+                            _id: req.body.team_id
+                        }}
+                    }, (err, count) => {
+                        callback(err, count);
+                    })
+                }
+            }
+        ], (err, results) => {
+            res.redirect('/settings/interests');
+        })
+
+        async.parallel([
+            function(callback){
+                if(req.body.club_id){
+                    User.update({
+                       '_id': req.user._id
+                    },
+                    {
+                       $pull: {favClub: {
+                            '_id': req.body.club_id
+                        }}
+                    }, (err, count) => {
+                        callback(err, count);
+                    })
+                }
+            }
+        ], (err, results) => {
+            res.redirect('/settings/interests');
+        })
+
+        async.parallel([
+            function(callback){
+                if(req.body.player_id){
+                    User.update({
+                       '_id': req.user._id
+                    },
+                    {
+                       $pull: {favPlayers: {
+                            '_id': req.body.player_id
+                        }}
+                    }, (err, count) => {
+                        callback(err, count);
+                    })
+                }
+            }
+        ], (err, results) => {
+            res.redirect('/settings/interests');
+        })
+
         PostRequest(req, res, '/settings/interests');
 
-        // async.parallel([
-        //     function(callback){
-        //         if(req.body.senderId){
-        //             //This function is used to update the document of the receiver of the friend request
-        //             User.update({
-        //                '_id': req.user._id,
-        //                'friendsList.friendId': {$ne: req.body.senderId}
-        //             },
-        //             {
-        //                $push: {friendsList: {
-        //                    friendId: req.body.senderId,
-        //                    friendName: req.body.senderName
-        //                }},
-        //                $pull: {request: {
-        //                     userId: req.body.senderId,
-        //                     username: req.body.senderName
-        //                 }},
-        //                 $inc: {totalRequest: -1},
-        //             }, (err, count) => {
-        //                callback(err, count);
-        //             })
-        //         }
-        //     },
-            
-        //     //This function is used to update the document of the sender of the 
-        //     //friend request
-        //     function(callback){
-        //         if(req.body.senderId){
-        //             User.update({
-        //                '_id': req.body.senderId,
-        //                'friendsList.friendId': {$ne: req.user._id}
-        //             },
-        //             {
-        //                $push: {friendsList: {
-        //                    friendId: req.user._id,
-        //                    friendName: req.user.username
-        //                }},
-        //                $pull: {sentRequest: {
-        //                     username: req.user.username
-        //                 }}
-        //             }, (err, count) => {
-        //                callback(err, count);
-        //             })
-        //         }
-        //     },
-            
-        //     function(callback){
-        //         if(req.body.user_Id){
-        //             User.update({
-        //                '_id': req.user._id,
-        //                'request.userId': {$eq: req.body.user_Id}
-        //             },
-        //             {
-        //                $pull: {request: {
-        //                     userId: req.body.user_Id,
-        //                 }},
-        //                 $inc: {totalRequest: -1}
-        //             }, (err, count) => {
-        //                 callback(err, count);
-        //             })
-        //         }
-        //     },
-
-        //     //This is used to update the sentRequest array for the sender of the friend request
-        //     function(callback){
-        //         if(req.body.user_Id){
-        //             User.update({
-        //                '_id': req.body.user_Id,
-        //                'sentRequest.username': {$eq: req.user.username}
-        //             },
-        //             {
-        //                $pull: {sentRequest: {
-        //                     username: req.user.username
-        //                 }}
-        //             }, (err, count) => {
-        //                 callback(err, count);
-        //             })
-        //         }
-        //     },
-
-        //     function(callback){
-        //         if(req.body.chatId){
-        //             Message.update({
-        //                 '_id': req.body.chatId
-        //             },
-        //             {
-        //                 "isRead": true
-        //             }, (err, done) => {
-        //                 callback(err, done)
-        //             })
-        //         }
-        //     }
-        // ], (err, results) => {
-        //     res.redirect('/settings/interests')
-        // });
+        
     });
     
     app.get('/profile/:name', (req, res) => {
