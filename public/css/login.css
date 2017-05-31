@@ -106,9 +106,9 @@ body {
     color: white !important;
 }
 
-/*#parallax {
+#parallax {
   width: 100%;
-  height: 570px;
+  height: auto;
   overflow: hidden;
   display: block;
   border-top: 1px solid #e7e7e7;
@@ -136,7 +136,7 @@ body {
 .parallax-image img {
   width: 100%;
   position: relative;
-}*/
+}
 
 .logo-container{
     margin-bottom:5px

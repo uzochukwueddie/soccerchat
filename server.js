@@ -26,13 +26,16 @@ var app = express();
 app.use(helmet());
 
 mongoose.Promise = global.Promise;
+//mongoose.connect('mongodb://localhost/soccerchat');
 mongoose.connect(secret.database.host);
 
-//mongoose.connect(secret.database.host, function(err){
-//    if(!err) {
-//        console.log("We are connected");
-//    }
-//})
+mongoose.connection.on("open", function() {
+    console.log("connection to database done!");
+});
+
+mongoose.connection.on("error", function() {
+    console.log("error");
+});
 
 
 var server = http.createServer(app);

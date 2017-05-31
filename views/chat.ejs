@@ -188,7 +188,7 @@
                                                     </div>
                                                     </a>
                                                     <% } else if(user.username === val.body.authorName) {%>
-                                                    <a href="/chat/@<%= val.body.receiverName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>" class="click-link">>
+                                                    <a href="/chat/@<%= val.body.receiverName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>" class="click-link">
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <p class="text-center">
@@ -253,7 +253,7 @@
                                         <li><a href="/settings/profile"><span class="glyphicon glyphicon-user" style="color: #4aa1f3 !important;"></span>  Profile</a></li>
                                         <!-- <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li> -->
                                         <li class="divider"></li>
-                                        <li><a href="#"><span class="glyphicon glyphicon-off" style="color: #4aa1f3 !important;"></span>  Logout</a></li>
+                                        <li><a href="/logout"><span class="glyphicon glyphicon-off" style="color: #4aa1f3 !important;"></span>  Logout</a></li>
                                     </ul>
                                 </li>
                             </ul>

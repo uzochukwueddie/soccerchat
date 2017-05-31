@@ -80,27 +80,29 @@ module.exports = (app) => {
         
         async.parallel([
             function(callback){
-                User.findOne({'username':nameParams}, (err, data) => {
-                   if(err){
-                      console.log('Error:',err)
-                    }else{
-                        var newMessage = new Message();
-                        newMessage.author = req.user._id;
-                        newMessage.receiver = data._id;
-                        newMessage.authorName = req.user.username;
-                        newMessage.receiverName = nameParams;
-                        newMessage.body = req.body.message;
-                        newMessage.createdAt = new Date();
+                if(req.body.message){
+                    User.findOne({'username':nameParams}, (err, data) => {
+                       if(err){
+                          console.log('Error:',err)
+                        }else{
+                            var newMessage = new Message();
+                            newMessage.author = req.user._id;
+                            newMessage.receiver = data._id;
+                            newMessage.authorName = req.user.username;
+                            newMessage.receiverName = nameParams;
+                            newMessage.body = req.body.message;
+                            newMessage.createdAt = new Date();
 
-                        newMessage.save((err, newMessage) => {
-                          if (err) {
-                            console.log('Save error:',err);
-                          }
-                          callback(err, newMessage)
-//                           res.redirect('/chat/'+req.params.name);
-                        });
-                    }
-                })
+                            newMessage.save((err, newMessage) => {
+                              if (err) {
+                                console.log('Save error:',err);
+                              }
+                              callback(err, newMessage)
+    //                           res.redirect('/chat/'+req.params.name);
+                            });
+                        }
+                    })
+                }
             },
         ], (err, result) => {
             res.redirect('/chat/'+req.params.name);
@@ -242,7 +244,6 @@ module.exports = (app) => {
                     {
                         // multi: true
                     },(err, done) => {
-                      console.log('Done', req.body.chat_id)
                        callback(err, done);
                     })
                 }
