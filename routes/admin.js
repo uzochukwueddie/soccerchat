@@ -6,25 +6,25 @@ var passport = require('passport');
 
 module.exports = (app) => {
 
-    app.get('/admin/signup', (req, res) => {
+    app.get('/bo_admin_dev_signup', (req, res) => {
         var errors = req.flash('error');
         res.render('admin/signup', {title: 'Admin Signup | Soccerchat', messages: errors, hasErrors: errors.length > 0});
     });
 
-    app.post('/admin/signup', signupValidation, passport.authenticate('local.sign_up', {
+    app.post('/bo_admin_dev_signup', signupValidation, passport.authenticate('local.sign_up', {
         successRedirect: '/admin/dashboard',
-        failureRedirect: '/admin/signup',
+        failureRedirect: '/bo_admin_dev_signup',
         failureFlash : true
     }));
 
-    app.get('/admin/login', (req, res) => {
+    app.get('/bo_admin_dev_login', (req, res) => {
         var errors = req.flash('error');
         res.render('admin/login', {title: 'Admin Login | Soccerchat', messages: errors, hasErrors: errors.length > 0});
     });
 
-    app.post('/admin/login', loginValidation, passport.authenticate('local.log_in', {
+    app.post('/bo_admin_dev_login', loginValidation, passport.authenticate('local.log_in', {
         successRedirect: '/admin/dashboard',
-        failureRedirect: '/admin/login',
+        failureRedirect: 'bo_admin_dev_login',
         failureFlash : true
     }));
     

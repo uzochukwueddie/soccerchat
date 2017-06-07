@@ -1,4 +1,3 @@
-var {generateMessage} = require('./message');
 var {isRealString} = require('./validation');
 var {Users} = require('./users');
 
@@ -20,8 +19,6 @@ module.exports = (io) => {
                         
             io.to(params.room).emit('updateUsersList',users.getUserList(params.room));
             
-            //socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined`, params.room));
-            
             callback();
         });
         
@@ -39,17 +36,11 @@ module.exports = (io) => {
         
         
         socket.on('disconnect', () => {
-//            console.log('User disconnected');
             var user = users.removeUser(socket.id);
 
-            // console.log('Disconnected')
-
-            //setTimeout(function(){
-                if(user){
-                  io.to(user.room).emit('updateUsersList', users.getUserList(user.room));
-                  //io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left`))
-                }
-            //}, 5000);
+            if(user){
+              io.to(user.room).emit('updateUsersList', users.getUserList(user.room));
+            }
         })
     })
 }

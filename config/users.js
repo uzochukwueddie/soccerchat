@@ -10,12 +10,6 @@ class Users {
     this.users.push(user);
     return user;
   }
-    
-  // addUsername(number, room1, room){
-  //     var user = {number, room1, room};
-  //     this.receivers.push(user);
-  //     return user;
-  // }
 
   removeUser(id){
     var user = this.getUser(id);

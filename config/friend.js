@@ -20,12 +20,6 @@ module.exports = (io) => {
 
         socket.on('friendRequest', function(friend, callback){
 
-              // io.to(friend.room).emit('newFriendRequest', {
-              //     from: friend.room1,
-              //     to: friend.room,
-              //     num: 1
-              // });
-
               io.to(friend.room).emit('newFriendRequest', {});
 
             callback();
