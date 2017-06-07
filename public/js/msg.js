@@ -12,7 +12,6 @@ $(document).ready(function(){
     var room1 = '@'+roomSplit[1]+'@'+roomSplit[2]
 
     socket.on('connect', function() {
-        console.log('Connected to PM server');
         
         var newParams = {
             room: room,
@@ -21,13 +20,13 @@ $(document).ready(function(){
         }
         
         socket.emit('joinMessage', newParams, function(err){
-            console.log(newParams)
+//            console.log(newParams)
         });
         
     });
 
     socket.on('disconnect', () => {
-        console.log('Disconnected from server');
+//        console.log('Disconnected from server');
     });
 
     socket.on('newMessage', function(message){

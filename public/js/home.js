@@ -3,8 +3,6 @@ $(document).ready(function(){
 
     var names = $('#chat_names').val();
 
-    console.log(names);
-
     socket.on('connect', function() {
 
         socket.on('my message', function(message){
@@ -136,7 +134,7 @@ $(document).ready(function(){
                 clubName: clubName
             },
             success: function(data){
-                console.log(clubName);
+                
             }
         });
     })

@@ -12,7 +12,7 @@ $(document).ready(function(){
 
     
     socket.on('connect', function(){
-        console.log('Connected to my server');
+//        console.log('Connected to my server');
 
         socket.on('updateUsersList', function(users){
             var ol = $('<ol></ol>');
@@ -49,7 +49,7 @@ $(document).ready(function(){
                     }
 
                     socket.emit('requestJoin', params, function(err){
-                        console.log(params)
+//                        console.log(params)
                     });
 
                     
@@ -64,7 +64,7 @@ $(document).ready(function(){
 
     socket.on('newFriendRequest', function(friend){
 
-        console.log(friend)
+//        console.log(friend)
     });
 
 });

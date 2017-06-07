@@ -3,8 +3,6 @@ $(document).ready(function(){
 
     var names = $('#chat_names').val();
 
-    console.log(names);
-
     socket.on('connect', function() {
 
         socket.on('my message', function(message){

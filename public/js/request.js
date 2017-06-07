@@ -12,7 +12,7 @@ $(document).ready(function(){
     var room1 = '@'+roomSplit[1]+'@'+roomSplit[2];
 
     socket.on('connect', function() {
-        console.log('Connected to PM server');
+//        console.log('Connected to PM server');
         
         var newParams = {
             room: room,
@@ -22,7 +22,7 @@ $(document).ready(function(){
         }
         
         socket.emit('joinPM', newParams, function(err){
-            console.log('Sent!!!')
+//            console.log('Sent!!!')
         });
 
         socket.on('my message', function(message){
@@ -32,7 +32,7 @@ $(document).ready(function(){
     });
 
     socket.on('disconnect', () => {
-        console.log('Disconnected from server');
+//        console.log('Disconnected from server');
     });
 
     socket.on('new PM message', function(message){
@@ -112,7 +112,7 @@ $(document).ready(function(){
                 text: msg,
                 room: room
             }, function(){
-                console.log('Got it!!!');
+//                console.log('Got it!!!');
                 $('#msg').val('');
             }); 
 

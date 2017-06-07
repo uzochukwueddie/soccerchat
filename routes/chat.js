@@ -83,7 +83,7 @@ module.exports = (app) => {
                 if(req.body.message){
                     User.findOne({'username':nameParams}, (err, data) => {
                        if(err){
-                          console.log('Error:',err)
+                           return next(err)
                         }else{
                             var newMessage = new Message();
                             newMessage.author = req.user._id;
@@ -95,7 +95,7 @@ module.exports = (app) => {
 
                             newMessage.save((err, newMessage) => {
                               if (err) {
-                                console.log('Save error:',err);
+                                return next(err)
                               }
                               callback(err, newMessage)
     //                           res.redirect('/chat/'+req.params.name);
@@ -107,20 +107,6 @@ module.exports = (app) => {
         ], (err, result) => {
             res.redirect('/chat/'+req.params.name);
         });
-        
-        // async.parallel([
-        //     function(callback){
-        //         Message.update({
-        //             '':req.body.chat_id
-        //         },
-        //         {
-        //             "isRead": true
-        //         }, (err, done) => {
-        //           console.log('Doneeeeeeeeeeeeeeeeeeeee')
-        //             callback(err, done);
-        //         })
-        //     }
-        // ])
         
         
         async.parallel([

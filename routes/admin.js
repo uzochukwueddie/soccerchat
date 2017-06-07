@@ -3,6 +3,48 @@ var formidable = require('formidable');
 var path = require('path');
 var fs = require('fs');
 var passport = require('passport');
+var secret = require('../secret/secret');
+
+//var SF3S = require('sf3s');
+//var sf3s = new SF3S('clubsimages', secret.aws);
+//sf3s.create();
+
+var aws = require('aws-sdk');
+var multerS3 = require('multer-s3');
+var multer = require('multer');
+
+//aws.config.loadFromPath('./secret/config.json');
+//aws.config.update({
+//    signatureVersion: 'v4'
+//});
+
+aws.config.update({
+    secretAccessKey: secret.aws.accesskeyId,
+    accessKeyId: secret.aws.secretAccessKey
+});
+
+//aws.config.update({
+//    secretAccessKey: process.env.AWS_ACCESS_KEY_ID,
+//    accessKeyId: process.env.AWS_SECRET_ACCESS_KEY
+//});
+
+var s0 = new aws.S3({});
+
+var upload = multer({
+    storage: multerS3({
+        s3: s0,
+        bucket: 'clubsimages',
+        acl: 'public-read',
+        metadata: function(req, file, cb){
+            console.log(file)
+            cb(null, {fieldName: file.fieldname});
+        },
+        key: function(req, file, cb){
+            console.log(file)
+            cb(null, Date.now()+file.originalname);
+        }
+    })
+})
 
 module.exports = (app) => {
 
@@ -32,7 +74,7 @@ module.exports = (app) => {
         res.render('admin/dashboard');
     });
     
-    app.post('/admin/dashboard', (req, res, next) => {
+    app.post('/admin/dashboard', upload.any(), (req, res, next) => {
         var newClub = new Club();
         newClub.name = req.body.club;
         newClub.country = req.body.country;
@@ -48,29 +90,31 @@ module.exports = (app) => {
     });
     
     app.post('/upload', (req, res) => {
-        var form = new formidable.IncomingForm();
+//        var form = new formidable.IncomingForm();
+//        
+//        form.uploadDir = path.join(__dirname, '../public/uploads');
+//        
+//        form.on('file', (field, file) => {
+//           fs.rename(file.path, path.join(form.uploadDir, file.name), (err) => {
+//               if(err){
+//                   throw err
+//               }
+//               
+//               //console.log('File has been renamed');
+//           }); 
+//        });
+//        
+//        form.on('error', (err) => {
+//            //console.log('An error occured', err);
+//        });
+//        
+//        form.on('end', () => {
+//            //console.log('File upload was successful');
+//        });
+//        
+//        form.parse(req);
+        res.redirect('admin/dashboard')
         
-        form.uploadDir = path.join(__dirname, '../public/uploads');
-        
-        form.on('file', (field, file) => {
-           fs.rename(file.path, path.join(form.uploadDir, file.name), (err) => {
-               if(err){
-                   throw err
-               }
-               
-               console.log('File has been renamed');
-           }); 
-        });
-        
-        form.on('error', (err) => {
-            console.log('An error occured', err);
-        });
-        
-        form.on('end', () => {
-            console.log('File upload was successful');
-        });
-        
-        form.parse(req);
     });
 
     app.get('/admin/logout', (req, res) => {

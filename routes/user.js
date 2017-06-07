@@ -150,7 +150,7 @@ module.exports = (app, io) => {
         })
     });
     
-    app.get('/group/:username/:name', isLoggedIn, (req, res) => {
+    app.get('/group/:username/:name', isLoggedIn, (req, res, next) => {
         var nameParams = req.params.name;
         
         
@@ -161,7 +161,7 @@ module.exports = (app, io) => {
                 one: function(callback) {
                     Club.findOne({ "name": regex }, function(err, result1) {
                        if(err) {
-                           console.log(err);
+                           return next(err)
                        } else {
                            callback(err, result1);
                        }
@@ -170,7 +170,7 @@ module.exports = (app, io) => {
                 two: function(callback){
                     User.findOne({ "username": regex }, function(err, result2) {
                        if(err) {
-                           console.log(err);
+                           return next(err)
                        } else {
                           callback(err, result2);
                        }
@@ -527,8 +527,6 @@ module.exports = (app, io) => {
             for(var i=0; i < result.length; i += chunkSize){
                 members.push(result.slice(i, i+chunkSize));
             }
-
-            console.log(members);
 
             res.render('members', {title: 'SoccerChat | Members', user:req.user, data:members, chat:'', clubs: ''});
         });

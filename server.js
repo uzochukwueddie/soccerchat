@@ -1,3 +1,4 @@
+var compression = require('compression');
 var express = require('express');
 var path = require('path');
 var http = require('http');
@@ -21,6 +22,7 @@ var MongoClient = require('mongodb').MongoClient;
 
 
 var app = express();
+app.use(compression())
 
 
 app.use(helmet());

@@ -116,16 +116,16 @@ module.exports = (app) => {
                    throw err;
                }
                
-               console.log('User file has been renamed');
+               //console.log('User file has been renamed');
            }); 
         });
         
         form.on('error', (err) => {
-            console.log('An error occured', err);
+            //console.log('An error occured', err);
         });
         
         form.on('end', () => {
-            console.log('User file upload was successful');
+            //console.log('User file upload was successful');
         });
         
         form.parse(req);

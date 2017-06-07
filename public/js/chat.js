@@ -35,7 +35,7 @@ $(document).ready(function(){
         });
 
         socket.emit('joinRequest', params1, function(err){
-            console.log('Joined');
+//            console.log('Joined');
         });
 
         socket.on('my message', function(message){
@@ -193,7 +193,6 @@ $(document).ready(function(){
                 text: msg,
                 room: room
             }, function(){
-                console.log('Got it!!!');
                 $('#msg').val('');
             }); 
         }
@@ -211,7 +210,6 @@ $(document).ready(function(){
                 text: msg,
                 room: room
             }, function(){
-                console.log('Got it!!!');
                 $('#msg').val('');
             }); 
         }
@@ -249,8 +247,6 @@ $(document).ready(function(){
                 })
             }
         });
-
-        //$('#friend-add').load(window.location.href + ' #friend-add');
 
         
     });
