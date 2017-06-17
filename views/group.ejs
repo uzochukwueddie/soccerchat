@@ -237,10 +237,10 @@
                                     <div class="card">
                                         <div class="front">
                                             <div class="cover">
-                                                <img src="/images/pr.jpg" />
+<!--                                                <img src="/images/pr.jpg" />-->
                                             </div>
                                             <div class="user cover-img">
-                                                <img class="img-circle" src="/profileImages/<%= user.userImage %>" />
+                                                <img class="img-circle" src="https://soccerchatuser.s3.amazonaws.com/<%= user.userImage %>" />
                                             </div>
                                             <div class="content">
                                                 <div class="main">
@@ -322,7 +322,7 @@
                             <script id="message-template" type="text/template">
                                 <li class="left clearfix">
                                     <span class="chat-img1 pull-left">
-                                        <img src="/images/team.jpg" alt="User Avatar" class="img-circle">
+                                        <img class="img-circle" src="https://soccerchatuser.s3.amazonaws.com/<%= user.userImage %>" />
                                     </span>
                                     <div class="chat-body1 clearfix">
                                         

@@ -14,7 +14,7 @@ $(document).ready(function(){
             formData.append('upload', uploadInput[0].files[0]);
             
             $.ajax({
-                url: '/admin/dashboard',
+                url: '/upload',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -22,7 +22,7 @@ $(document).ready(function(){
                 success: function(data){
                     uploadInput.val('');
                 }
-            })
+            });
         }
     });
     

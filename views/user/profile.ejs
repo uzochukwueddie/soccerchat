@@ -269,7 +269,7 @@
                             <div class="col-md-12">
                                 <div class="profile-sidebar">
                                         <div class="img-container">
-                                            <img src="/profileImages/<%= data.userImage %>" class="img-responsive img-user" id="show_img">
+                                            <img src="https://soccerchatuser.s3.amazonaws.com/<%= data.userImage %>" class="img-responsive img-user" id="show_img">
                                         </div>
                                 
                                     <div class="profile-usertitle">
@@ -353,7 +353,6 @@
 
                                 <div class="" style="margin-top:20px">
                                 <label style="color:#4aa1f3 !important">About You</label><br>
-                                    <!-- <textarea rows="5" class="form-control input-lg" placeholder="Something About You"></textarea> -->
                                     <textarea name="description" id="description" class="form-control input-lg" rows="5" placeholder="Something About You"><%= user.description %></textarea>
                                 </div>
 
@@ -381,7 +380,7 @@
 
                         <div class="main profile-settings-friends">
                             <h3 style="margin-top:0px; color: #4aa1f3">Friends</h3>
-                            <!-- <hr style="margin-top:10px" /> -->
+                            
                             <% user.friendsList.forEach(function(val){%>
                             <div class="clearfix"></div>
                             <hr style=" margin-top: 14px; margin-bottom: 14px;" />

@@ -6,7 +6,38 @@ var formidable = require('formidable');
 var path = require('path');
 var fs = require('fs');
 var Message = require('../models/message');
+var secret = require('../secret/secret');
 
+
+var aws = require('aws-sdk');
+var multerS3 = require('multer-s3');
+var multer = require('multer');
+
+aws.config.update({
+    accessKeyId: secret.aws.accesskeyId,
+    secretAccessKey: secret.aws.secretAccessKey,
+    region: secret.aws.region
+});
+
+var s0 = new aws.S3({});
+
+var upload = multer({
+    storage: multerS3({
+        s3: s0,
+        bucket: 'soccerchatuser',
+        acl: 'public-read',
+        metadata: function(req, file, cb){
+            cb(null, {fieldName: file.fieldname});
+        },
+        key: function(req, file, cb){
+            cb(null, file.originalname);
+        }
+    }),
+    
+    rename: function (fieldname, filename) {
+        return filename.replace(/\W+/g, '-').toLowerCase();
+    }
+});
 
 
 module.exports = (app) => {
@@ -105,19 +136,17 @@ module.exports = (app) => {
 
     });
 
-    app.post('/userupload', (req, res) => {
+    app.post('/userupload', upload.any(), (req, res) => {
         var form = new formidable.IncomingForm();
         
-        form.uploadDir = path.join(__dirname, '../public/profileImages');
+//        form.uploadDir = path.join(__dirname, '../public/profileImages');
         
         form.on('file', (field, file) => {
-           fs.rename(file.path, path.join(form.uploadDir, file.name), (err) => {
-               if(err){
-                   throw err;
-               }
-               
-               //console.log('User file has been renamed');
-           }); 
+//           fs.rename(file.path, path.join(form.uploadDir, file.name), (err) => {
+//               if(err){
+//                   throw err;
+//               }
+//           }); 
         });
         
         form.on('error', (err) => {

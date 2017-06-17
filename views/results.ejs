@@ -147,7 +147,7 @@
                                     <div class="item col-md-4 col-sm-4 clubDiv">
                                     <a style="text-decoration:none !important" href="/group/@<%= user.username%>/<%= data[i][j].name.replace(/ /g,"-") %>">
                                         <div class="thumbnail">
-                                            <img class="img-responsive" src="/uploads/<%= data[i][j].image %>" width="200px" height="171px" alt="" />
+                                            <img class="img-responsive" src="https://clubpictures.s3.amazonaws.com/<%= data[i][j].image %>" width="200px" height="171px" alt="" />
                                             <div class="caption">
                                                 <h4 class="group inner list-group-item-heading">
                                                     <%= data[i][j].name %> (<%= data[i][j].fans.length %>)

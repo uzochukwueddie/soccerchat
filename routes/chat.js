@@ -63,12 +63,22 @@ module.exports = (app) => {
                 val = data[i].body.authorName;
             }
             
+//            Message.find({'$or': [{'author':req.user._id, 'receiver':resultdata._id}, 
+//              {'author': resultdata._id, 'receiver':req.user._id}]}, (err, result3) => {
+//                res.render('chat', {title: '@'+nameParams+' | Soccer Chat', user:req.user, data:result, 
+//                  data1: resultdata, name: '@'+nameParams, chatNames:name_Params, chats:result3, 
+//                  chat:data, username:resultdata.username, val:val, id: id });
+//            });
+            
             Message.find({'$or': [{'author':req.user._id, 'receiver':resultdata._id}, 
-              {'author': resultdata._id, 'receiver':req.user._id}]}, (err, result3) => {
-                res.render('chat', {title: '@'+nameParams+' | Soccer Chat', user:req.user, data:result, 
-                  data1: resultdata, name: '@'+nameParams, chatNames:name_Params, chats:result3, 
-                  chat:data, username:resultdata.username, val:val, id: id });
-            });
+              {'author': resultdata._id, 'receiver':req.user._id}]})
+                .populate('author')
+                .exec((err, result3) => {
+                console.log(result3)
+                    res.render('chat', {title: '@'+nameParams+' | Soccer Chat', user:req.user, data:result, 
+                        data1: resultdata, name: '@'+nameParams, chatNames:name_Params, chats:result3, 
+                        chat:data, username:resultdata.username, val:val, id: id });
+                })
         });
     });
     

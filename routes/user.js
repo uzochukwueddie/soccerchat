@@ -4,6 +4,15 @@ var Message = require('../models/message');
 var passport = require('passport');
 var async = require('async');
 var _ = require('underscore');
+var secret = require('../secret/secret');
+var AWS = require('aws-sdk');
+
+AWS.config.update({
+    accessKeyId: secret.aws.accesskeyId,
+    secretAccessKey: secret.aws.secretAccessKey,
+    region: secret.aws.region
+});
+
 var {validate} = require('../config/validation');
 
 var {Users} = require('../config/users');
@@ -94,11 +103,36 @@ module.exports = (app, io) => {
                     callback(err, newResult);
                 })
             },
+            
+//            function(callback){
+////                var s3 = new AWS.S3();
+//                
+//                
+//                //Club.find({}, (err, result) => {
+//                    
+////                     var params = {
+////                      Bucket: "clubpictures", 
+////                     };
+////                
+////                     s3.getObject(params, function(err, data) {
+////                        if (err) {
+////                           console.log(err, err.stack)
+////                        }
+////                         
+//////                         var newData = new Buffer(data.Body).toString("utf8");
+////                         
+////                         callback(err, data);
+////                     });
+//                //});
+//            }
 
         ], (err, results) => {
             var res1 = results[0];
             var res2 = results[1];
             var res3 = results[2];
+//            var res4 = results[3];
+            
+//            console.log(res4);
             
             var countrySort =  _.sortBy( res2, '_id' );
             
@@ -674,3 +708,44 @@ function PostRequest(req, res, link){
         res.redirect(link)
     });
 }
+
+
+//Code to download from AWS
+//var express = require('express');
+//var app = express();
+//var fs = require('fs');
+//
+//app.get('/', function(req, res, next){
+//    res.send('You did not say the magic word');
+//});
+//
+//
+//app.get('/s3Proxy', function(req, res, next){
+//    // download the file via aws s3 here
+//    var fileKey = req.query['fileKey'];
+//
+//    console.log('Trying to download file', fileKey);
+//    var AWS = require('aws-sdk');
+//    AWS.config.update(
+//      {
+//        accessKeyId: "....",
+//        secretAccessKey: "...",
+//        region: 'ap-southeast-1'
+//      }
+//    );
+//    var s3 = new AWS.S3();
+//    var options = {
+//        Bucket    : '/bucket-url',
+//        Key    : fileKey,
+//    };
+//
+//    res.attachment(fileKey);
+//    var fileStream = s3.getObject(options).createReadStream();
+//    fileStream.pipe(res);
+//});
+//
+//var server = app.listen(3000, function () {
+//    var host = server.address().address;
+//    var port = server.address().port;
+//    console.log('S3 Proxy app listening at http://%s:%s', host, port);
+//});
