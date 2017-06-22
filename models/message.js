@@ -12,5 +12,3 @@ var messageSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model('Message', messageSchema);
-
-//module.exports = mongoose.model('Message', messageSchema);

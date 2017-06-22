@@ -195,6 +195,8 @@ $(document).ready(function(){
             }, function(){
                 $('#msg').val('');
             }); 
+            
+            AjaxRequest('group/'+rm1+'/'+rm, msg);
         }
           
     });
@@ -213,6 +215,8 @@ $(document).ready(function(){
             }, function(){
                 $('#msg').val('');
             }); 
+            
+            AjaxRequest('group/'+rm1+'/'+rm, msg);
         }
     });
     
@@ -323,6 +327,21 @@ function swap(input, index_A, index_B) {
 
 function scrollToBottom(){
     $('.chat_area').scrollTop($('.chat_area')[0].scrollHeight);
+}
+
+function AjaxRequest(str, msgData){
+    console.log(msgData)
+    console.log(str)
+    $.ajax({
+        url: '/'+str,
+        type: 'POST',
+        data: {
+            msgData: msgData
+        },
+        success: function(data){
+            
+        }
+    });
 }
 
 

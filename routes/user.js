@@ -1,5 +1,6 @@
 var Club = require('../models/clubs');
 var User = require('../models/user');
+var Group = require('../models/group');
 var Message = require('../models/message');
 var passport = require('passport');
 var async = require('async');
@@ -244,14 +245,7 @@ module.exports = (app, io) => {
                     })
                 }, 
                 
-//                function(callback){
-//                    User.findOne({'username':req.user.username})
-//                        .populate('userId')
-//                        .exec((err, result33) => {
-////                            console.log("Result:",result33.friendsList);
-//                            callback(err, result33);
-//                        })
-//                }
+//                       
             ], (err, results) => {
                 var res1 = results[0];
                 var res2 = results[1];
@@ -307,7 +301,10 @@ module.exports = (app, io) => {
                        callback(err, count);
                    })
                }
-           }
+           },
+            
+           
+            
         ], (err, results) => {
             // res.redirect('/group/'+req.params.name);
             res.redirect('/group/'+req.params.username+'/'+req.params.name)
@@ -404,9 +401,30 @@ module.exports = (app, io) => {
                         callback(err, done)
                     })
                 }
-            }
+            },
+            
+            
         ], (err, results) => {
-            // res.redirect('/group/'+req.params.name);
+            res.redirect('/group/'+req.params.username+'/'+req.params.name)
+        });
+        
+        async.parallel([
+            function(callback){
+               if(req.body.message){
+                   var group = new Group();
+                   group.sender = req.user._id;
+                   group.body = req.body.message;
+                   group.createdAt = new Date();
+                   group.save((err, msg) => {
+                       if (err) {
+                        console.log(err)
+                      }
+                       console.log("Group Message:",msg)
+                       callback(err, msg);
+                   })
+               }
+           }
+        ], (err, results) => {
             res.redirect('/group/'+req.params.username+'/'+req.params.name)
         });
     });
