@@ -77,8 +77,13 @@ module.exports = (app) => {
         ], (err, results) => {
             var result1 = results[0];
             var result2 = results[1];
-
-            res.render('user/profile', {title: 'Profile Settings || Soccer Chat', user:req.user, message:result1, data:result2});
+            
+            Message.find({'$or': [{"authorName":req.user.username}, {"receiverName":req.user.username}]})
+                .populate('author')
+                .populate('receiver')
+                .exec((err, result3) => {
+                    res.render('user/profile', {title: 'Profile Settings || Soccer Chat', user:req.user, message:result1, data:result2, image:result3});
+                })
         })
     });
     
@@ -139,16 +144,6 @@ module.exports = (app) => {
     app.post('/userupload', upload.any(), (req, res) => {
         var form = new formidable.IncomingForm();
         
-//        form.uploadDir = path.join(__dirname, '../public/profileImages');
-        
-        form.on('file', (field, file) => {
-//           fs.rename(file.path, path.join(form.uploadDir, file.name), (err) => {
-//               if(err){
-//                   throw err;
-//               }
-//           }); 
-        });
-        
         form.on('error', (err) => {
             //console.log('An error occured', err);
         });
@@ -199,8 +194,13 @@ module.exports = (app) => {
         ], (err, results) => {
             var result1 = results[0];
             var result2 = results[1];
-
-            res.render('user/interests', {title: 'Interests || Soccer Chat', user:req.user, message:result1, data:result2});
+            
+            Message.find({'$or': [{"authorName":req.user.username}, {"receiverName":req.user.username}]})
+                .populate('author')
+                .populate('receiver')
+                .exec((err, result3) => {
+                    res.render('user/interests', {title: 'Interests || Soccer Chat', user:req.user, message:result1, data:result2, image:result3});
+                })
         })        
         
     });
@@ -409,8 +409,13 @@ module.exports = (app) => {
         ], (err, results) => {
             var result1 = results[0];
             var result2 = results[1];
-
-            res.render('user/userprofile', {title: '@'+name+' || Soccer Chat', user:req.user, message:result1, data:result2});
+            
+            Message.find({'$or': [{"authorName":req.user.username}, {"receiverName":req.user.username}]})
+                .populate('author')
+                .populate('receiver')
+                .exec((err, result3) => {
+                    res.render('user/userprofile', {title: '@'+name+' || Soccer Chat', user:req.user, message:result1, data:result2, image:result3});
+                })
         })
     });
 

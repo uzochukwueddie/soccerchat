@@ -155,7 +155,11 @@
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                             <p class="text-center">
-                                                                <img src="/images/team.jpg" class="img-responsive dropdown-img" />
+                                                                <% for(var i = 0; i < chats.length; i++){%>
+                                                                     <% if(chats[i].author.username === val.body.authorName){%>
+                                                                          <img src="https://soccerchatuser.s3.amazonaws.com/<%= chats[i].author.userImage %>" class="img-circle img-responsive dropdown-img" />
+                                                                      <% } %>
+                                                                  <% } %>
                                                             </p>
                                                         </div>
                                                         <div class="col-md-9 pleft-0">
@@ -194,7 +198,13 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <p class="text-center">
-                                                                    <img src="/images/team.jpg" class="img-responsive dropdown-img" />
+                                                                    <% if(chats.length > 0) {%>
+                                                                       <% for(var i = 0; i < chats.length; i++){%>
+                                                                         <% if(chats[i].receiver.username === val.body.receiverName){%>
+                                                                              <img src="https://soccerchatuser.s3.amazonaws.com/<%= chats[i].receiver.userImage %>" class="img-circle img-responsive dropdown-img" />
+                                                                          <% } %>
+                                                                      <% } %>
+                                                                   <% } %>
                                                                 </p>
                                                             </div>
                                                             <div class="col-md-9 pleft-0">
@@ -269,6 +279,7 @@
         <div class="col-md-12">
             <div class="chat_container">
             <input type="hidden" name="name_user" id="name-user" value="<%= user.username %>">
+            <input type="hidden" name="" id="img-user" value="<%= username.userImage %>">
                 <div class="row">
                     <!-- LEFT -->
 
@@ -288,7 +299,7 @@
                                             <div class="content">
                                                 <div class="main">
                                                     <h3 class="name">
-                                                    @<%= data1.username %>
+                                                    @<%= user.username %>
                                                     </h3>
                                                     <p class="profession-online">
                                                     </p>
@@ -298,7 +309,7 @@
                                                 </div>
                                                 <div class="footer">
                                                     <i class="fa fa-mail-forward"></i>
-                                                    <a href="/profile/<%= data1.username %>" style="color:#999999; text-decoration:none;font-weight:normal; font-size:16px;" id="user-name">
+                                                    <a href="/profile/<%= user.username %>" style="color:#999999; text-decoration:none;font-weight:normal; font-size:16px;" id="user-name">
                                                       View Profile
                                                     </a>
                                                 </div>
@@ -360,7 +371,7 @@
                                     <% chats.forEach(function(val){ %>
                                         <li class="left clearfix">
                                             <span class="chat-img1 pull-left">
-<!--                                                <img src="/images/team.jpg" alt="User Avatar" class="img-circle">-->
+                                                <img src="https://soccerchatuser.s3.amazonaws.com/<%= val.userImage %>" class="img-circle" />
                                             </span>
                                               <div class="chat-body1 clearfix">
                                                 <p>
@@ -377,7 +388,7 @@
                                     <script id="message-template" type="text/template">
                                         <li class="left clearfix">
                                             <span class="chat-img1 pull-left">
-                                                <img src="/images/team.jpg" alt="User Avatar" class="img-circle">
+                                                <img src="https://soccerchatuser.s3.amazonaws.com/{{userPic}}" alt="User Avatar" class="img-circle">
                                             </span>
                                             <div class="chat-body1 clearfix">
                                                 <p>
@@ -399,6 +410,8 @@
                                     <input type="hidden" name="receiverId" id="receiverId" class="" value="<%= data1._id %>">
 
                                     <input type="hidden" name="chat_id" id="my_id" value="<%= id %>">
+                                    
+                                    <input type="hidden" id="user_img" value="<%= user.userImage %>">
 
                                     <textarea class="form-control" name="message" id="msg" placeholder="Type a message" data-value="<%= id %>"></textarea>
                                       <div class="clearfix"></div>

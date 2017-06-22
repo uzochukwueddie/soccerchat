@@ -27,7 +27,8 @@ module.exports = (io) => {
             io.to(message.room).emit('newMessage', {
                 from: message.from,
                 text: message.text,
-                room: message.room
+                room: message.room,
+                userImage: message.userImg,
             })
             
             

@@ -151,7 +151,11 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <p class="text-center">
-                                                                    <img src="/images/team.jpg" class="img-responsive dropdown-img" />
+                                                                    <% for(var i = 0; i < image.length; i++){%>
+                                                                     <% if(image[i].author.username === val.body.authorName){%>
+                                                                          <img src="https://soccerchatuser.s3.amazonaws.com/<%= image[i].author.userImage %>" class="img-circle img-responsive dropdown-img" />
+                                                                      <% } %>
+                                                                    <% } %>
                                                                 </p>
                                                             </div>
                                                             <div class="col-md-9 pleft-0">
@@ -191,7 +195,11 @@
                                                             <div class="row">
                                                                 <div class="col-md-3">
                                                                     <p class="text-center">
-                                                                        <img src="/images/team.jpg" class="img-responsive dropdown-img" />
+                                                                        <% for(var i = 0; i < image.length; i++){%>
+                                                                          <% if(image[i].receiver.username === val.body.receiverName){%>
+                                                                              <img src="https://soccerchatuser.s3.amazonaws.com/<%= image[i].receiver.userImage %>" class="img-circle img-responsive dropdown-img" />
+                                                                          <% } %>
+                                                                        <% } %>
                                                                     </p>
                                                                 </div>
                                                                 <div class="col-md-9 pleft-0">
@@ -261,6 +269,7 @@
         <div class="col-md-12">
             <div class="chat_container">
             <input type="hidden" name="" id="name-user" value="<%= user.username %>">
+               <input type="hidden" name="" id="img-user" value="<%= user.userImage %>">
                 <div class="row">
                     <!-- LEFT -->
 

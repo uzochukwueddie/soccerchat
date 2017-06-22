@@ -6,6 +6,7 @@ var messageSchema = mongoose.Schema({
     receiver: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     authorName: {type: String},
     receiverName: {type: String},
+    userImage: {type: String, default: 'defaultPic.png'},
     isRead: {type: Boolean, default: false},
     createdAt: {type: Date, required: true, default: Date.now}
 });

@@ -6,7 +6,6 @@ $(document).ready(function(){
     var sender = $('#sender').val();
     var name = $('#sender').val();
 
-
     var param = $.myDeparam(window.location.pathname);
 
     var room = decodeURIComponent(param);
@@ -15,9 +14,10 @@ $(document).ready(function(){
 
     var rm1 = param1;
     var rm2 = '@'+sender;
+    
+    var userImg = $('#img-user').val();
 
     socket.on('connect', function() {
-        //console.log('Connected to server');
         
         var params = {
             room: room,
@@ -56,8 +56,6 @@ $(document).ready(function(){
 
         var sentTo = $('.sentTo').text();
         var sentToName = sentTo.split('@');
-
-        console.log(sentToName)
         
 
         for(var i = 0; i < users.length; i++){
@@ -121,6 +119,7 @@ $(document).ready(function(){
         var html = Mustache.render(template, {
             text: message.text,
             from: message.from,
+            userPic: message.userImage
         });
 
         $('#messages').append(html);
@@ -191,7 +190,8 @@ $(document).ready(function(){
            socket.emit('createMessage', {
                 from: sender,
                 text: msg,
-                room: room
+                room: room,
+                userImg: userImg
             }, function(){
                 $('#msg').val('');
             }); 
@@ -208,7 +208,8 @@ $(document).ready(function(){
            socket.emit('createMessage', {
                 from: sender,
                 text: msg,
-                room: room
+                room: room,
+                userImg: userImg
             }, function(){
                 $('#msg').val('');
             }); 

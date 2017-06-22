@@ -22,7 +22,7 @@ module.exports = (io) => {
                 clients.enterRoom(socket.id, first.name, first.room);    
             }
 
-            io.to(first.room).emit('loggedInUser', clients.getRoomList(first.room));
+            io.to(first.room).emit('loggedInUser', clients.getRoomList(first.room), first.img);
 
             callback();
         });

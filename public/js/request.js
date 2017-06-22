@@ -10,6 +10,8 @@ $(document).ready(function(){
     swap(roomSplit, 1, 2);
 
     var room1 = '@'+roomSplit[1]+'@'+roomSplit[2];
+    
+    var userImg = $('#user_img').val();
 
     socket.on('connect', function() {
 //        console.log('Connected to PM server');
@@ -42,6 +44,7 @@ $(document).ready(function(){
         var html = Mustache.render(template, {
             text: message.text,
             from: message.from,
+            userPic: message.userImage,
             createdAt: moment(message.createdAt).format('LT')
         });
 
@@ -74,7 +77,8 @@ $(document).ready(function(){
                 from: sender,
                 text: msg,
                 room: room,
-                room1: room1
+                room1: room1, 
+                userImg: userImg
             }, function(){
                 $('#msg').val('')
             });
@@ -110,7 +114,8 @@ $(document).ready(function(){
            socket.emit('private message', {
                 from: sender,
                 text: msg,
-                room: room
+                room: room,
+                userImg: userImg
             }, function(){
 //                console.log('Got it!!!');
                 $('#msg').val('');

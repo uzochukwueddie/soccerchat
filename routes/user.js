@@ -102,37 +102,12 @@ module.exports = (app, io) => {
                 },function(err, newResult){
                     callback(err, newResult);
                 })
-            },
-            
-//            function(callback){
-////                var s3 = new AWS.S3();
-//                
-//                
-//                //Club.find({}, (err, result) => {
-//                    
-////                     var params = {
-////                      Bucket: "clubpictures", 
-////                     };
-////                
-////                     s3.getObject(params, function(err, data) {
-////                        if (err) {
-////                           console.log(err, err.stack)
-////                        }
-////                         
-//////                         var newData = new Buffer(data.Body).toString("utf8");
-////                         
-////                         callback(err, data);
-////                     });
-//                //});
-//            }
+            }
 
         ], (err, results) => {
             var res1 = results[0];
             var res2 = results[1];
             var res3 = results[2];
-//            var res4 = results[3];
-            
-//            console.log(res4);
             
             var countrySort =  _.sortBy( res2, '_id' );
             
@@ -142,7 +117,14 @@ module.exports = (app, io) => {
                 productChunks.push(res1.slice(i, i+chunkSize));
             }
             
-            res.render('home', {title: 'SoccerChat | Chat With Friends', user:req.user, data:productChunks, country:countrySort, chat:res3});
+            Message.find({'$or': [{"authorName":req.user.username}, {"receiverName":req.user.username}]})
+                .populate('author')
+                .populate('receiver')
+                .exec((err, result3) => {
+                    res.render('home', {title: 'SoccerChat | Chat With Friends', user:req.user, data:productChunks, country:countrySort, chat:res3, image: result3});
+                })
+            
+            
         })
     });
     
@@ -216,9 +198,7 @@ module.exports = (app, io) => {
                 
                 if(data){
                     var resultData = data.name.replace(/ /g, "-")
-                    // res.redirect('/group/'+resultData)
                     res.redirect('/group/'+req.params.username+'/'+resultData)
-                    //res.render('group', {title: nameParams+' | Soccer Chat', user:req.user, chat:data3, data:req.user, name: nameParams });
                     
                 }else if(data2){
                     var val1 = data2.username
@@ -227,9 +207,6 @@ module.exports = (app, io) => {
                     res.redirect('/chat/'+value);
                 }else{
                     res.redirect('/group/'+req.params.username+'/'+req.params.name)
-//                    User.findOne({'username':req.user.username}, (err, result) => {
-//                        res.render('group', {title: nameParams+' | Soccer Chat', user:req.user, chat:data3, data:result, name: nameParams });
-//                    });
                 }
                 
             });
@@ -265,18 +242,34 @@ module.exports = (app, io) => {
                     User.findOne({'username':req.user.username}, (err, result) => {
                         callback(err, result)
                     })
-                }
+                }, 
+                
+//                function(callback){
+//                    User.findOne({'username':req.user.username})
+//                        .populate('userId')
+//                        .exec((err, result33) => {
+////                            console.log("Result:",result33.friendsList);
+//                            callback(err, result33);
+//                        })
+//                }
             ], (err, results) => {
                 var res1 = results[0];
                 var res2 = results[1];
                 
-                res.render('group', {title: nameParams+' | Soccer Chat', user:req.user, chat:res1, data:res2, name: nameParams });
+//                console.log(res2);
+                
+                
+                Message.find({'$or': [{"authorName":req.user.username}, {"receiverName":req.user.username}]})
+                    .populate('author')
+                    .populate('receiver')
+                    .exec((err, result3) => {
+                        res.render('group', {title: nameParams+' | Soccer Chat', user:req.user, chat:res1, data:res2, name: nameParams, image:result3 });
+                    })
             })
         }
     });
     
     app.post('/group/:username/:name', (req, res) => {
-//        var nameParams = req.params.name.replace(/ /g," ");
         var nameParams = req.params.name;
         
         async.parallel([
@@ -315,17 +308,6 @@ module.exports = (app, io) => {
                    })
                }
            }
-            
-           // function(callback){
-           //     Message.update({
-           //         '_id':req.body.chatId
-           //     },
-           //     {
-           //         "isRead": true
-           //     }, (err, done) => {
-           //         callback(err, done);
-           //     })
-           // }
         ], (err, results) => {
             // res.redirect('/group/'+req.params.name);
             res.redirect('/group/'+req.params.username+'/'+req.params.name)
@@ -431,32 +413,6 @@ module.exports = (app, io) => {
     
     
     app.get('/results', isLoggedIn, (req, res) => {
-        // var regex = new RegExp(req.body.country, 'gi');
-        
-        // async.parallel([
-        //     function(callback){
-        //         Club.find({'country':regex}, (err, result) => {
-        //             callback(err, result)
-        //         })
-        //     },
-            
-        //     function(callback){
-        //         Club.aggregate(
-        //         {
-        //             $group: {
-        //                 _id: "$country",
-        //             }
-        //         },function(err, newResult){
-        //             callback(err, newResult);
-        //         })
-        //     }
-        // ], (err, results) => {
-        //     var res1 = results[0];
-        //     var res2 = results[1];
-            
-        //     res.render('results', {title: 'SoccerChat | Chat With Friends', user:req.user, data:res1, country:res2});
-        // });
-
         res.redirect('/home');
     });
     
@@ -546,8 +502,12 @@ module.exports = (app, io) => {
                 memberChunks.push(res1.slice(i, i+chunkSize));
             }
 
-                        
-            res.render('members', {title: 'SoccerChat | Members', user:req.user, data:memberChunks, chat:res2, clubs:res3});
+            Message.find({'$or': [{"authorName":req.user.username}, {"receiverName":req.user.username}]})
+                .populate('author')
+                .populate('receiver')
+                .exec((err, result3) => {
+                    res.render('members', {title: 'SoccerChat | Members', user:req.user, data:memberChunks, chat:res2, clubs:res3, image: result3});
+                })
         })
     });
     
@@ -562,7 +522,7 @@ module.exports = (app, io) => {
                 members.push(result.slice(i, i+chunkSize));
             }
 
-            res.render('members', {title: 'SoccerChat | Members', user:req.user, data:members, chat:'', clubs: ''});
+            res.render('members', {title: 'SoccerChat | Members', user:req.user, data:members, chat:'', clubs: '', image: ''});
         });
 
         PostRequest(req, res, '/members');

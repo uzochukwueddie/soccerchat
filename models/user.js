@@ -16,11 +16,11 @@ var userSchema = mongoose.Schema({
         username: {type: String, default: ''}
     }],
     request: [{
-        userId: {type: String, default: ''},
+        userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         username: {type: String, default: ''},
     }],
     friendsList: [{
-        friendId: {type: String, default: ''},
+        friendId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         friendName: {type: String, default: ''}
     }], 
     totalRequest: {type: Number, default: 0},

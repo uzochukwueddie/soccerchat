@@ -11,11 +11,8 @@ module.exports = (io) => {
     io.on('connection', (socket) => {
         
         socket.on('joinPM', (newParams, callback) => {
-            
             socket.join(newParams.room);
             socket.join(newParams.room1);
-            // socket.join(newParams.receiver);
-            
         });
         
         
@@ -27,6 +24,7 @@ module.exports = (io) => {
                 receiver: message.receiver,
                 room: message.room,
                 room1: message.room1,
+                userImage: message.userImg,
                 createdAt: new Date()
             });
 

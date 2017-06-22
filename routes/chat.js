@@ -63,21 +63,13 @@ module.exports = (app) => {
                 val = data[i].body.authorName;
             }
             
-//            Message.find({'$or': [{'author':req.user._id, 'receiver':resultdata._id}, 
-//              {'author': resultdata._id, 'receiver':req.user._id}]}, (err, result3) => {
-//                res.render('chat', {title: '@'+nameParams+' | Soccer Chat', user:req.user, data:result, 
-//                  data1: resultdata, name: '@'+nameParams, chatNames:name_Params, chats:result3, 
-//                  chat:data, username:resultdata.username, val:val, id: id });
-//            });
-            
-            Message.find({'$or': [{'author':req.user._id, 'receiver':resultdata._id}, 
-              {'author': resultdata._id, 'receiver':req.user._id}]})
+            Message.find({'$or': [{"authorName":req.user.username}, {"receiverName":req.user.username}]})
                 .populate('author')
+                .populate('receiver')
                 .exec((err, result3) => {
-                console.log(result3)
                     res.render('chat', {title: '@'+nameParams+' | Soccer Chat', user:req.user, data:result, 
                         data1: resultdata, name: '@'+nameParams, chatNames:name_Params, chats:result3, 
-                        chat:data, username:resultdata.username, val:val, id: id });
+                        chat:data, username:resultdata, val:val, id: id });
                 })
         });
     });
@@ -87,33 +79,45 @@ module.exports = (app) => {
         
         var paramsName = req.params.name.split('@');
         var nameParams = paramsName[1];
+        var nameParams2 = paramsName[2];
         
-        async.parallel([
+        async.waterfall([
             function(callback){
                 if(req.body.message){
                     User.findOne({'username':nameParams}, (err, data) => {
-                       if(err){
-                           return next(err)
-                        }else{
+                        callback(err, data)
+                    })
+                }
+            },
+            
+            function(data, callback){
+                if(req.body.message){
+                    //User.findOne({'username':nameParams}, (err, data) => {
+//                       if(err){
+//                           return next(err)
+//                        }else{
+                            
                             var newMessage = new Message();
                             newMessage.author = req.user._id;
                             newMessage.receiver = data._id;
                             newMessage.authorName = req.user.username;
-                            newMessage.receiverName = nameParams;
+                            newMessage.receiverName = data.username;
                             newMessage.body = req.body.message;
+                            newMessage.userImage = data.userImage;
                             newMessage.createdAt = new Date();
 
                             newMessage.save((err, newMessage) => {
                               if (err) {
                                 return next(err)
                               }
-                              callback(err, newMessage)
-    //                           res.redirect('/chat/'+req.params.name);
+                              callback(err, newMessage);
+//                                res.redirect('/chat/'+req.params.name);
                             });
-                        }
-                    })
-                }
-            },
+                        
+                    //})
+                }    
+            }
+            
         ], (err, result) => {
             res.redirect('/chat/'+req.params.name);
         });

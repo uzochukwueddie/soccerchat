@@ -150,12 +150,57 @@
                                                 <% if(chat.length > 0) {%>
                                                 <% chat.forEach(function(val){ %>
                                                 <input type="hidden" name="" id="chat_names" value="@<%= val.body.authorName %>@<%= user.username %>">
-                                                
+                                                    <% if(user.username !== val.body.authorName) {%>
                                                     <a href="/chat/@<%= val.body.authorName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>">
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <p class="text-center">
-                                                                    <img src="/images/team.jpg" class="img-responsive dropdown-img" />
+                                                                    <% for(var i = 0; i < image.length; i++){%>
+                                                                     <% if(image[i].author.username === val.body.authorName){%>
+                                                                          <img src="https://soccerchatuser.s3.amazonaws.com/<%= image[i].author.userImage %>" class="img-circle img-responsive dropdown-img" />
+                                                                      <% } %>
+                                                                    <% } %>
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-md-9 pleft-0">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 textRow" style="width:244px">
+                                                                        <div class="col-md-12" id="textRow">
+                                                                            <p class="text-left drop-name">
+                                                                                <% if(user.username !== val.body.receiverName) {%>
+                                                                                    <strong><%= val.body.receiverName %></strong>
+                                                                                <% } else { %>
+                                                                                    <strong><%= val.body.authorName %></strong>
+                                                                                <% } %>
+                                                                            </p>
+                                                                           <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
+                                                                           <% if(val.body.isRead == true){ %> 
+                                                                               <p class="textRead drop-message">
+                                                                               <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                               </p>
+                                                                           <% } else { %>
+                                                                               <p class="textNotRead drop-message">
+                                                                                <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                               </p>
+                                                                           <% } %>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <% } else if(user.username === val.body.authorName) {%>
+                                                        <a href="/chat/@<%= val.body.receiverName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <p class="text-center">
+                                                                    <% for(var i = 0; i < image.length; i++){%>
+                                                                      <% if(image[i].receiver.username === val.body.receiverName){%>
+                                                                          <img src="https://soccerchatuser.s3.amazonaws.com/<%= image[i].receiver.userImage %>" class="img-circle img-responsive dropdown-img" />
+                                                                      <% } %>
+                                                                    <% } %>
                                                                 </p>
                                                             </div>
                                                             <div class="col-md-9 pleft-0">
@@ -188,6 +233,7 @@
                                                         </div>
                                                     </a>
                                                     <hr class="dropdown-divider" />
+                                                     <% } %>
                                                       <% }) %>
                                                   <% } else { %>
                                                         <p class="text-center">No Message Notification</p>
@@ -207,7 +253,6 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="/settings/profile"><span class="glyphicon glyphicon-user" style="color: #4aa1f3 !important;"></span>  Profile</a></li>
-                                        <!-- <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li> -->
                                         <li class="divider"></li>
                                         <li><a href="/logout"><span class="glyphicon glyphicon-off" style="color: #4aa1f3 !important;"></span> Logout</a></li>
                                     </ul>
@@ -233,6 +278,7 @@
         <div class="col-md-12">
             <div class="chat_container">
             <input type="hidden" name="" id="name-user" value="<%= user.username %>">
+            <input type="hidden" name="" id="img-user" value="<%= user.userImage %>">
                 <div class="row">
                     <!-- LEFT -->
 

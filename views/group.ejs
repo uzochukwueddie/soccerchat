@@ -72,7 +72,7 @@
                                                     <div class="row" id="row_div">
                                                         <div class="col-md-3">
                                                             <p class="text-center">
-                                                                <img src="/images/team.jpg" class="img-responsive dropdown-img" id="img" />
+                                                                <img src="https://soccerchatuser.s3.amazonaws.com/<%= val.userImage %>" class="img-circle img-responsive dropdown-img" />
                                                             </p>
                                                         </div>
                                                         <div class="col-md-9 pleft-0">
@@ -145,12 +145,59 @@
                                                 <div class="col-md-12">
                                                 <% if(chat.length > 0) {%>
                                                 <% chat.forEach(function(val){ %>
-                                                
+                                                    <% if(user.username !== val.body.authorName) {%>
                                                     <a href="/chat/@<%= val.body.authorName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>">
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <p class="text-center">
-                                                                    <img src="/images/team.jpg" class="img-responsive dropdown-img" />
+                                                                  <% for(var i = 0; i < image.length; i++){%>
+                                                                     <% if(image[i].author.username === val.body.authorName){%>
+                                                                          <img src="https://soccerchatuser.s3.amazonaws.com/<%= image[i].author.userImage %>" class="img-circle img-responsive dropdown-img" />
+                                                                      <% } %>
+                                                                  <% } %>
+                                                                   
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-md-9 pleft-0">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 textRow" style="width:244px">
+                                                                        <div class="col-md-12" id="textRow">
+                                                                            <p class="text-left drop-name">
+                                                                                <% if(user.username !== val.body.receiverName) {%>
+                                                                                    <strong><%= val.body.receiverName %></strong>
+                                                                                <% } else { %>
+                                                                                    <strong><%= val.body.authorName %></strong>
+                                                                                <% } %>
+                                                                            </p>
+                                                                           <input type="hidden" name="chatId" id="chatId" value="<%= val.body._id %>">
+                                                                           <input type="hidden" name="clubName" id="clubName" value="<%= name %>">
+                                                                           <% if(val.body.isRead == true){ %> 
+                                                                               <p class="textRead drop-message">
+                                                                               <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                               </p>
+                                                                           <% } else { %>
+                                                                               <p class="textNotRead drop-message">
+                                                                                <%= cutstring.cutString(val.body.body, 10) %>...
+                                                                               </p>
+                                                                           <% } %>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <% } else if(user.username === val.body.authorName) {%>
+                                                        <a href="/chat/@<%= val.body.receiverName %>@<%= user.username %>" id="link_click" data-value="<%= val.body._id %>">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <p class="text-center">
+                                                                   <% for(var i = 0; i < image.length; i++){%>
+                                                                      <% if(image[i].receiver.username === val.body.receiverName){%>
+                                                                          <img src="https://soccerchatuser.s3.amazonaws.com/<%= image[i].receiver.userImage %>" class="img-circle img-responsive dropdown-img" />
+                                                                      <% } %>
+                                                                  <% } %>
                                                                 </p>
                                                             </div>
                                                             <div class="col-md-9 pleft-0">
@@ -184,6 +231,7 @@
                                                         </div>
                                                     </a>
                                                     <hr class="dropdown-divider" />
+                                                     <% } %>
                                                       <% }) %>
                                                   <% } else { %>
                                                         <p class="text-center">No Message Notification</p>
@@ -312,6 +360,7 @@
                                 </div>
                                 <div class="pull-right">
                                 <input type="hidden" name="" id="name-user" value="<%= user.username %>">
+                                <input type="hidden" name="" id="img-user" value="<%= user.userImage %>">
                                 </div>
                             </div>
 
@@ -322,7 +371,7 @@
                             <script id="message-template" type="text/template">
                                 <li class="left clearfix">
                                     <span class="chat-img1 pull-left">
-                                        <img class="img-circle" src="https://soccerchatuser.s3.amazonaws.com/<%= user.userImage %>" />
+                                        <img class="img-circle" src="https://soccerchatuser.s3.amazonaws.com/{{userPic}}" />
                                     </span>
                                     <div class="chat-body1 clearfix">
                                         
