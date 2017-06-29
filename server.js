@@ -18,10 +18,7 @@ var cutstring = require('./functions/func');
 var helmet = require('helmet');
 var MongoClient = require('mongodb').MongoClient;
 
-
-
 var app = express();
-
 
 app.use(compression())
 app.use(helmet());
@@ -41,10 +38,7 @@ mongoose.connection.on("error", function() {
 var server = http.createServer(app);
 var io = socketIO(server);
 
-
-
 require('./config/passport');
-
 
 app.use(express.static('public'));
 app.engine('ejs', engine);
