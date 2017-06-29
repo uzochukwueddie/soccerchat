@@ -80,20 +80,23 @@ $(document).ready(function(){
 
                 var rec = $('#receiverName').val();
 
-                if(f.length > 1){
-                    if(f.indexOf(rec) > -1 || f.indexOf(getUsername) > -1){
-                        $('#friend-add').attr('disabled', 'disabled');
-                        $('#friend-add').html('Friends');
-                        $('#friend-add').removeClass('btn-primary')
-                    }
-                }else {
-                    $('#friend-add').css('background-color', '#4aa1f3')
-                    $('#friend-add').css('color', 'white')
+                if(f.indexOf(rec) > -1){
+                    $('#friend-add').attr('disabled', 'disabled');
+                    $('#friend-add').html('Friends');
+                    $('#friend-add').removeClass('btn-primary');
+                }else{
+                    $('#friend-add').html('Add Friend');
+                    $('#friend-add').css('background-color', '#4aa1f3');
+                    $('#friend-add').css('color', 'white');
                 }
 
                 if(sentToName.indexOf(rec) > -1){
                     $('#friend-add').html('Friend Request Sent');
                     $('#friend-add').removeClass('btn-primary')
+                }else if(sentToName.indexOf(rec) <= -1){
+                    $('#friend-add').html('Add Friend');
+                    $('#friend-add').css('background-color', '#4aa1f3');
+                    $('#friend-add').css('color', 'white');
                 }  
                 
             });
@@ -110,7 +113,7 @@ $(document).ready(function(){
     });
 
     socket.on('disconnect', function() {
-        console.log('Disconnected from server');
+        //console.log('Disconnected from server');
     });
 
     socket.on('newMessage', function(message){
@@ -146,7 +149,6 @@ $(document).ready(function(){
                     senderName: senderName
                 },
                 success: function(data){
-                    
                     $(this).parent().eq(1).remove();
                 }
             });
@@ -185,6 +187,7 @@ $(document).ready(function(){
         e.preventDefault();
 
         var msg = $('#msg').val();
+        var clubId = $('#clubId').val();
         
         if((typeof msg === 'string' && msg.trim().length > 0)){
            socket.emit('createMessage', {
@@ -196,7 +199,7 @@ $(document).ready(function(){
                 $('#msg').val('');
             }); 
             
-            AjaxRequest('group/'+rm1+'/'+rm, msg);
+            AjaxRequest('/group/'+rm1+'/'+rm, msg, clubId);
         }
           
     });
@@ -205,6 +208,7 @@ $(document).ready(function(){
          var key = e.keyCode || e.which ;
         
         var msg = $('#msg').val();
+        var clubId = $('#clubId').val();
     
         if((key == 13 && typeof msg === 'string' && msg.trim().length > 0)){
            socket.emit('createMessage', {
@@ -216,7 +220,7 @@ $(document).ready(function(){
                 $('#msg').val('');
             }); 
             
-            AjaxRequest('group/'+rm1+'/'+rm, msg);
+            AjaxRequest('/group/'+rm1+'/'+rm, msg, clubId);
         }
     });
     
@@ -231,10 +235,7 @@ $(document).ready(function(){
         var receiverName = $('#receiverName').val();
         var sender_name = '@'+$('#sender-name').val();        
         
-        // var sender_Name = '@'+sender_name;
-        var receiver_Name = '@'+receiverName
-
-        
+        var receiver_Name = '@'+receiverName;
         
         $.ajax({
             url: '/group/@'+receiverName+'/'+rm,
@@ -298,7 +299,6 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '#link_click', function(e){
-        //e.preventDefault();
 
         var chatId = $(this).data().value
 
@@ -329,14 +329,13 @@ function scrollToBottom(){
     $('.chat_area').scrollTop($('.chat_area')[0].scrollHeight);
 }
 
-function AjaxRequest(str, msgData){
-    console.log(msgData)
-    console.log(str)
+function AjaxRequest(str, message, clubId=''){
     $.ajax({
-        url: '/'+str,
+        url: str,
         type: 'POST',
         data: {
-            msgData: msgData
+            message: message,
+            clubId: clubId
         },
         success: function(data){
             

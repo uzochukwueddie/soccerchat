@@ -43,7 +43,7 @@
                             <ul class="nav navbar-nav navbar-right" id="re_load2">
                                 <li id="">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-bell nav-glyphicon "></span><b class="caret"></b> 
+                                        <span class="glyphicon fa fa-bell nav-glyphicon "></span><b class="caret"></b> 
                                         <% if(data.totalRequest > 0) {%>
                                           <span class="label label-primary nav-label-icon"><%= data.request.length %></span>
                                           
@@ -71,7 +71,7 @@
                                                     <div class="row" id="row_div">
                                                         <div class="col-md-3">
                                                             <p class="text-center">
-                                                                <img src="/images/team.jpg" class="img-responsive dropdown-img" id="img" />
+                                                                <img src="https://soccerchatuser.s3.amazonaws.com/<%= val.userId.userImage %>" class="img-circle img-responsive dropdown-img" />
                                                             </p>
                                                         </div>
                                                         <div class="col-md-9 pleft-0">
@@ -85,12 +85,12 @@
                                                                     <div class="col-md-12">
                                                                         <div class="row">
                                                                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                                                                <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
+                                                                                <input type="hidden" name="senderId" id="senderId" value="<%= val.userId._id %>">
                                                                                 <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
                                                                                 <button type="submit" name="accept" id="accept_friend" class="btn btn-default drop-accept accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
                                                                             </div>
                                                                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                                                                <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
+                                                                                <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId._id %>">
                                                                                 <button type="submit" name="cancel" class="btn drop-cancel remove" id="cancel_friend">
                                                                                 <i class="fa fa-times" aria-hidden="true"></i> Cancel
                                                                                 </button>
@@ -151,11 +151,7 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <p class="text-center">
-                                                                    <% for(var i = 0; i < image.length; i++){%>
-                                                                     <% if(image[i].author.username === val.body.authorName){%>
-                                                                          <img src="https://soccerchatuser.s3.amazonaws.com/<%= image[i].author.userImage %>" class="img-circle img-responsive dropdown-img" />
-                                                                      <% } %>
-                                                                    <% } %>
+                                                                    <img src="https://soccerchatuser.s3.amazonaws.com/<%= val.body.author.userImage %>" class="img-circle img-responsive dropdown-img" />
                                                                 </p>
                                                             </div>
                                                             <div class="col-md-9 pleft-0">
@@ -195,11 +191,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-3">
                                                                     <p class="text-center">
-                                                                        <% for(var i = 0; i < image.length; i++){%>
-                                                                          <% if(image[i].receiver.username === val.body.receiverName){%>
-                                                                              <img src="https://soccerchatuser.s3.amazonaws.com/<%= image[i].receiver.userImage %>" class="img-circle img-responsive dropdown-img" />
-                                                                          <% } %>
-                                                                        <% } %>
+                                                                        <img src="https://soccerchatuser.s3.amazonaws.com/<%= val.body.receiver.userImage %>" class="img-circle img-responsive dropdown-img" />
                                                                     </p>
                                                                 </div>
                                                                 <div class="col-md-9 pleft-0">
@@ -249,12 +241,12 @@
 
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span> <b class="caret"></b>
+                                        <span class="glyphicon fa fa-user nav-glyphicon "></span> <b class="caret"></b>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="/settings/profile"><span class="glyphicon glyphicon-user" style="color: #4aa1f3 !important;"></span>  Profile</a></li>
+                                        <li><a href="/settings/profile"><span class="fa fa-user" style="color: #4aa1f3 !important;"></span>  Profile</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="/logout"><span class="glyphicon glyphicon-off" style="color: #4aa1f3 !important;"></span> Logout</a></li>
+                                        <li><a href="/logout"><span class="fa fa-sign-out" style="color: #4aa1f3 !important;"></span> Logout</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -295,19 +287,19 @@
                                         <ul class="nav">
                                             <li>
                                                 <a href="/profile/<%= user.username %>" style="color:#4aa1f3 !important">
-                                                    <i class="glyphicon glyphicon-home" style="color:#4aa1f3 !important"></i>
+                                                    <i class="fa fa-home" style="color:#4aa1f3 !important"></i>
                                                     Overview
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="/settings/profile" style="color:#4aa1f3 !important">
-                                                    <i class="glyphicon glyphicon-user" style="color:#4aa1f3 !important"></i>
+                                                    <i class="fa fa-user" style="color:#4aa1f3 !important"></i>
                                                     Profile
                                                 </a>
                                             </li>
                                             <li class="active">
                                                 <a href="/settings/interests" style="color:#4aa1f3 !important">
-                                                    <i class="glyphicon glyphicon-ok" style="color:#4aa1f3 !important"></i>
+                                                    <i class="fa fa-check" style="color:#4aa1f3 !important"></i>
                                                     Interests
                                                 </a>
                                             </li>

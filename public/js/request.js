@@ -223,7 +223,7 @@ $(document).ready(function(){
         });
 
         socket.emit('refresh div', new_params, function(){
-            console.log('Good to go')
+            //console.log('Good to go')
         });
         
     });

@@ -8,6 +8,8 @@ var _ = require('underscore');
 var secret = require('../secret/secret');
 var AWS = require('aws-sdk');
 
+var ObjectId = require('mongodb').ObjectID;
+
 AWS.config.update({
     accessKeyId: secret.aws.accesskeyId,
     secretAccessKey: secret.aws.secretAccessKey,
@@ -20,7 +22,7 @@ var {Users} = require('../config/users');
 
 var clients = new Users();
 
-module.exports = (app, io) => {
+module.exports = (app, io, mongoose) => {
     
     app.get('/', (req, res) => {
         var errors = req.flash('error');
@@ -101,14 +103,30 @@ module.exports = (app, io) => {
                     },"body":{$first:"$$ROOT"}
                     }
                 },function(err, newResult){
-                    callback(err, newResult);
+                    var opts = [
+                      { path: 'body.author', model: 'User' },
+                      { path: 'body.receiver', model: 'User' }
+                    ]
+
+                    Message.populate(newResult, opts, function (err, newResult1) {
+                        callback(err, newResult1);
+                    });
                 })
-            }
+            },
+            
+            function(callback){
+                User.findOne({'username':req.user.username})
+                    .populate('request.userId')
+                    .exec((err, result) => {
+                        callback(err, result);
+                    })
+            },
 
         ], (err, results) => {
             var res1 = results[0];
             var res2 = results[1];
             var res3 = results[2];
+            var res4 = results[3];
             
             var countrySort =  _.sortBy( res2, '_id' );
             
@@ -122,7 +140,7 @@ module.exports = (app, io) => {
                 .populate('author')
                 .populate('receiver')
                 .exec((err, result3) => {
-                    res.render('home', {title: 'SoccerChat | Chat With Friends', user:req.user, data:productChunks, country:countrySort, chat:res3, image: result3});
+                    res.render('home', {title: 'SoccerChat | Chat With Friends', user:req.user, userData:res4, data:productChunks, country:countrySort, chat:res3, image: result3});
                 })
             
             
@@ -168,7 +186,7 @@ module.exports = (app, io) => {
     });
     
     app.get('/group/:username/:name', isLoggedIn, (req, res, next) => {
-        var nameParams = req.params.name;
+        var nameParams = req.params.name.replace(/-/g," ");
         
         
         if (req.query.search) {
@@ -235,29 +253,53 @@ module.exports = (app, io) => {
                         },"body":{$first:"$$ROOT"}
                         }
                     },function(err, newResult){
-                        callback(err, newResult);
+                        var opts = [
+                          { path: 'body.author', model: 'User' },
+                          { path: 'body.receiver', model: 'User' }
+                        ]
+
+                        Message.populate(newResult, opts, function (err, newResult1) {
+                            callback(err, newResult1);
+                        });
                     })
                 },
                 
                 function(callback){
-                    User.findOne({'username':req.user.username}, (err, result) => {
-                        callback(err, result)
+                    User.findOne({'username':req.user.username})
+                        .populate('request.userId')
+                        .populate('friendsList.friendId')
+                        .exec((err, result) => {
+                            callback(err, result);
+                        })
+                },
+                
+                function(callback){
+                    Club.findOne({"name": nameParams}, (err, clubResult) => {
+                        callback(err, clubResult);
                     })
-                }, 
+                },
+                
+                function(callback){
+                    Group.find({})
+                        .populate('sender')
+                        .exec((err, msgResult) => {
+                            callback(err, msgResult);
+                        })
+                },
                 
 //                       
             ], (err, results) => {
                 var res1 = results[0];
                 var res2 = results[1];
-                
-//                console.log(res2);
+                var res3 = results[2];
+                var res4 = results[3];
                 
                 
                 Message.find({'$or': [{"authorName":req.user.username}, {"receiverName":req.user.username}]})
                     .populate('author')
                     .populate('receiver')
                     .exec((err, result3) => {
-                        res.render('group', {title: nameParams+' | Soccer Chat', user:req.user, chat:res1, data:res2, name: nameParams, image:result3 });
+                        res.render('group', {title: nameParams+' | Soccer Chat', user:req.user, chat:res1, data:res2, name: nameParams, club: res3, groupMsg: res4, image:result3 });
                     })
             })
         }
@@ -265,6 +307,24 @@ module.exports = (app, io) => {
     
     app.post('/group/:username/:name', (req, res) => {
         var nameParams = req.params.name;
+        
+        async.parallel([
+            function(callback){
+               if(req.body.message){
+                   
+                   var group = new Group();
+                   group.sender = req.user._id;
+                   group.body = req.body.message;
+                   group.groupId = req.body.clubId;
+                   group.createdAt = new Date();
+                   //group.save((err, msg) => {
+                       callback(err, group);
+                   //})
+               }
+           }
+        ], (err, result) => {
+            res.redirect('/group/'+req.params.username+'/'+req.params.name);
+        });
         
         async.parallel([
            function(callback){
@@ -408,25 +468,7 @@ module.exports = (app, io) => {
             res.redirect('/group/'+req.params.username+'/'+req.params.name)
         });
         
-        async.parallel([
-            function(callback){
-               if(req.body.message){
-                   var group = new Group();
-                   group.sender = req.user._id;
-                   group.body = req.body.message;
-                   group.createdAt = new Date();
-                   group.save((err, msg) => {
-                       if (err) {
-                        console.log(err)
-                      }
-                       console.log("Group Message:",msg)
-                       callback(err, msg);
-                   })
-               }
-           }
-        ], (err, results) => {
-            res.redirect('/group/'+req.params.username+'/'+req.params.name)
-        });
+        
     });
     
     
@@ -499,7 +541,14 @@ module.exports = (app, io) => {
                     },"body":{$first:"$$ROOT"}
                     }
                 },function(err, newResult){
-                    callback(err, newResult);
+                    var opts = [
+                      { path: 'body.author', model: 'User' },
+                      { path: 'body.receiver', model: 'User' }
+                    ]
+
+                    Message.populate(newResult, opts, function (err, newResult1) {
+                        callback(err, newResult1);
+                    });
                 })
             },
 
@@ -508,11 +557,20 @@ module.exports = (app, io) => {
                     callback(err, clubresult)
                 }).sort({'name': 1})
             },
+            
+            function(callback){
+                User.findOne({'username':req.user.username})
+                    .populate('request.userId')
+                    .exec((err, result) => {
+                        callback(err, result);
+                    })
+            },
 
         ], (err, results) => {
             var res1 = results[0];
             var res2 = results[1];
             var res3 = results[2];
+            var res4 = results[3];
 
             var memberChunks = [];
             var chunkSize = 3;
@@ -524,7 +582,7 @@ module.exports = (app, io) => {
                 .populate('author')
                 .populate('receiver')
                 .exec((err, result3) => {
-                    res.render('members', {title: 'SoccerChat | Members', user:req.user, data:memberChunks, chat:res2, clubs:res3, image: result3});
+                    res.render('members', {title: 'SoccerChat | Members', user:req.user, userData: res4, data:memberChunks, chat:res2, clubs:res3, image: result3});
                 })
         })
     });
@@ -686,44 +744,3 @@ function PostRequest(req, res, link){
         res.redirect(link)
     });
 }
-
-
-//Code to download from AWS
-//var express = require('express');
-//var app = express();
-//var fs = require('fs');
-//
-//app.get('/', function(req, res, next){
-//    res.send('You did not say the magic word');
-//});
-//
-//
-//app.get('/s3Proxy', function(req, res, next){
-//    // download the file via aws s3 here
-//    var fileKey = req.query['fileKey'];
-//
-//    console.log('Trying to download file', fileKey);
-//    var AWS = require('aws-sdk');
-//    AWS.config.update(
-//      {
-//        accessKeyId: "....",
-//        secretAccessKey: "...",
-//        region: 'ap-southeast-1'
-//      }
-//    );
-//    var s3 = new AWS.S3();
-//    var options = {
-//        Bucket    : '/bucket-url',
-//        Key    : fileKey,
-//    };
-//
-//    res.attachment(fileKey);
-//    var fileStream = s3.getObject(options).createReadStream();
-//    fileStream.pipe(res);
-//});
-//
-//var server = app.listen(3000, function () {
-//    var host = server.address().address;
-//    var port = server.address().port;
-//    console.log('S3 Proxy app listening at http://%s:%s', host, port);
-//});

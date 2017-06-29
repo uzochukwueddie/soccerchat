@@ -65,14 +65,24 @@ module.exports = (app) => {
                     },"body":{$first:"$$ROOT"}
                     }
                 },function(err, newResult){
-                    callback(err, newResult);
+                    var opts = [
+                      { path: 'body.author', model: 'User' },
+                      { path: 'body.receiver', model: 'User' }
+                    ]
+
+                    Message.populate(newResult, opts, function (err, newResult1) {
+                        callback(err, newResult1);
+                    });
                 })
             },
 
             function(callback){
-                User.findOne({"fullname":req.user.fullname}, (err, result) => {
-                    callback(err, result);
-                })
+                User.findOne({'username':req.user.username})
+                    .populate('request.userId')
+                    .populate('friendsList.friendId')
+                    .exec((err, result) => {
+                        callback(err, result);
+                    })
             }
         ], (err, results) => {
             var result1 = results[0];
@@ -144,6 +154,10 @@ module.exports = (app) => {
     app.post('/userupload', upload.any(), (req, res) => {
         var form = new formidable.IncomingForm();
         
+        form.on('file', (field, file) => {
+            
+        });
+        
         form.on('error', (err) => {
             //console.log('An error occured', err);
         });
@@ -181,15 +195,23 @@ module.exports = (app) => {
                     },"body":{$first:"$$ROOT"}
                     }
                 },function(err, newResult){
-                    callback(err, newResult);
+                    var opts = [
+                      { path: 'body.author', model: 'User' },
+                      { path: 'body.receiver', model: 'User' }
+                    ]
+
+                    Message.populate(newResult, opts, function (err, newResult1) {
+                        callback(err, newResult1);
+                    });
                 })
             },
 
             function(callback){
-                User.findOne({"fullname":req.user.fullname}, (err, result) => {
-                    //console.log(result)
-                    callback(err, result);
-                })
+                User.findOne({'username':req.user.username})
+                    .populate('request.userId')
+                    .exec((err, result) => {
+                        callback(err, result);
+                    })
             }
         ], (err, results) => {
             var result1 = results[0];
@@ -397,14 +419,23 @@ module.exports = (app) => {
                     },"body":{$first:"$$ROOT"}
                     }
                 },function(err, newResult){
-                    callback(err, newResult);
+                    var opts = [
+                      { path: 'body.author', model: 'User' },
+                      { path: 'body.receiver', model: 'User' }
+                    ]
+
+                    Message.populate(newResult, opts, function (err, newResult1) {
+                        callback(err, newResult1);
+                    });
                 })
             },
 
             function(callback){
-                User.findOne({"username":req.params.name}, (err, result) => {
-                    callback(err, result);
-                })
+                User.findOne({'username':req.params.name})
+                    .populate('request.userId')
+                    .exec((err, result) => {
+                        callback(err, result);
+                    })
             }
         ], (err, results) => {
             var result1 = results[0];

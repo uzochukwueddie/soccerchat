@@ -40,26 +40,14 @@ class Users {
   }
 
 //...........................................................................................................................
-  enterRoom(id, name, room){
-      var roomName = {id, name, room};
+  enterRoom(id, name, room, img){
+      var roomName = {id, name, room, img};
       this.globalRoom.push(roomName);
       return roomName;
   }
 
   
   removeRoom(name){
-    // var user = this.getList(name);
-
-    // if(user){
-    //   this.globalRoom = this.globalRoom.filter((user) => user.name === name);
-    // }
-
-    // if(user.indexOf(name) > -1){
-    //   return user.pop();
-    // }
-
-    // return user;
-
     var name = this.globalRoom.filter((user) => user.name === name);
 
     var names = name.map((name) => {
@@ -86,7 +74,11 @@ class Users {
     var roomName = this.globalRoom.filter((user) => user.room === room);
 
     var names = roomName.map((name) => {
-      return name.name;
+//        return name.name;
+        return {
+            name: name.name,
+            img: name.img
+        }
     });
 
     return names;

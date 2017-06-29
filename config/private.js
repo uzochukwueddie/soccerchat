@@ -1,7 +1,4 @@
-var {generateMessage} = require('./message');
-var {isRealString} = require('./validation');
 var {Users} = require('./users');
-
 var users = new Users();
 
 

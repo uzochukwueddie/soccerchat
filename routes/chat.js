@@ -16,9 +16,11 @@ module.exports = (app) => {
         async.parallel([
             
             function(callback){
-                User.findOne({'username':req.user.username}, (err, result1) => {
-                    callback(err, result1);
-                });
+                User.findOne({'username':req.user.username})
+                    .populate('request.userId')
+                    .exec((err, result) => {
+                        callback(err, result);
+                    })
             },
             
             function(callback){
@@ -47,9 +49,17 @@ module.exports = (app) => {
                     },"body":{$first:"$$ROOT"}
                     }
                 },function(err, newResult){
-                    callback(err, newResult);
-                });
-            },
+                    var opts = [
+                          { path: 'body.author', model: 'User' },
+                          { path: 'body.receiver', model: 'User' }
+                    ]
+                    
+                     Message.populate(newResult, opts, function (err, newResult1) {
+                         callback(err, newResult1);
+
+                     });
+                })
+            }
             
         ], (err, results) => {
             var result = results[0];
@@ -75,7 +85,6 @@ module.exports = (app) => {
     });
     
     app.post('/chat/:name', (req, res, next) => {
-        // var nameParams = req.params.name
         
         var paramsName = req.params.name.split('@');
         var nameParams = paramsName[1];
@@ -91,30 +100,22 @@ module.exports = (app) => {
             },
             
             function(data, callback){
-                if(req.body.message){
-                    //User.findOne({'username':nameParams}, (err, data) => {
-//                       if(err){
-//                           return next(err)
-//                        }else{
-                            
-                            var newMessage = new Message();
-                            newMessage.author = req.user._id;
-                            newMessage.receiver = data._id;
-                            newMessage.authorName = req.user.username;
-                            newMessage.receiverName = data.username;
-                            newMessage.body = req.body.message;
-                            newMessage.userImage = data.userImage;
-                            newMessage.createdAt = new Date();
+                if(req.body.message){    
+                    var newMessage = new Message();
+                    newMessage.author = req.user._id;
+                    newMessage.receiver = data._id;
+                    newMessage.authorName = req.user.username;
+                    newMessage.receiverName = data.username;
+                    newMessage.body = req.body.message;
+                    newMessage.userImage = data.userImage;
+                    newMessage.createdAt = new Date();
 
-                            newMessage.save((err, newMessage) => {
-                              if (err) {
-                                return next(err)
-                              }
-                              callback(err, newMessage);
-//                                res.redirect('/chat/'+req.params.name);
-                            });
-                        
-                    //})
+                    newMessage.save((err, newMessage) => {
+                      if (err) {
+                        return next(err)
+                      }
+                      callback(err, newMessage);
+                    });
                 }    
             }
             
@@ -266,7 +267,6 @@ function loginValidation(req, res, next){
    req.checkBody('email', 'Email is Invalid').isEmail();
    req.checkBody('password', 'Password is Required').notEmpty();
    req.checkBody('password', 'Password Must Not Be Less Than 5 Characters').isLength({min:5});
-//   req.check("password", "Password Must Contain at least 1 Number.").matches(/^(?=.*\d)(?=.*[a-z])[0-9a-z]{5,}$/, "i");
 
    var loginErrors = req.validationErrors();
 

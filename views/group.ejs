@@ -44,7 +44,7 @@
 
                                 <li id="">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-bell nav-glyphicon "></span><b class="caret"></b> 
+                                        <span class="glyphicon fa fa-bell nav-glyphicon "></span><b class="caret"></b> 
                                         <% if(data.totalRequest > 0) {%>
                                           <span class="label label-primary nav-label-icon"><%= data.request.length %></span>
                                           
@@ -72,7 +72,7 @@
                                                     <div class="row" id="row_div">
                                                         <div class="col-md-3">
                                                             <p class="text-center">
-                                                                <img src="https://soccerchatuser.s3.amazonaws.com/<%= val.userImage %>" class="img-circle img-responsive dropdown-img" />
+                                                                <img src="https://soccerchatuser.s3.amazonaws.com/<%= val.userId.userImage %>" class="img-circle img-responsive dropdown-img" />
                                                             </p>
                                                         </div>
                                                         <div class="col-md-9 pleft-0">
@@ -86,12 +86,12 @@
                                                                     <div class="col-md-12">
                                                                         <div class="row">
                                                                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                                                                <input type="hidden" name="senderId" id="senderId" value="<%= val.userId %>">
+                                                                                <input type="hidden" name="senderId" id="senderId" value="<%= val.userId._id %>">
                                                                                 <input type="hidden" name="senderName" id="senderName" value="<%= val.username %>">
                                                                                 <button type="submit" name="accept" id="accept_friend" class="btn btn-default drop-accept accept"><i class="fa fa-check" aria-hidden="true"></i> Accept</button>
                                                                             </div>
                                                                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                                                                <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId %>">
+                                                                                <input type="hidden" name="user_Id" id="user_Id" value="<%= val.userId._id %>">
                                                                                 <button type="submit" name="cancel" class="btn drop-cancel remove" id="cancel_friend">
                                                                                 <i class="fa fa-times" aria-hidden="true"></i> Cancel
                                                                                 </button>
@@ -120,10 +120,12 @@
 
                                 <li>
                                 <% var numOfTrue = 0 %>
+                                <% if(typeof chat != 'undefined') {%>
                                 <% for(var i=0;i<chat.length;i++){
                                     if(chat[i].body.isRead === false)
                                        numOfTrue = numOfTrue + 1
                                 }%>
+                                <% } %>
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         <span class="fa fa-globe "></span> <b class="caret"></b> 
                                         <% if(numOfTrue != 0) {%>
@@ -150,12 +152,7 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <p class="text-center">
-                                                                  <% for(var i = 0; i < image.length; i++){%>
-                                                                     <% if(image[i].author.username === val.body.authorName){%>
-                                                                          <img src="https://soccerchatuser.s3.amazonaws.com/<%= image[i].author.userImage %>" class="img-circle img-responsive dropdown-img" />
-                                                                      <% } %>
-                                                                  <% } %>
-                                                                   
+                                                                    <img src="https://soccerchatuser.s3.amazonaws.com/<%= val.body.author.userImage %>" class="img-circle img-responsive dropdown-img" />
                                                                 </p>
                                                             </div>
                                                             <div class="col-md-9 pleft-0">
@@ -193,11 +190,7 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <p class="text-center">
-                                                                   <% for(var i = 0; i < image.length; i++){%>
-                                                                      <% if(image[i].receiver.username === val.body.receiverName){%>
-                                                                          <img src="https://soccerchatuser.s3.amazonaws.com/<%= image[i].receiver.userImage %>" class="img-circle img-responsive dropdown-img" />
-                                                                      <% } %>
-                                                                  <% } %>
+                                                                  <img src="https://soccerchatuser.s3.amazonaws.com/<%= val.body.receiver.userImage %>" class="img-circle img-responsive dropdown-img" />
                                                                 </p>
                                                             </div>
                                                             <div class="col-md-9 pleft-0">
@@ -247,13 +240,13 @@
 
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-user nav-glyphicon "></span> <b class="caret"></b>
+                                        <span class="glyphicon fa fa-user nav-glyphicon "></span> <b class="caret"></b>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="/settings/profile"><span class="glyphicon glyphicon-user" style="color: #4aa1f3 !important;"></span>  Profile</a></li>
+                                        <li><a href="/settings/profile"><span class="fa fa-user" style="color: #4aa1f3 !important;"></span>  Profile</a></li>
                                         <!-- <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li> -->
                                         <li class="divider"></li>
-                                        <li><a href="/logout"><span class="glyphicon glyphicon-off" style="color: #4aa1f3 !important;"></span> Logout</a></li>
+                                        <li><a href="/logout"><span class="fa fa-sign-out" style="color: #4aa1f3 !important;"></span> Logout</a></li>
                                     </ul>
                                 </li>
 
@@ -355,7 +348,7 @@
                             <div class="new_message_head">
                                 <div class="pull-left">
                                 <button class="club_name">
-                                  @<%= name.replace(/ /g, "-") %>
+                                  @<%= name %>
                                 </button>
                                 </div>
                                 <div class="pull-right">
@@ -365,8 +358,24 @@
                             </div>
 
                             <div class="chat_area" id="mess">
-                                <ol class="list-unstyled chat_messages" id="messages"></ol>
-                            </div>
+                            
+                            <ul id="messages" class="list-unstyled chat_messages">
+                                  <% groupMsg.forEach(function(val){ %>
+                                       <% if(name === val.groupId){ %>
+                                        <li class="left clearfix">
+                                            <span class="chat-img1 pull-left">
+                                                <img src="https://soccerchatuser.s3.amazonaws.com/<%= val.sender.userImage %>" class="img-circle" />
+                                            </span>
+                                              <div class="chat-body1 clearfix">
+                                                <span class="chat-name"><%= val.sender.username %></span>
+                                                <br />
+                                                <%= val.body %>
+                                                <div class="chat_time pull-right" style=" font-size: 13px; color:; font-weight: 600; letter-spacing: 0.8px;"><% moment(val.createdAt).format('LT') %></div>
+                                              </div>
+                                         </li>
+                                         <% } %>
+                                    <% }) %>
+                            </ul>
 
                             <script id="message-template" type="text/template">
                                 <li class="left clearfix">
@@ -379,16 +388,19 @@
                                             <br />
                                             <span>{{text}}</span>
                                         
-                                            <div class="chat_time pull-right" style="font-size: 13px; color: black; font-weight: 600; letter-spacing: 0.8px;">{{createdAt}}
+                                            
                                             </div>
                                     </div>
                                 </li>
                             </script>
+                            
+                            </div>
 
                             <div class="message_write">
-                              <form action="" id="message-form" style="width:100%; padding:0; margin:0;" method="post">
+                              <form action="/group/@<%= user.username %>/<%= name %>" id="message-form" style="width:100%; padding:0; margin:0;" method="post">
                                 <input type="hidden" name="sender" id="sender" class="" value="<%= user.username %>"><br>
                                   <input type="hidden" name="roomName" id="roomName" value="<%= name %>">
+                                  <input type="hidden" name="clubId" id="clubId" value="<%= club.name %>">
 
                                   <textarea class="form-control" name="message" id="msg" placeholder="Type a message"></textarea>
                                   <div class="clearfix"></div>
@@ -428,11 +440,9 @@
                             <div id="myModal" class="modal fade" role="dialog">
                               <div class="modal-dialog">
 
-                                <!-- Modal content-->
                                 <div class="modal-content">
                                   <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <!-- <h4 class="modal-title">Modal Header</h4> -->
                                     <h3 class="modal-title" id="name"></h3>
                                   </div>
                                   <div class="modal-body">
@@ -478,7 +488,6 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/chat.js"></script>
     <script src="/js/global.js"></script>
-    <!-- <script src="/js/request.js"></script> -->
     <script src="/js/deparam.js"></script>
     <script src="/js/myDeparam.js"></script>
     <script src="/js/ejs.min.js"></script>

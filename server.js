@@ -22,9 +22,9 @@ var MongoClient = require('mongodb').MongoClient;
 
 
 var app = express();
+
+
 app.use(compression())
-
-
 app.use(helmet());
 
 mongoose.Promise = global.Promise;
@@ -90,7 +90,7 @@ require('./config/private')(io);
 require('./config/msg')(io);
 require('./config/friend')(io);
 require('./config/login')(io);
-require('./routes/user')(app, io);
+require('./routes/user')(app, io, mongoose);
 require('./routes/admin')(app);
 require('./routes/profile')(app);
 require('./routes/chat')(app);

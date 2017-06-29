@@ -54,7 +54,6 @@ passport.use('local.signup', new LocalStrategy({
 
                 newUser.save((err) => {
                     callback(err, newUser)
-//                    return done(null, newUser);
                 });
             }
         ], (err, result) => {

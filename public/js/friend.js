@@ -12,8 +12,6 @@ $(document).ready(function(){
 
     
     socket.on('connect', function(){
-//        console.log('Connected to my server');
-
         socket.on('updateUsersList', function(users){
             var ol = $('<ol></ol>');
             

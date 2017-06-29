@@ -84,7 +84,6 @@ $(document).ready(function(){
         })
         
         setTimeout(function(){
-//            $('.request').load(location.href + ' .request');
             window.location.reload(true);
         }, 200);
     });
