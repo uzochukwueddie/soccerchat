@@ -5,17 +5,10 @@ var Message = require('../models/message');
 var passport = require('passport');
 var async = require('async');
 var _ = require('underscore');
-var secret = require('../secret/secret');
 var AWS = require('aws-sdk');
 
 
 var ObjectId = require('mongodb').ObjectID;
-
-//AWS.config.update({
-//    accessKeyId: secret.aws.accesskeyId,
-//    secretAccessKey: secret.aws.secretAccessKey,
-//    region: secret.aws.region
-//});
 
 var {validate} = require('../config/validation');
 

@@ -3,7 +3,6 @@ var formidable = require('formidable');
 var path = require('path');
 var fs = require('fs');
 var passport = require('passport');
-//var secret = require('../secret/secret');
 
 var aws = require('aws-sdk');
 var multerS3 = require('multer-s3');

@@ -7,7 +7,6 @@ var smtpTransport = require('nodemailer-smtp-transport');
 var async = require('async');
 var {validate} = require('../config/validation');
 var random = require('random-string-module');
-//var secret = require('../secret/secret');
 
 
 

@@ -6,7 +6,6 @@ var formidable = require('formidable');
 var path = require('path');
 var fs = require('fs');
 var Message = require('../models/message');
-//var secret = require('../secret/secret');
 
 
 var aws = require('aws-sdk');

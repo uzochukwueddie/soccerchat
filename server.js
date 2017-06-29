@@ -16,7 +16,6 @@ var flash = require('connect-flash');
 var moment = require('moment');
 var cutstring = require('./functions/func');
 var helmet = require('helmet');
-//var secret = require('./secret/secret');
 var MongoClient = require('mongodb').MongoClient;
 
 
@@ -28,7 +27,6 @@ app.use(compression())
 app.use(helmet());
 
 mongoose.Promise = global.Promise;
-//mongoose.connect('mongodb://localhost/soccerchat');
 mongoose.connect(process.env.SECRET_DB_HOST);
 
 mongoose.connection.on("open", function() {
@@ -99,7 +97,7 @@ require('./routes/reset')(app);
 require('./config/admin_passport');
 
 server.listen(process.env.SECRET_DB_PORT, () => {
-  console.log('Listening on Port 3000');
+  //console.log('Listening on Port 3000');
 });
 
 app.use(function(req, res){
