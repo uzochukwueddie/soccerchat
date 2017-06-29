@@ -16,7 +16,7 @@ var flash = require('connect-flash');
 var moment = require('moment');
 var cutstring = require('./functions/func');
 var helmet = require('helmet');
-var secret = require('./secret/secret');
+//var secret = require('./secret/secret');
 var MongoClient = require('mongodb').MongoClient;
 
 
@@ -29,14 +29,14 @@ app.use(helmet());
 
 mongoose.Promise = global.Promise;
 //mongoose.connect('mongodb://localhost/soccerchat');
-mongoose.connect(secret.database.host);
+mongoose.connect(ENV['SECRET_DB_HOST']);
 
 mongoose.connection.on("open", function() {
-    console.log("connection to database done!");
+    //console.log("connection to database done!");
 });
 
 mongoose.connection.on("error", function() {
-    console.log("error");
+    //console.log("error");
 });
 
 
@@ -67,7 +67,7 @@ app.use(validator({
 }));
 
 app.use(session({
-    secret: secret.cookieSecret,
+    secret: ENV['SECRET_COOKIE_SECRET'],
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({mongooseConnection: mongoose.connection})
@@ -98,7 +98,7 @@ require('./routes/reset')(app);
 
 require('./config/admin_passport');
 
-server.listen(secret.database.port, () => {
+server.listen(ENV['SECRET_DB_PORT'], () => {
   console.log('Listening on Port 3000');
 });
 

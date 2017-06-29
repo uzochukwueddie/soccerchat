@@ -6,17 +6,23 @@ var formidable = require('formidable');
 var path = require('path');
 var fs = require('fs');
 var Message = require('../models/message');
-var secret = require('../secret/secret');
+//var secret = require('../secret/secret');
 
 
 var aws = require('aws-sdk');
 var multerS3 = require('multer-s3');
 var multer = require('multer');
 
+AWS::S3::Base.establish_connection!(
+    :access_key_id   => ENV['SECRET_AWS_ACCESSKEYID'],
+    :secret_access_key => ENV['SECRET_AWS_SECRETACCESSKEY'],
+    :region => ENV['SECRET_AWS_REGION']
+)
+
 aws.config.update({
-    accessKeyId: secret.aws.accesskeyId,
-    secretAccessKey: secret.aws.secretAccessKey,
-    region: secret.aws.region
+    accessKeyId: process.env.SECRET_AWS_ACCESSKEYID,
+    secretAccessKey: process.env.SECRET_AWS_SECRETACCESSKEY,
+    region: process.env.SECRET_AWS_REGION
 });
 
 var s0 = new aws.S3({});
