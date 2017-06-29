@@ -47,14 +47,14 @@ module.exports = (app, io) => {
                 var smtpTransport = nodemailer.createTransport({
                     service: 'Gmail',
                     auth: {
-                        user: ENV['SECRET_AUTH_USER'],
-                        pass: ENV['SECRET_AUTH_PASS']
+                        user: proces.env.SECRET_AUTH_USER,
+                        pass: process.env.SECRET_AUTH_PASS
                     }
                 });
                 
                 var mailOptions = {
                     to: user.email,
-                    from: 'Soccerchat '+'<'+ENV['SECRET_AUTH_USER']+'>',
+                    from: 'Soccerchat '+'<'+proces.env.SECRET_AUTH_USER+'>',
                     subject: 'Soccerchat Password Reset Token',
                     text: 'You have requested for password reset token. \n\n'+
                         'Please click on the link to complete the process: \n\n'+
@@ -136,14 +136,14 @@ module.exports = (app, io) => {
                 var smtpTransport = nodemailer.createTransport({
                     service: 'Gmail',
                     auth: {
-                        user: ENV['SECRET_AUTH_USER'],
-                        pass: ENV['SECRET_AUTH_PASS']
+                        user: proces.env.SECRET_AUTH_USER,
+                        pass: proces.env.SECRET_AUTH_PASS
                     }
                 });
                 
                 var mailOptions = {
                     to: user.email,
-                    from: 'Soccerchat '+'<'+ENV['SECRET_AUTH_USER']+'>',
+                    from: 'Soccerchat '+'<'+proces.env.SECRET_AUTH_USER+'>',
                     subject: 'Your password Has Been Updated.',
                     text: 'This is a confirmation that you updated the password for '+user.email
                 };

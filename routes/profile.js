@@ -13,12 +13,6 @@ var aws = require('aws-sdk');
 var multerS3 = require('multer-s3');
 var multer = require('multer');
 
-AWS::S3::Base.establish_connection!(
-    :access_key_id   => ENV['SECRET_AWS_ACCESSKEYID'],
-    :secret_access_key => ENV['SECRET_AWS_SECRETACCESSKEY'],
-    :region => ENV['SECRET_AWS_REGION']
-)
-
 aws.config.update({
     accessKeyId: process.env.SECRET_AWS_ACCESSKEYID,
     secretAccessKey: process.env.SECRET_AWS_SECRETACCESSKEY,
