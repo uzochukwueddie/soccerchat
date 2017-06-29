@@ -27,7 +27,7 @@ app.use(compression())
 app.use(helmet());
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.SECRET_DB_HOST);
+mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on("open", function() {
     //console.log("connection to database done!");
