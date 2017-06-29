@@ -90,7 +90,7 @@ require('./routes/reset')(app);
 
 require('./config/admin_passport');
 
-server.listen(process.env.SECRET_DB_PORT, () => {
+server.listen(process.env.PORT || 3000, () => {
   //console.log('Listening on Port 3000');
 });
 
