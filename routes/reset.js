@@ -44,7 +44,10 @@ module.exports = (app, io) => {
             
             function(token, user, callback){
                 var smtpTransport = nodemailer.createTransport({
-                    service: 'Gmail',
+//                    service: 'Gmail',
+                    host: 'smtp.gmail.com',
+                    port: 465,
+                    secure: true,
                     auth: {
                         user: process.env.SECRET_AUTH_USER,
                         pass: process.env.SECRET_AUTH_PASS
@@ -132,7 +135,10 @@ module.exports = (app, io) => {
             
             function(user, callback){
                 var smtpTransport = nodemailer.createTransport({
-                    service: 'Gmail',
+//                    service: 'Gmail',
+                    host: 'smtp.gmail.com',
+                    port: 465,
+                    secure: true,
                     auth: {
                         user: process.env.SECRET_AUTH_USER,
                         pass: process.env.SECRET_AUTH_PASS
