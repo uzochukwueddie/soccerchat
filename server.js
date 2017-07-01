@@ -59,7 +59,7 @@ app.use(validator({
 }));
 
 app.use(session({
-    secret: process.env.SECRET_COOKIE_SECRET ,
+    secret: process.env.SECRET_COOKIE_SECRET,
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({mongooseConnection: mongoose.connection})
