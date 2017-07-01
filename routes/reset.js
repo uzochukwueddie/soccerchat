@@ -17,7 +17,7 @@ module.exports = (app, io) => {
         
         var info = req.flash('info');
 
-        res.render('forgot', {title: 'Soccerchat | Forgot Password', messages: errors, hasErrors: errors.length > 0, 
+        res.render('forgot', {title: 'Soccerkik | Forgot Password', messages: errors, hasErrors: errors.length > 0, 
           info: info, noErrors: info.length > 0})        
     });
 
@@ -53,8 +53,8 @@ module.exports = (app, io) => {
                 
                 var mailOptions = {
                     to: user.email,
-                    from: 'Soccerchat '+'<'+proces.env.SECRET_AUTH_USER+'>',
-                    subject: 'Soccerchat Password Reset Token',
+                    from: 'Soccerkik '+'<'+proces.env.SECRET_AUTH_USER+'>',
+                    subject: 'Soccerkik Password Reset Token',
                     text: 'You have requested for password reset token. \n\n'+
                         'Please click on the link to complete the process: \n\n'+
                         'http://localhost:3000/reset/'+token+'\n\n'
@@ -142,7 +142,7 @@ module.exports = (app, io) => {
                 
                 var mailOptions = {
                     to: user.email,
-                    from: 'Soccerchat '+'<'+proces.env.SECRET_AUTH_USER+'>',
+                    from: 'Soccerkik '+'<'+proces.env.SECRET_AUTH_USER+'>',
                     subject: 'Your password Has Been Updated.',
                     text: 'This is a confirmation that you updated the password for '+user.email
                 };
@@ -154,12 +154,7 @@ module.exports = (app, io) => {
                     
                     //var errors = req.flash('error');
                     var success = req.flash('success');
-
-                    //if(user){
-                        res.redirect('/');
-                    //}
-                    
-                    //res.render('forgot_password', {title: 'Reset Your Password', messages: error, hasErrors: errors.length > 0, success:success, noErrors:success.length > 0});
+                    res.redirect('/');
                 });
             }
         ]);
@@ -174,7 +169,6 @@ function loginValidation(req, res, next){
    req.checkBody('email', 'Email is Invalid').isEmail();
    req.checkBody('password', 'Password is Required').notEmpty();
    req.checkBody('password', 'Password Must Not Be Less Than 5 Characters').isLength({min:5});
-//   req.check("password", "Password Must Contain at least 1 Number.").matches(/^(?=.*\d)(?=.*[a-z])[0-9a-z]{5,}$/, "i");
 
    var loginErrors = req.validationErrors();
 

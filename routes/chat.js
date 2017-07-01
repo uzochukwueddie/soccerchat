@@ -7,7 +7,7 @@ var mongoose = require('mongoose')
 
 module.exports = (app) => {
     
-    app.get('/chat/:name', (req, res, next) => {
+    app.get('/chat/:name',chatRedirect, (req, res, next) => {
         var name_Params = req.params.name
         
         var paramsName = req.params.name.split('@')
@@ -77,7 +77,7 @@ module.exports = (app) => {
                 .populate('author')
                 .populate('receiver')
                 .exec((err, result3) => {
-                    res.render('chat', {title: '@'+nameParams+' | Soccer Chat', user:req.user, data:result, 
+                    res.render('chat', {title: '@'+nameParams+' | Soccerkik', user:req.user, data:result, 
                         data1: resultdata, name: '@'+nameParams, chatNames:name_Params, chats:result3, 
                         chat:data, username:resultdata, val:val, id: id });
                 })
@@ -281,6 +281,12 @@ function loginValidation(req, res, next){
    }else{
        return next();
    }
+}
+
+function chatRedirect(req, res, next){
+    if(req.path == '/chat/'+'@'+req.user.username+'@'+req.user.username){
+        res.redirect('/home');
+    }
 }
 
 //Fussy search mongodb

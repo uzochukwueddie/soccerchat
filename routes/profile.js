@@ -91,7 +91,7 @@ module.exports = (app) => {
                 .populate('author')
                 .populate('receiver')
                 .exec((err, result3) => {
-                    res.render('user/profile', {title: 'Profile Settings || Soccer Chat', user:req.user, message:result1, data:result2, image:result3});
+                    res.render('user/profile', {title: 'Profile Settings || Soccerkik', user:req.user, message:result1, data:result2, image:result3});
                 })
         })
     });
@@ -171,7 +171,6 @@ module.exports = (app) => {
 
     
     app.get('/settings/interests', (req, res) => {
-        // res.render('user/interests', {title: 'Interests || Soccer Chat', user:req.user});
         
         async.parallel([
             function(callback){
@@ -220,7 +219,7 @@ module.exports = (app) => {
                 .populate('author')
                 .populate('receiver')
                 .exec((err, result3) => {
-                    res.render('user/interests', {title: 'Interests || Soccer Chat', user:req.user, message:result1, data:result2, image:result3});
+                    res.render('user/interests', {title: 'Interests || Soccerkik', user:req.user, message:result1, data:result2, image:result3});
                 })
         })        
         
@@ -444,7 +443,7 @@ module.exports = (app) => {
                 .populate('author')
                 .populate('receiver')
                 .exec((err, result3) => {
-                    res.render('user/userprofile', {title: '@'+name+' || Soccer Chat', user:req.user, message:result1, data:result2, image:result3});
+                    res.render('user/userprofile', {title: '@'+name+' || Soccerkik', user:req.user, message:result1, data:result2, image:result3});
                 })
         })
     });

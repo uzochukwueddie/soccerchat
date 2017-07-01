@@ -25,7 +25,7 @@ module.exports = (app, io, mongoose) => {
         if(req.session.cookie.originalMaxAge !== null){
             res.redirect('/home');
         }else{
-            res.render('index', {title: 'Soccer Chat', messages: errors, hasErrors: errors.length > 0, 
+            res.render('index', {title: 'Soccerkik', messages: errors, hasErrors: errors.length > 0, 
                                 success:success, noErrors:success.length > 0});
         }
     });
@@ -46,7 +46,7 @@ module.exports = (app, io, mongoose) => {
         Club.find({}, (err, result) => {
             var errors = req.flash('error');
             
-            res.render('signup', {title: 'Soccer Chat | Sign Up', data:result, errors: errors, hasErrors: errors.length > 0});
+            res.render('signup', {title: 'Soccerkik | Sign Up', data:result, errors: errors, hasErrors: errors.length > 0});
         }).sort({'name': 1});
     });
 
@@ -134,7 +134,7 @@ module.exports = (app, io, mongoose) => {
                 .populate('author')
                 .populate('receiver')
                 .exec((err, result3) => {
-                    res.render('home', {title: 'SoccerChat | Chat With Friends', user:req.user, userData:res4, data:productChunks, country:countrySort, chat:res3, image: result3});
+                    res.render('home', {title: 'Soccerkik | Chat With Friends', user:req.user, userData:res4, data:productChunks, country:countrySort, chat:res3, image: result3});
                 })
             
             
@@ -155,7 +155,6 @@ module.exports = (app, io, mongoose) => {
                        favClubName: req.body.clubName
                    }}
                 }, (err, res1) => {
-                   // res.redirect('/home');
                    callback(err, res1);
                 })
             },
@@ -293,7 +292,7 @@ module.exports = (app, io, mongoose) => {
                     .populate('author')
                     .populate('receiver')
                     .exec((err, result3) => {
-                        res.render('group', {title: nameParams+' | Soccer Chat', user:req.user, chat:res1, data:res2, name: nameParams, club: res3, groupMsg: res4, image:result3 });
+                        res.render('group', {title: nameParams+' | Soccerkik', user:req.user, chat:res1, data:res2, name: nameParams, club: res3, groupMsg: res4, image:result3 });
                     })
             })
         }
@@ -500,7 +499,7 @@ module.exports = (app, io, mongoose) => {
                 productChunks.push(res1.slice(i, i+chunkSize));
             }
             
-            res.render('results', {title: 'SoccerChat | Chat With Friends', user:req.user, data:productChunks, country:res2, chat: ''});
+            res.render('results', {title: 'Soccerkik | Chat With Friends', user:req.user, data:productChunks, country:res2, chat: ''});
             //res.redirect('/results')
         });
     });
@@ -576,7 +575,7 @@ module.exports = (app, io, mongoose) => {
                 .populate('author')
                 .populate('receiver')
                 .exec((err, result3) => {
-                    res.render('members', {title: 'SoccerChat | Members', user:req.user, userData: res4, data:memberChunks, chat:res2, clubs:res3, image: result3});
+                    res.render('members', {title: 'Soccerkik | Members', user:req.user, userData: res4, data:memberChunks, chat:res2, clubs:res3, image: result3});
                 })
         })
     });
@@ -592,7 +591,7 @@ module.exports = (app, io, mongoose) => {
                 members.push(result.slice(i, i+chunkSize));
             }
 
-            res.render('members', {title: 'SoccerChat | Members', user:req.user, data:members, chat:'', clubs: '', image: ''});
+            res.render('members', {title: 'Soccerkik | Members', user:req.user, data:members, chat:'', clubs: '', image: ''});
         });
 
         PostRequest(req, res, '/members');
@@ -612,7 +611,6 @@ function loginValidation(req, res, next){
    req.checkBody('email', 'Email is Invalid').isEmail();
    req.checkBody('password', 'Password is Required').notEmpty();
    req.checkBody('password', 'Password Must Not Be Less Than 5 Characters').isLength({min:5});
-//   req.check("password", "Password Must Contain at least 1 Number.").matches(/^(?=.*\d)(?=.*[a-z])[0-9a-z]{5,}$/, "i");
 
    var loginErrors = req.validationErrors();
 

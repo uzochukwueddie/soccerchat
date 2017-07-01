@@ -38,7 +38,7 @@ module.exports = (app) => {
 
     app.get('/bo_admin_dev_signup', (req, res) => {
         var errors = req.flash('error');
-        res.render('admin/signup', {title: 'Admin Signup | Soccerchat', messages: errors, hasErrors: errors.length > 0});
+        res.render('admin/signup', {title: 'Admin Signup | Soccerkik', messages: errors, hasErrors: errors.length > 0});
     });
 
     app.post('/bo_admin_dev_signup', signupValidation, passport.authenticate('local.sign_up', {
@@ -49,7 +49,7 @@ module.exports = (app) => {
 
     app.get('/bo_admin_dev_login', (req, res) => {
         var errors = req.flash('error');
-        res.render('admin/login', {title: 'Admin Login | Soccerchat', messages: errors, hasErrors: errors.length > 0});
+        res.render('admin/login', {title: 'Admin Login | Soccerkik', messages: errors, hasErrors: errors.length > 0});
     });
 
     app.post('/bo_admin_dev_login', loginValidation, passport.authenticate('local.log_in', {
