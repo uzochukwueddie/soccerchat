@@ -46,7 +46,7 @@ module.exports = (app, io) => {
                 var smtpTransport = nodemailer.createTransport({
                     service: 'Gmail',
                     auth: {
-                        user: proces.env.SECRET_AUTH_USER,
+                        user: process.env.SECRET_AUTH_USER,
                         pass: process.env.SECRET_AUTH_PASS
                     }
                 });
