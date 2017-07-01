@@ -53,7 +53,7 @@ module.exports = (app, io) => {
                 
                 var mailOptions = {
                     to: user.email,
-                    from: 'Soccerkik '+'<'+proces.env.SECRET_AUTH_USER+'>',
+                    from: 'Soccerkik '+'<'+process.env.SECRET_AUTH_USER+'>',
                     subject: 'Soccerkik Password Reset Token',
                     text: 'You have requested for password reset token. \n\n'+
                         'Please click on the link to complete the process: \n\n'+
@@ -98,7 +98,6 @@ module.exports = (app, io) => {
 
                       req.checkBody('password', 'Password is Required').notEmpty();
                       req.checkBody('password', 'Password Must Not Be Less Than 5').isLength({min:5});
-                      //req.check("password", "Password Must Contain at least 1 Number.").matches(/^(?=.*\d)(?=.*[a-z])[0-9a-z]{5,}$/, "i");
                       
                       var errors = req.validationErrors();
                       
@@ -135,14 +134,14 @@ module.exports = (app, io) => {
                 var smtpTransport = nodemailer.createTransport({
                     service: 'Gmail',
                     auth: {
-                        user: proces.env.SECRET_AUTH_USER,
-                        pass: proces.env.SECRET_AUTH_PASS
+                        user: process.env.SECRET_AUTH_USER,
+                        pass: process.env.SECRET_AUTH_PASS
                     }
                 });
                 
                 var mailOptions = {
                     to: user.email,
-                    from: 'Soccerkik '+'<'+proces.env.SECRET_AUTH_USER+'>',
+                    from: 'Soccerkik '+'<'+process.env.SECRET_AUTH_USER+'>',
                     subject: 'Your password Has Been Updated.',
                     text: 'This is a confirmation that you updated the password for '+user.email
                 };
