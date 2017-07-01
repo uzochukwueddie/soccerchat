@@ -60,7 +60,7 @@ module.exports = (app, io) => {
                     subject: 'Soccerkik Password Reset Token',
                     text: 'You have requested for password reset token. \n\n'+
                         'Please click on the link to complete the process: \n\n'+
-                        'http://soccerkik/reset/'+token+'\n\n'
+                        'http://soccerkik.com/reset/'+token+'\n\n'
                 };
                 
                 smtpTransport.sendMail(mailOptions, (err, response) => {
