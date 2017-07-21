@@ -935,10 +935,10 @@ pre.prettyprint {
     padding: 5px;
 }
 
-/*#teamBtn{
-    float: right;
-    margin: 0;
-}*/
+.headerLink{
+    color: #4aa1f3 !important;
+    text-decoration: none !important;
+}
 
 
 

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title><%= title %></title>
+    <meta charset="utf-8">
+    <link href="/css/news.css" rel='stylesheet' type='text/css' />
+    <link href="/css/style-01.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+
+    <link href="/font-awesome.4.6.1/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/profileImages/favicon.ico" type="image/x-icon" />
+
+</head>
+
+<body>
+
+<div class="container logo-container">
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar" id="nav_bar" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle navbar_icon" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> 
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h1 class="logo-div">
+                        <a class="" href="/">Soccerkik</a>
+                    </h1>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li style="padding-right: 50px;">
+                            <h2 class="reg-div" >
+                               <a href="/latest-football-news" style="padding-right: 30px;">
+                                    Football News
+                                </a>
+                                <a href="/">
+                                    Login
+                                </a>
+
+                                <a href="/signup" class="reg_link" style="display: none;">
+                                    | Register
+                                </a>
+                            </h2>
+
+                        </li>
+                        <li class="reg_link2">
+                            <h2 class="reg-div">
+                                <a href="/signup">
+                                    Register
+                                </a>
+                            </h2>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-sm-12">
+    <div class="col-md-12">
+        <h1 class="new-mainhead">
+            News And Updates
+        </h1>
+    </div>
+
+    <!-- FOR DESKTOP VIEW -->
+    <div class="col-md-12 col-sm-12 n-hide-screen-small news-bottom-40" id="newsResult">
+
+    </div>
+
+
+    <!--FOR MOBILE VIEW-->
+    <div class="col-xs-12 n-hide-screen-large  news-bottom-40" id="mobileViewResult">
+
+    </div>
+
+</div>
+
+
+
+
+<script src="/assets/js/jquery.1.11.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/js/newsrequest.js"></script>
+
+</body>
+</html>

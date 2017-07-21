@@ -25,6 +25,7 @@ app.use(helmet());
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI);
+//mongoose.connect('mongodb://localhost/soccerchat');
 
 mongoose.connection.on("open", function() {
     //console.log("connection to database done!");
@@ -60,6 +61,7 @@ app.use(validator({
 
 app.use(session({
     secret: process.env.SECRET_COOKIE_SECRET,
+    //secret: 'Thisismytestkeyandiloveit',
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({mongooseConnection: mongoose.connection})
@@ -87,11 +89,12 @@ require('./routes/admin')(app);
 require('./routes/profile')(app);
 require('./routes/chat')(app);
 require('./routes/reset')(app);
+require('./routes/footballnews')(app);
 
 require('./config/admin_passport');
 
 server.listen(process.env.PORT || 3000, () => {
-  //console.log('Listening on Port 3000');
+  console.log('Listening on Port 3000');
 });
 
 app.use(function(req, res){

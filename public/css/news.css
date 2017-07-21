@@ -94,9 +94,9 @@ img {
     margin: 0;
 }
 
+/*
 body {
     font-family: 'Open Sans', sans-serif;
-/*    background: url(../profileImages/bg1.png) no-repeat center center fixed;*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -105,6 +105,7 @@ body {
     background: #fff !important;
     color: white !important;
 }
+*/
 
 #parallax {
   width: 100%;

@@ -136,8 +136,6 @@ module.exports = (app, io, mongoose) => {
                 .exec((err, result3) => {
                     res.render('home', {title: 'Soccerkik | Chat With Friends', user:req.user, userData:res4, data:productChunks, country:countrySort, chat:res3, image: result3});
                 })
-            
-            
         })
     });
     
@@ -595,6 +593,10 @@ module.exports = (app, io, mongoose) => {
         });
 
         PostRequest(req, res, '/members');
+    });
+    
+    app.get('/football/latest-news', isLoggedIn, (req, res) => {
+        res.render('football_news', {title: "Soccerkik - Latest Football News", user: req.user});
     });
     
     app.get('/logout', (req, res) => {
