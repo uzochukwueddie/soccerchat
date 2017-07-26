@@ -1,20 +1,22 @@
 $(document).ready(function(){
+    LoadData(".paginate");
+    
     return GetRequest(); 
 });
 
 function GetRequest(){
     
     $.ajax({
-        url: 'http://content.guardianapis.com/football?page-size=20&order-by=newest&show-fields=all&api-key=8b435306-1b3a-480d-b96d-32b7d969507a',
+        url: 'http://content.guardianapis.com/football?page-size=300&order-by=newest&show-fields=all&api-key=8b435306-1b3a-480d-b96d-32b7d969507a',
         type: "GET",
         dataType: "json",
         success: function(data) {
             
-            var res = '';
+            var res = "";
             
             $.each(data.response.results, function(i){
-                res += "<form>";
-                res += "<div class='col-sm-12 col-md-12 news-posts news-30'>";
+                res += "<form class='paginate'>";
+                res += "<div class='col-sm-12 col-md-12 news-posts news-30 '>";
                 res += "<div class='row'>";
                 
                 res += "<a href='"+data.response.results[i].webUrl+"' target='_blank'>";
@@ -34,18 +36,21 @@ function GetRequest(){
                 res += "</div>";
                 res += "</div>";
                 res += "</form>";
-                
-                
             });
             
-            $("#newsResult").html(res);
+            $("#newsResult").html(res);  
             
-            var res1 = '';
+            $(".paginate").slice(0, 4).show();
+
+
+            
+            
+            var res1 = "";
             
             for(var i = 0; i < data.response.results.length; i++){
                 res += "<form>";
                 res1 += "<a href='"+data.response.results[i].webUrl+"' target='_blank'>";
-                res1 += "<div class='col-xs-12 news-posts-mob'>";
+                res1 += "<div class='col-xs-12 news-posts-mob paginate1'>";
                 res1 += "<div class='row'>";
 
                 res1 += "<div class='col-xs-12'>";
@@ -65,8 +70,37 @@ function GetRequest(){
             }
             
             $("#mobileViewResult").html(res1);
+            
+            $(".paginate1").slice(0, 4).show();
+            LoadData(".paginate1");
+
+
         }
     });  
+}
+
+function LoadData(divClass){
+    $("#loadMore").on('click', function (e) {
+        e.preventDefault();
+
+        $(divClass+":hidden").slice(0, 4).slideDown();
+
+        if ($(divClass+":hidden").length == 0) {
+            $("#load").fadeOut('slow');
+        }
+
+        $('html,body').animate({
+            scrollTop: $(this).offset().top
+        }, 1500);
+    });
+
+    $('a[href=#top]').click(function () {
+        $('body,html').animate({
+            scrollTop: 0
+        }, 600);
+
+        return false;
+    });
 }
 
 

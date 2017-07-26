@@ -181,3 +181,42 @@ h3 {
     color: #4aa1f3 !important;
     text-decoration: none !important;
 }
+
+totop a {
+    display: none;
+}
+
+#loadMore {
+    padding: 10px;
+    text-align: center;
+    background-color: #4aa1f3;
+    color: #fff;
+    border-width: 0 1px 1px 0;
+    border-style: solid;
+    border-color: #fff;
+    box-shadow: 0 1px 1px #ccc;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+}
+
+.paginate {
+    display:none;
+}
+
+.paginate1 {
+    display:none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
