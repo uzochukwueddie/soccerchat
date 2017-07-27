@@ -77,14 +77,15 @@
 
 
         <div class="col-md-12">
-        <form method="POST" action="/results" class="">
+        <form method="POST" action="/results">
             <div class="form-group ad-30" style="margin-top:8px;">
                 <div class="input-group search-style">
                     <input class="form-control new-search-bar"  name="country" id="search" placeholder="Enter Your Club Name" type="text">
                     <span class="input-group-btn">
-                        <button class="btn input-btn" type="submit" id="submit">Search</button>
+                        <button class="btn input-btn" id="search-form" >Search</button>
                     </span>
                 </div>
+                <span id="error" class="text-center errMsg"></span>
             </div>
             </form>
         </div>
@@ -178,7 +179,7 @@
                             </div>
                             <% } %>
                             <% } else { %>
-                                <h2 class="text-center">No Record Found. Record Will Be Added Soon</h2>
+                                <h2 class="text-center no_record_text">No Record Found. Record Will Be Added Soon</h2>
                             <% } %>
                         </div>
 
@@ -197,6 +198,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/home.js"></script>
     <script src="/js/global.js"></script>
+    <script src="/js/search.js"></script>
 
 </body>
 
