@@ -10,7 +10,7 @@ var AWS = require('aws-sdk');
 
 var ObjectId = require('mongodb').ObjectID;
 
-var {validate} = require('../config/validation');
+const {validate} = require('../config/validation');
 
 var {Users} = require('../config/users');
 
@@ -55,7 +55,7 @@ module.exports = (app, io, mongoose) => {
         failureRedirect: '/signup',
         failureFlash: true
     }), (req, res) => {
-        res.redirect('/home')
+        res.redirect('/home');
     });
     
     app.get('/home', isLoggedIn, (req, res) => {
@@ -74,7 +74,7 @@ module.exports = (app, io, mongoose) => {
                     }
                 },function(err, newResult){
                     callback(err, newResult);
-                })
+                });
             },
 
             function(callback){
@@ -100,12 +100,12 @@ module.exports = (app, io, mongoose) => {
                     var opts = [
                       { path: 'body.author', model: 'User' },
                       { path: 'body.receiver', model: 'User' }
-                    ]
+                    ];
 
                     Message.populate(newResult, opts, function (err, newResult1) {
                         callback(err, newResult1);
                     });
-                })
+                });
             },
             
             function(callback){
@@ -113,7 +113,7 @@ module.exports = (app, io, mongoose) => {
                     .populate('request.userId')
                     .exec((err, result) => {
                         callback(err, result);
-                    })
+                    });
             },
 
         ], (err, results) => {
@@ -135,8 +135,8 @@ module.exports = (app, io, mongoose) => {
                 .populate('receiver')
                 .exec((err, result3) => {
                     res.render('home', {title: 'Soccerkik | Chat With Friends', user:req.user, userData:res4, data:productChunks, country:countrySort, chat:res3, image: result3});
-                })
-        })
+                });
+        });
     });
     
     app.post('/home', (req, res) => {
@@ -154,7 +154,7 @@ module.exports = (app, io, mongoose) => {
                    }}
                 }, (err, res1) => {
                    callback(err, res1);
-                })
+                });
             },
 
             function(callback){
@@ -169,11 +169,11 @@ module.exports = (app, io, mongoose) => {
                    }}
                 }, (err, res2) => {
                    callback(err, res2);
-                })
+                });
             }
         ], (err, results) => {
             res.redirect('/home');
-        })
+        });
     });
     
     app.get('/group/:username/:name', isLoggedIn, (req, res, next) => {
@@ -187,7 +187,7 @@ module.exports = (app, io, mongoose) => {
                 one: function(callback) {
                     Club.findOne({ "name": regex }, function(err, result1) {
                        if(err) {
-                           return next(err)
+                           return next(err);
                        } else {
                            callback(err, result1);
                        }
@@ -196,27 +196,27 @@ module.exports = (app, io, mongoose) => {
                 two: function(callback){
                     User.findOne({ "username": regex }, function(err, result2) {
                        if(err) {
-                           return next(err)
+                           return next(err);
                        } else {
                           callback(err, result2);
                        }
                     }); 
                 }
             }, function(err, results) {
-                var data = results.one
-                var data2 = results.two
+                var data = results.one;
+                var data2 = results.two;
                 
                 if(data){
                     var resultData = data.name.replace(/ /g, "-")
-                    res.redirect('/group/'+req.params.username+'/'+resultData)
+                    res.redirect('/group/'+req.params.username+'/'+resultData);
                     
                 }else if(data2){
-                    var val1 = data2.username
-                    var val2 = req.user.username
+                    var val1 = data2.username;
+                    var val2 = req.user.username;
                     var value = '@'+val1+'@'+val2;
                     res.redirect('/chat/'+value);
                 }else{
-                    res.redirect('/group/'+req.params.username+'/'+req.params.name)
+                    res.redirect('/group/'+req.params.username+'/'+req.params.name);
                 }
                 
             });
@@ -247,12 +247,12 @@ module.exports = (app, io, mongoose) => {
                         var opts = [
                           { path: 'body.author', model: 'User' },
                           { path: 'body.receiver', model: 'User' }
-                        ]
+                        ];
 
                         Message.populate(newResult, opts, function (err, newResult1) {
                             callback(err, newResult1);
                         });
-                    })
+                    });
                 },
                 
                 function(callback){
@@ -261,13 +261,13 @@ module.exports = (app, io, mongoose) => {
                         .populate('friendsList.friendId')
                         .exec((err, result) => {
                             callback(err, result);
-                        })
+                        });
                 },
                 
                 function(callback){
                     Club.findOne({"name": nameParams}, (err, clubResult) => {
                         callback(err, clubResult);
-                    })
+                    });
                 },
                 
                 function(callback){
@@ -275,7 +275,7 @@ module.exports = (app, io, mongoose) => {
                         .populate('sender')
                         .exec((err, msgResult) => {
                             callback(err, msgResult);
-                        })
+                        });
                 },
                 
 //                       
@@ -291,8 +291,8 @@ module.exports = (app, io, mongoose) => {
                     .populate('receiver')
                     .exec((err, result3) => {
                         res.render('group', {title: nameParams+' | Soccerkik', user:req.user, chat:res1, data:res2, name: nameParams, club: res3, groupMsg: res4, image:result3 });
-                    })
-            })
+                    });
+            });
         }
     });
     
@@ -334,7 +334,7 @@ module.exports = (app, io, mongoose) => {
                    }, (err, count) => {
                        callback(err, count);
                    })
-               }
+               };
            },
 
            function(callback){
@@ -350,7 +350,7 @@ module.exports = (app, io, mongoose) => {
                        }}
                    }, (err, count) => {
                        callback(err, count);
-                   })
+                   });
                }
            },
             
@@ -358,7 +358,7 @@ module.exports = (app, io, mongoose) => {
             
         ], (err, results) => {
             // res.redirect('/group/'+req.params.name);
-            res.redirect('/group/'+req.params.username+'/'+req.params.name)
+            res.redirect('/group/'+req.params.username+'/'+req.params.name);
         });
         
         async.parallel([
@@ -381,7 +381,7 @@ module.exports = (app, io, mongoose) => {
                         $inc: {totalRequest: -1},
                     }, (err, count) => {
                        callback(err, count);
-                    })
+                    });
                 }
             },
             
@@ -403,7 +403,7 @@ module.exports = (app, io, mongoose) => {
                         }}
                     }, (err, count) => {
                        callback(err, count);
-                    })
+                    });
                 }
             },
             
@@ -420,7 +420,7 @@ module.exports = (app, io, mongoose) => {
                         $inc: {totalRequest: -1}
                     }, (err, count) => {
                         callback(err, count);
-                    })
+                    });
                 }
             },
 
@@ -437,7 +437,7 @@ module.exports = (app, io, mongoose) => {
                         }}
                     }, (err, count) => {
                         callback(err, count);
-                    })
+                    });
                 }
             },
 
@@ -449,14 +449,14 @@ module.exports = (app, io, mongoose) => {
                     {
                         "isRead": true
                     }, (err, done) => {
-                        callback(err, done)
-                    })
+                        callback(err, done);
+                    });
                 }
             },
             
             
         ], (err, results) => {
-            res.redirect('/group/'+req.params.username+'/'+req.params.name)
+            res.redirect('/group/'+req.params.username+'/'+req.params.name);
         });
         
         
@@ -473,8 +473,8 @@ module.exports = (app, io, mongoose) => {
         async.parallel([
             function(callback){
                 Club.find({"$or": [{'country':regex}, {'name':regex}]}, (err, result) => {
-                    callback(err, result)
-                })
+                    callback(err, result);
+                });
             },
             
             function(callback){
@@ -508,8 +508,8 @@ module.exports = (app, io, mongoose) => {
         async.parallel([
             function(callback){
                 User.find({}, (err, result) => {
-                    callback(err, result)
-                })
+                    callback(err, result);
+                });
             },
 
             function(callback){
@@ -535,18 +535,18 @@ module.exports = (app, io, mongoose) => {
                     var opts = [
                       { path: 'body.author', model: 'User' },
                       { path: 'body.receiver', model: 'User' }
-                    ]
+                    ];
 
                     Message.populate(newResult, opts, function (err, newResult1) {
                         callback(err, newResult1);
                     });
-                })
+                });
             },
 
             function(callback){
                 Club.find({}, (err, clubresult) => {
-                    callback(err, clubresult)
-                }).sort({'name': 1})
+                    callback(err, clubresult);
+                }).sort({'name': 1});
             },
             
             function(callback){
@@ -554,7 +554,7 @@ module.exports = (app, io, mongoose) => {
                     .populate('request.userId')
                     .exec((err, result) => {
                         callback(err, result);
-                    })
+                    });
             },
 
         ], (err, results) => {
@@ -574,8 +574,8 @@ module.exports = (app, io, mongoose) => {
                 .populate('receiver')
                 .exec((err, result3) => {
                     res.render('members', {title: 'Soccerkik | Members', user:req.user, userData: res4, data:memberChunks, chat:res2, clubs:res3, image: result3});
-                })
-        })
+                });
+        });
     });
     
     app.post('/members', (req, res) => {
@@ -605,7 +605,7 @@ module.exports = (app, io, mongoose) => {
             res.redirect('/');
         });
     });
-}
+};
 
 
 function loginValidation(req, res, next){
@@ -639,7 +639,7 @@ function isLoggedIn(req, res, next){
 //Fussy search mongodb
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-};
+}
 
 function PostRequest(req, res, link){
     async.parallel([
@@ -662,7 +662,7 @@ function PostRequest(req, res, link){
                     $inc: {totalRequest: -1},
                 }, (err, count) => {
                    callback(err, count);
-                })
+                });
             }
         },
         
@@ -684,7 +684,7 @@ function PostRequest(req, res, link){
                     }}
                 }, (err, count) => {
                    callback(err, count);
-                })
+                });
             }
         },
         
@@ -701,7 +701,7 @@ function PostRequest(req, res, link){
                     $inc: {totalRequest: -1}
                 }, (err, count) => {
                     callback(err, count);
-                })
+                });
             }
         },
 
@@ -718,7 +718,7 @@ function PostRequest(req, res, link){
                     }}
                 }, (err, count) => {
                     callback(err, count);
-                })
+                });
             }
         },
 
@@ -730,11 +730,11 @@ function PostRequest(req, res, link){
                 {
                     "isRead": true
                 }, (err, done) => {
-                    callback(err, done)
-                })
+                    callback(err, done);
+                });
             }
         }
     ], (err, results) => {
-        res.redirect(link)
+        res.redirect(link);
     });
 }
