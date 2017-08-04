@@ -102,7 +102,7 @@ body {
     -o-background-size: cover;
     background-size: cover;
     background-size: 90% 90%;
-    background: #fff !important;
+    background: #3ca2e0 !important;
     color: white !important;
 }
 
@@ -125,7 +125,7 @@ body {
 }
 
 .parallax-image {
-    background: url(../images/background.png);    
+/*    background: url(../images/background.png);    */
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -143,15 +143,48 @@ body {
 }
 
 .logo-div a{
-    color: #4aa1f3 !important;
+    color: #fff !important;
     text-decoration: none !important;
 }
 
-.reg-div a{
+.logo-div img{
+	width: 200px;
+	height: 200px;
+	margin-top: 40px;
+}
+
+.logo-div .logo{
+	font-size: 70px;
+	margin-bottom: 5px;
+}
+
+.reg-div {
     color: #4aa1f3 !important;
-    font-size:18px;
-    text-decoration:none !important;
+    font-size: 20px;
     z-index: 1000;
+	width: 100%;
+	margin-bottom: 0px;
+	padding-top: 5px;
+}
+
+.reg-link {
+	text-decoration: none;
+	background: #ffffff;
+	width: 150px !important;
+	padding: 10px;
+	margin: 0px 5px 0px 5px;
+	display: inline-block;
+}
+
+.reg-link:link, .reg-link:visited {
+	color: #4aa1f3;
+	text-decoration: none;
+}
+
+.reg-link:active, .reg-link:hover {
+    background: #fff;
+    color: #4aa1f3;
+	text-decoration: none;
 }
 
 .main {
@@ -162,15 +195,13 @@ body {
 }
 
 #main{
-    background-image: url('../profileImages/bg2.jpg');
+/*    background-image: url('../profileImages/bg2.jpg');*/
+	background-color: #3ca2e0;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     background-size: 100% 100%;
-    border: 1px solid white;
-    height: 100%;
-    min-height: 1000px;
 }
 
 form {
@@ -178,6 +209,7 @@ form {
     overflow: hidden;
     position: relative;
     box-shadow: 0 5px 10px 5px rgba(0,0,0,0.2);
+	margin-top: 0px;
 }
 
     form:after {
@@ -387,16 +419,57 @@ footer .container .text-muted {
     }
     
     .logo-div a{
-        color: #4aa1f3 !important;
+        color: #fff !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 200px;
+		height: 200px;
+		margin-top: 40px;
+		margin-bottom: 0px;
+	}
+	
+	.logo-div .logo{
+		font-size: 55px;
+		margin-bottom: 5px;
+	}
+	
+	form{
+		display: block;
+		margin-top: 45px;
+	}
 
-    .reg-div a{
-        color: #4aa1f3 !important;
-        font-size:18px;
-        text-decoration:none !important;
-        z-index: 1000;
-    }
+	.reg-div {
+		color: #fff !important;
+		font-size: 20px;
+		z-index: 1000;
+		width: 100%;
+		margin-bottom: 0px;
+		padding-top: 5px;
+	}
+
+	.reg-link {
+		text-decoration: none;
+		background: #fff;
+		width: 150px !important;
+		padding: 10px;
+		margin: 0px 5px 0px 5px;
+		display: inline-block;
+		font-size: 18px;
+		color: #4aa1f3 !important;
+	}
+
+	.reg-link:link, .reg-link:visited {
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
+
+	.reg-link:active, .reg-link:hover {
+		background: #fff;
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
 }
 
 @media only screen and (max-width:1366px) {
@@ -414,15 +487,57 @@ footer .container .text-muted {
     }
     
     .logo-div a{
-        color: #4aa1f3 !important;
+        color: #fff !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 165px;
+		height: 165px;
+		margin-top: 40px;
+		margin-bottom: 0px;
+	}
+	
+	.logo-div .logo{
+		font-size: 55px;
+		margin-bottom: 5px;
+	}
+	
+	form{
+		display: block;
+		margin-top: 45px;
+	}
 
-    .reg-div a{
-        color: #4aa1f3 !important;
-        font-size:18px;
-        text-decoration:none !important;
-    }
+	.reg-div {
+		color: #fff !important;
+		font-size: 20px;
+		z-index: 1000;
+		width: 100%;
+		margin-bottom: 0px;
+		padding-top: 5px;
+	}
+
+	.reg-link {
+		text-decoration: none;
+		background: #fff;
+		width: 150px !important;
+		padding: 10px;
+		margin: 0px 5px 0px 5px;
+		display: inline-block;
+		font-size: 18px;
+		color: #4aa1f3 !important;
+	}
+
+	.reg-link:link, .reg-link:visited {
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
+
+	.reg-link:active, .reg-link:hover {
+		background: #fff;
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
 }
 
 @media only screen and (max-width:1280px) {
@@ -440,16 +555,57 @@ footer .container .text-muted {
     }
     
     .logo-div a{
-        color: #4aa1f3 !important;
+        color: #fff !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 160px;
+		height: 160px;
+		margin-top: 40px;
+		margin-bottom: 0px;
+	}
+	
+	.logo-div .logo{
+		font-size: 50px;
+		margin-bottom: 5px;
+	}
+	
+	form{
+		display: block;
+		margin-top: 45px;
+	}
 
-    .reg-div a{
-        color: #4aa1f3 !important;
-        font-size:18px;
-        text-decoration:none !important;
-        z-index: 1000;
-    }
+	.reg-div {
+		color: #fff !important;
+		font-size: 20px;
+		z-index: 1000;
+		width: 100%;
+		margin-bottom: 0px;
+		padding-top: 5px;
+	}
+
+	.reg-link {
+		text-decoration: none;
+		background: #fff;
+		width: 150px !important;
+		padding: 10px;
+		margin: 0px 5px 0px 5px;
+		display: inline-block;
+		font-size: 18px;
+		color: #4aa1f3 !important;
+	}
+
+	.reg-link:link, .reg-link:visited {
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
+
+	.reg-link:active, .reg-link:hover {
+		background: #fff;
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
 }
 
 @media only screen and (max-width:1024px) {
@@ -466,17 +622,58 @@ footer .container .text-muted {
         background-color: #4aa1f3 !important;
     }
     
-    .logo-div a{
-        color: #4aa1f3 !important;
+   .logo-div a{
+        color: #fff !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 140px;
+		height: 140px;
+		margin-top: 40px;
+		margin-bottom: 0px;
+	}
+	
+	.logo-div .logo{
+		font-size: 50px;
+		margin-bottom: 5px;
+	}
+	
+	form{
+		display: block;
+		margin-top: 45px;
+	}
 
-    .reg-div a{
-        color: #4aa1f3 !important;
-        font-size:18px;
-        text-decoration:none !important;
-        z-index: 1000;
-    }
+	.reg-div {
+		color: #fff !important;
+		font-size: 20px;
+		z-index: 1000;
+		width: 100%;
+		margin-bottom: 0px;
+		padding-top: 5px;
+	}
+
+	.reg-link {
+		text-decoration: none;
+		background: #fff;
+		width: 150px !important;
+		padding: 10px;
+		margin: 0px 5px 0px 5px;
+		display: inline-block;
+		font-size: 18px;
+		color: #4aa1f3 !important;
+	}
+
+	.reg-link:link, .reg-link:visited {
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
+
+	.reg-link:active, .reg-link:hover {
+		background: #fff;
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
 }
 
 @media only screen and (max-width:768px) {
@@ -497,27 +694,62 @@ footer .container .text-muted {
     
     #main{
         background-image: none !important;
-        background-color: #4aa1f3 !important;
+        background-color: #3ca2e0 !important;
         height: 100%;
-        min-height: 500px !important;
     }
     
     .logo-div a{
-        color: #4aa1f3 !important;
+        color: #fff !important;
         text-decoration: none !important;
     }
-    
-    reg-div{
-        margin-top: 0 !important;
-        z-index: 1000;
-    }
+	
+	.logo-div img{
+		width: 130px;
+		height: 130px;
+		margin-top: 40px;
+		margin-bottom: 0px;
+	}
+	
+	.logo-div .logo{
+		font-size: 45px;
+		margin-bottom: 5px;
+	}
+	
+	form{
+		display: block;
+		margin-top: 45px;
+	}
 
-    .reg-div a{
-        color: #4aa1f3 !important;
-        font-size:18px;
-        text-decoration:none !important;
-        z-index: 1000;
-    }
+	.reg-div {
+		color: #fff !important;
+		font-size: 20px;
+		z-index: 1000;
+		width: 100%;
+		margin-bottom: 0px;
+		padding-top: 5px;
+	}
+
+	.reg-link {
+		text-decoration: none;
+		background: #fff;
+		width: 150px !important;
+		padding: 10px;
+		margin: 0px 5px 0px 5px;
+		display: inline-block;
+		font-size: 18px;
+		color: #4aa1f3 !important;
+	}
+
+	.reg-link:link, .reg-link:visited {
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
+
+	.reg-link:active, .reg-link:hover {
+		background: #fff;
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
 }
 
 @media only screen and (max-width:640px) {
@@ -536,21 +768,62 @@ footer .container .text-muted {
     
     #main{
         background-image: none !important;
-        background-color: #4aa1f3 !important;
+        background-color: #3ca2e0 !important;
         height: 100%;
-        min-height: 500px !important;
     }
-    
-    .logo-div a{
-        color: #4aa1f3 !important;
+	
+	.logo-div a{
+        color: #fff !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 100px;
+		height: 100px;
+		margin-top: 40px;
+		margin-bottom: 0px;
+	}
+	
+	.logo-div .logo{
+		font-size: 40px;
+		margin-bottom: 5px;
+	}
+	
+	form{
+		display: block;
+		margin-top: 45px;
+	}
 
-    .reg-div a{
-        color: #4aa1f3 !important;
-        font-size:18px;
-        text-decoration:none !important;
-    }
+	.reg-div {
+		color: #fff !important;
+		font-size: 20px;
+		z-index: 1000;
+		width: 100%;
+		margin-bottom: 0px;
+		padding-top: 5px;
+	}
+
+	.reg-link {
+		text-decoration: none;
+		background: #fff;
+		width: 150px !important;
+		padding: 10px;
+		margin: 0px 5px 0px 5px;
+		display: inline-block;
+		font-size: 18px;
+		color: #4aa1f3 !important;
+	}
+
+	.reg-link:link, .reg-link:visited {
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
+
+	.reg-link:active, .reg-link:hover {
+		background: #fff;
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
 }
 
 @media only screen and (max-width:480px) {
@@ -594,27 +867,62 @@ footer .container .text-muted {
     
     #main{
         background-image: none !important;
-        background-color: #4aa1f3 !important;
+        background-color: #3ca2e0 !important;
         height: 100%;
-        min-height: 500px !important;
     }
     
-    .logo-div a{
-        color: #4aa1f3 !important;
+	.logo-div a{
+        color: #fff !important;
         text-decoration: none !important;
     }
-    
-    .reg-div{
-        margin-top: 0 !important;
-        z-index: 1000;
-    }
+	
+	.logo-div img{
+		width: 100px;
+		height: 100px;
+		margin-top: 40px;
+		margin-bottom: 0px;
+	}
+	
+	.logo-div .logo{
+		font-size: 40px;
+		margin-bottom: 5px;
+	}
+	
+	form{
+		display: block;
+		margin-top: 170px;
+	}
 
-    .reg-div a{
-        color: #4aa1f3 !important;
-        font-size:18px;
-        text-decoration:none !important;
-        z-index: 1000;
-    }
+	.reg-div {
+		color: #fff !important;
+		font-size: 20px;
+		z-index: 1000;
+		width: 100%;
+		margin-bottom: 0px;
+		padding-top: 5px;
+	}
+
+	.reg-link {
+		text-decoration: none;
+		background: #fff;
+		width: 150px !important;
+		padding: 10px;
+		margin: 0px 5px 0px 5px;
+		display: inline-block;
+		font-size: 18px;
+		color: #4aa1f3 !important;
+	}
+
+	.reg-link:link, .reg-link:visited {
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
+
+	.reg-link:active, .reg-link:hover {
+		background: #fff;
+		color: #4aa1f3 !important;
+		text-decoration: none;
+	}
 }
 
 @media only screen and (max-width:320px) {
@@ -649,27 +957,53 @@ footer .container .text-muted {
     
     #main{
         background-image: none !important;
-        background-color: #4aa1f3 !important;
+        background-color: #3ca2e0 !important;
         height: 100%;
-        min-height: 500px !important;
     }
-    
-    .logo-div a{
-        color: #4aa1f3 !important;
+	
+	form{
+		display: block;
+		margin-top: 175px;
+	}
+	
+	.logo-div a{
+        color: #fff !important;
         text-decoration: none !important;
     }
-    
-    .reg-div{
-        margin-top: 0 !important;
-        z-index: 1000;
-    }
+	
+	.logo-div img{
+		width: 100px;
+		height: 100px;
+		margin-top: 40px;
+	}
 
-    .reg-div a{
-        color: #4aa1f3 !important;
-        font-size:18px;
-        text-decoration:none !important;
-        z-index: 1000;
-    }
+	.reg-div {
+		color: #fff !important;
+		z-index: 1000;
+		width: 100%;
+		margin-bottom: 0px;
+		padding-top: 5px;
+	}
+
+	.reg-link {
+		text-decoration: none;
+		background: none !important;
+		padding: 10px;
+		margin: 0px 5px 0px 5px;
+		display: inline-block;
+		font-size: 17px !important;
+	}
+
+	.reg-link:link, .reg-link:visited {
+		color: #fff !important;
+		text-decoration: none;
+	}
+
+	.reg-link:active, .reg-link:hover {
+		background: none !important;
+		color: #fff !important;
+		text-decoration: none;
+	}
 }
 
 

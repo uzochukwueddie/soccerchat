@@ -148,6 +148,12 @@ body {
     text-decoration: none !important;
 }
 
+.logo-div img{
+		margin-left: 20px;
+		margin-right: 5px;
+		margin-top: -5px;
+	}
+
 .reg-div a{
     color: #4aa1f3 !important;
     font-size:18px;
@@ -391,6 +397,14 @@ footer .container .text-muted {
         color: #4aa1f3 !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 40px;
+		height: 40px;
+		margin-left: 20px;
+		margin-right: 5px;
+		margin-top: -5px;
+	}
 
     .reg-div a{
         color: #4aa1f3 !important;
@@ -418,6 +432,14 @@ footer .container .text-muted {
         color: #4aa1f3 !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 40px;
+		height: 40px;
+		margin-left: 20px;
+		margin-right: 5px;
+		margin-top: -5px;
+	}
 
     .reg-div a{
         color: #4aa1f3 !important;
@@ -444,6 +466,14 @@ footer .container .text-muted {
         color: #4aa1f3 !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 40px;
+		height: 40px;
+		margin-left: 0px;
+		margin-right: 5px;
+		margin-top: -5px;
+	}
 
     .reg-div a{
         color: #4aa1f3 !important;
@@ -471,6 +501,14 @@ footer .container .text-muted {
         color: #4aa1f3 !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 40px;
+		height: 40px;
+		margin-left: 20px;
+		margin-right: 5px;
+		margin-top: -5px;
+	}
 
     .reg-div a{
         color: #4aa1f3 !important;
@@ -507,6 +545,14 @@ footer .container .text-muted {
         color: #4aa1f3 !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 40px;
+		height: 40px;
+		margin-left: 20px;
+		margin-right: 5px;
+		margin-top: -5px;
+	}
     
     reg-div{
         margin-top: 0 !important;
@@ -518,6 +564,7 @@ footer .container .text-muted {
         font-size:18px;
         text-decoration:none !important;
         z-index: 1000;
+		margin-left: 23px;
     }
 }
 
@@ -533,6 +580,7 @@ footer .container .text-muted {
 
     .icon-bar{
         background-color: #4aa1f3 !important;
+		margin-right: 20px;
     }
     
     #main{
@@ -546,11 +594,21 @@ footer .container .text-muted {
         color: #4aa1f3 !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 40px;
+		height: 40px;
+		margin-left: 20px;
+		margin-right: 5px;
+		margin-top: -5px;
+	}
 
     .reg-div a{
         color: #4aa1f3 !important;
         font-size:18px;
         text-decoration:none !important;
+		margin-left: 23px;
+		font-size: 17px !important;
     }
 }
 
@@ -604,6 +662,14 @@ footer .container .text-muted {
         color: #4aa1f3 !important;
         text-decoration: none !important;
     }
+	
+	.logo-div img{
+		width: 40px;
+		height: 40px;
+		margin-left: 20px;
+		margin-right: 5px;
+		margin-top: -5px;
+	}
     
     .reg-div{
         margin-top: 0 !important;
@@ -615,6 +681,8 @@ footer .container .text-muted {
         font-size:18px;
         text-decoration:none !important;
         z-index: 1000;
+		font-size: 20px !important;
+		margin-left: 23px;
     }
 }
 
@@ -658,7 +726,12 @@ footer .container .text-muted {
     .logo-div a{
         color: #4aa1f3 !important;
         text-decoration: none !important;
+		font-size: 30px;
     }
+	
+	.logo-div img{
+		display: none;
+	}
     
     .reg-div{
         margin-top: 0 !important;
@@ -670,6 +743,7 @@ footer .container .text-muted {
         font-size:18px;
         text-decoration:none !important;
         z-index: 1000;
+		font-size: 17px !important;
     }
 }
 

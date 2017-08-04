@@ -940,6 +940,15 @@ pre.prettyprint {
     text-decoration: none !important;
 }
 
+.navbar_img{
+	width: 40px;
+	height: 40px;
+	margin-left: 15px;
+	margin-right: 4px;
+	margin-top: 5px;
+	padding: 0px;
+}
+
 
 
 
@@ -1386,6 +1395,7 @@ legend {
     color: #fff;
     font-size: 30px;
     font-weight: bold;
+	padding-left: 0px;
 }
 
 .form .form-control {

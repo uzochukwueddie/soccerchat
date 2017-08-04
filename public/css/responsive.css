@@ -354,6 +354,10 @@
     .no_record_text{
         font-size: 20px;
     }
+	
+	.navbar_img{
+		display: none;
+	}
 }
 
 
