@@ -153,6 +153,12 @@ body {
 	margin-top: 40px;
 }
 
+.logo_img{
+	width: 50px !important;
+	height: 50px !important;
+	margin-top: 0px !important;
+}
+
 .logo-div .logo{
 	font-size: 70px;
 	margin-bottom: 5px;
@@ -210,6 +216,7 @@ form {
     position: relative;
     box-shadow: 0 5px 10px 5px rgba(0,0,0,0.2);
 	margin-top: 0px;
+	margin-bottom: 50px;
 }
 
     form:after {
@@ -506,6 +513,7 @@ footer .container .text-muted {
 	form{
 		display: block;
 		margin-top: 45px;
+		margin-bottom: 70px;
 	}
 
 	.reg-div {
@@ -574,6 +582,7 @@ footer .container .text-muted {
 	form{
 		display: block;
 		margin-top: 45px;
+		margin-bottom: 70px;
 	}
 
 	.reg-div {

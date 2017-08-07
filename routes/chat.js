@@ -7,7 +7,7 @@ var mongoose = require('mongoose')
 
 module.exports = (app) => {
     
-    app.get('/chat/:name',chatRedirect, (req, res, next) => {
+    app.get('/chat/:name', chatRedirect, (req, res, next) => {
         var name_Params = req.params.name
         
         var paramsName = req.params.name.split('@')

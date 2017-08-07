@@ -308,9 +308,9 @@ module.exports = (app, io, mongoose) => {
                    group.body = req.body.message;
                    group.groupId = req.body.clubId;
                    group.createdAt = new Date();
-                   //group.save((err, msg) => {
+                   group.save((err, msg) => {
                        callback(err, group);
-                   //})
+                   })
                }
            }
         ], (err, result) => {
