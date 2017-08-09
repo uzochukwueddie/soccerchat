@@ -1,92 +1,58 @@
+
 <!DOCTYPE html>
 <html>
+
 <head>
-
     <title><%= title %></title>
-    <meta charset="utf-8">
-    <link href="/css/login.css" rel='stylesheet' type='text/css' />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-
     <link href="/font-awesome.4.6.1/css/font-awesome.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="/profileImages/favicon.ico" type="image/x-icon" />
-
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="/css/mystyle.css" type="text/css">
 </head>
+<body id="login-page">
 
-<body>
-
-    <div class="container logo-container">
-        <div class="row">
-            <div class="col-md-12">
-                    <nav class="navbar" id="nav_bar" role="navigation">
-
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle navbar_icon" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                                <span class="sr-only">Toggle navigation</span> 
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <h1 class="logo-div">
-                                <a class="" href="/">
-                                <img src="/profileImages/logo.png" class="logo_img" width="50px" height="50px"> Soccerkik
-                                </a>
-                            </h1>
-                        </div>
-
-                    </nav>
-                </div>
-
+    <div class="form-box">
+        <div class="form-logo">
+       		<p class="text-center logo-text"><a href="/">SOCCERKIK</a></p>
+       		<p class="text-center" style="color:#4aa1f3; font-weight:bold">Enter Your Email</p>
         </div>
-    </div>
-
-   <div id="main">
-    <div class="main">
         <form action="/forgot_password" method="post">
+          	<% if(hasErrors) {%>
+				<% for(var i = 0; i < messages.length; i++) {%>
+					<div class="alert alert-danger text-center">
+					   <a href="#" class="close" data-dismiss="alert" aria-label="close">
+						   &times;
+					   </a>
+					   <%= messages[i] %>
 
-            <h1>Enter Email</h1>
+					</div>
+				<% } %>
+			<% } %>
 
-            <div class="inset">
-                <% if(hasErrors) {%>
-                    <% for(var i = 0; i < messages.length; i++) {%>
-                        <div class="alert alert-danger text-center">
-                           <a href="#" class="close" data-dismiss="alert" aria-label="close">
-                               &times;
-                           </a>
-                           <%= messages[i] %>
-                            
-                        </div>
-                    <% } %>
-                <% } %>
-                
-                <% if(noErrors) {%>
-                    <div class="alert alert-info text-center">
-                       <a href="#" class="close" data-dismiss="alert" aria-label="close">
-                           &times;
-                       </a>
-                       <%= info %>
+			<% if(noErrors) {%>
+				<div class="alert alert-info text-center">
+				   <a href="#" class="close" data-dismiss="alert" aria-label="close">
+					   &times;
+				   </a>
+				   <%= info %>
 
-                    </div>
-                <% } %>
-
-                <p>
-                    <label for="email">EMAIL ADDRESS</label>
-                    <input type="text" name="email" placeholder="" />
-                </p>
-
-            </div>
-
-            <p class="p-container">
-                <span><a href="/">Already reset your password?</a></span>
-                <input type="submit" class="login-log" style=" background: #03A9F4; border: #3bb5ec;" name="Submit" value="Send">
-            </p>
+				</div>
+			<% } %>
+           
+            <input type="text" name="email" class="form-control" placeholder="Email" />
+            <input type="submit" class="btn btn-social login-log" style="background: #03A9F4; border: #3bb5ec;" name="Submit" value="SEND">
         </form>
+        <a href="/" class="login-action">
+            <h5>Already reset your password?</h5>
+        </a>
     </div>
-    </div>
+
 
 <script src="/assets/js/jquery.1.11.1.min.js"></script>
 <script src="/assets/js/bootstrap.min.js"></script>
-
 </body>
+
 </html>

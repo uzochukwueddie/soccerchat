@@ -284,9 +284,11 @@ function loginValidation(req, res, next){
 }
 
 function chatRedirect(req, res, next){
-    if(req.path == '/chat/'+'@'+req.user.username+'@'+req.user.username){
+    if(req.path === '/chat/'+'@'+req.user.username+'@'+req.user.username){
         res.redirect('/home');
+		
     }
+	next();
 }
 
 //Fussy search mongodb

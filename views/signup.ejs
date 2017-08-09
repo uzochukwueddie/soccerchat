@@ -1,96 +1,58 @@
+
 <!DOCTYPE html>
 <html>
+
 <head>
-
     <title><%= title %></title>
-    <meta charset="utf-8">
-    <link href="/css/login.css" rel='stylesheet' type='text/css' />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-
     <link href="/font-awesome.4.6.1/css/font-awesome.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="/profileImages/favicon.ico" type="image/x-icon" />
-
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="/css/mystyle.css" type="text/css">
 </head>
+<body id="login-page">
 
-<body>
-
-    <div class="container logo-container">
-   		<div class="row text-center title-name logo-div">
-			<img src="/profileImages/logo.png">
-			<h1 class="logo text-center">
-				<a class="" href="/">Soccerkik</a>
-			</h1>
-	   </div>
-	   
-	   <div class="text-center reg-div">
-	   		<a href="/latest-football-news" class="reg-link">Football News</a>
-	   		<a href="/" class="reg-link">Login</a>
-	   </div>
-   
-    </div>
-
-<div id="main">
-    <div class="main">
+    <div class="form-box">
+        <div class="form-logo">
+       		<p class="text-center logo-text"><a href="/">SOCCERKIK</a></p>
+       		<p class="text-center"><a href="/latest-football-news" class="reg-lin" style="color:#4aa1f3; font-weight:bold">Get Football News</a></p>
+        </div>
         <form action="/signup" method="post">
+           	<% if(hasErrors) {%>
+				 <div class="alert alert-danger text-center">
+				 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				  <% for(var i = 0; i < errors.length; i++) {%>
+					  <%= errors[i] %> <br>
+				  <% } %>
 
-            <h1>
-                Register
-            </h1>
-
-            <div class="inset">
-                <% if(hasErrors) {%>
-                     <div class="alert alert-danger text-center">
-                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                      <% for(var i = 0; i < errors.length; i++) {%>
-                          <%= errors[i] %> <br>
-                      <% } %>
-                      
-                      </div>
-                  <% } %>
-
-                <p>
-                  
-                  <select name="club" id="club" class=" select">
-                     <option value="">Select Your Club</option>
-                      <% data.forEach(function(val){%>
-                          <option value="<%= val.name %>"><%= val.name %></option>
-                      <% }) %>
-                  </select>
-                </p>
-
-                <p>
-                  <label for="username">USERNAME</label>
-                  <input type="text" name="username" class="" placeholder="">
-                </p>
-
-                <p>
-                    <label for="email">EMAIL ADDRESS</label>
-                    <input type="text" name="email" placeholder="" />
-                </p>
-                <p>
-                    <label for="password">PASSWORD</label>
-                    <input type="password" name="password" placeholder="" />
-                </p>
-
-            </div>
-
-            <p class="p-container">
-                <span><a href="/forgot_password">Forgot password?</a></span>
-                <span><a href="" style="color:white;padding-left:10px;padding-right:10px">|</a></span>
-                <span><a href="/">Login</a></span>
-                <input type="submit" class="login-log" style=" background: #03A9F4; border: #3bb5ec;" value="Register">
-            </p>
+				  </div>
+			<% } %>
+          	
+          	<select name="club" id="club" class="form-control select">
+			 	<option value="">Select Your Club</option>
+			  	<% data.forEach(function(val){%>
+				  <option value="<%= val.name %>"><%= val.name %></option>
+			  	<% }) %>
+			</select>
+           
+           	<input type="text" name="username" class="form-control" placeholder="Username">
+            <input type="text" name="email" class="form-control" placeholder="Email" />
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            <input type="submit" class="btn btn-social login-log" style="background: #03A9F4; border: #3bb5ec;" value="REGISTER">
         </form>
+        <a href="/forgot_password" class="login-action" title="Forgot password">
+            <h5>Forgot password?</h5>
+        </a>
+        <a href="/" class="login-action" title="Login">
+            <h5>Already Register? Please Login</h5>
+        </a>
     </div>
-</div>
-
 
 
 <script src="/assets/js/jquery.1.11.1.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-
-
+<script src="/assets/js/bootstrap.min.js"></script>
 </body>
+
 </html>

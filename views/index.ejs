@@ -1,143 +1,79 @@
+
 <!DOCTYPE html>
 <html>
+
 <head>
-
     <title><%= title %></title>
-    <meta charset="utf-8">
-    <link href="/css/login.css" rel='stylesheet' type='text/css' />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-
     <link href="/font-awesome.4.6.1/css/font-awesome.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="/profileImages/favicon.ico" type="image/x-icon" />
-
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="/css/mystyle.css" type="text/css">
 </head>
+<body id="login-page">
 
-<body>
-
-    <div class="container logo-container">
-<!--
-        <div class="row">
-            <div class="col-md-12">
-                <nav class="navbar" id="nav_bar" role="navigation">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle navbar_icon" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span> 
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <h1 class="logo-div">
-                            <a class="" href="/"></a>
-                        </h1>
-                    </div>
-
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li style="padding-right: 50px;">
-                                <h2 class="reg-div" >
-                                   <a href="/latest-football-news" style="padding-right: 30px;">
-                                        Football News
-                                    </a>
-                                    <a href="/">
-                                        Login
-                                    </a>
-
-                                    <a href="/signup" class="reg_link" style="display: none;">
-                                        | Register
-                                    </a>
-                                </h2>
-
-                            </li>
-                            <li class="reg_link2">
-                                <h2 class="reg-div">
-                                    <a href="/signup">
-                                        Register
-                                    </a>
-                                </h2>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
+    <div class="form-box">
+        <div class="form-logo">
+       		<p class="text-center logo-text"><a href="/">SOCCERKIK</a></p>
+       		<p class="text-center"><a href="/latest-football-news" class="reg-lin" style="color:#4aa1f3; font-weight:bold">Get Football News</a></p>
         </div>
--->
-        
-       <div class="row text-center title-name logo-div">
-			<img src="/profileImages/logo.png">
-			<h1 class="logo text-center">
-				<a class="" href="/">Soccerkik</a>
-			</h1>
-	   </div>
-	   
-	   <div class="text-center reg-div">
-	   		<a href="/latest-football-news" class="reg-link">Football News</a>
-	   		<a href="/signup" class="reg-link">Register</a>
-	   </div>
-	   
-    </div>
-
-<div id="main">
-    <div class="main">
-
         <form action="/" method="post">
+           <% if(hasErrors) {%>
+				 <div class="alert alert-danger text-center">
+				 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				  <% for(var i = 0; i < messages.length; i++) {%>
+					  <%= messages[i] %> <br>
+				  <% } %>
 
-            <h1>
-                Login
-            </h1>
+				  </div>
+			  <% } %>
 
-            <div class="inset">
-                <% if(hasErrors) {%>
-                     <div class="alert alert-danger text-center">
-                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                      <% for(var i = 0; i < messages.length; i++) {%>
-                          <%= messages[i] %> <br>
-                      <% } %>
-                      
-                      </div>
-                  <% } %>
+			  <% if(noErrors) {%>
+				<div class="alert alert-success text-center">
+				   <a href="#" class="close" data-dismiss="alert" aria-label="close">
+					   &times;
+				   </a>
+				   <%= success %>
 
-                  <% if(noErrors) {%>
-                    <div class="alert alert-success text-center">
-                       <a href="#" class="close" data-dismiss="alert" aria-label="close">
-                           &times;
-                       </a>
-                       <%= success %>
-
-                    </div>
-                <% } %>
-
-                  <input type="hidden" name="firstRoom" id="firstRoom" value="FirstRoom">
-
-                <p>
-                    <label for="email">EMAIL ADDRESS</label>
-                    <input type="text" name="email" placeholder="" />
-                </p>
-                <p>
-                    <label for="password">PASSWORD</label>
-                    <input type="password" name="password" placeholder="" />
-                </p>
-
-            </div>
-
-            <div class="p-container text-center">
-                <input type="checkbox" name="rememberme" value="yes">&nbsp;<label class="remember">REMEMBER ME</label>
-            </div>
-
-            <p class="p-container">
-                <span><a href="/forgot_password">Forgot password?</a></span>
-                <span><a href="" style="color:white;padding-left:10px;padding-right:10px">|</a></span>
-                <span><a href="/signup">Not Yet Register?</a></span>
-                <input type="submit" class="login-log" style=" background: #03A9F4; border: #3bb5ec;" value="Login">
-            </p>
+				</div>
+			<% } %>
+           
+           	<input type="hidden" name="firstRoom" id="firstRoom" value="FirstRoom">
+            <input type="text" name="email" class="form-control" placeholder="Email" />
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            <input type="checkbox" name="rememberme" value="yes"> REMEMBER ME
+            <input type="submit" class="btn btn-social login-log" style="background: #03A9F4; border: #3bb5ec;" value="LOGIN">
         </form>
+        <a href="/forgot_password" class="login-action" title="Forgot password">
+            <h5>Forgot password?</h5>
+        </a>
+        <a href="/signup" class="login-action" title="Sign Up">
+            <h5>Not Yet Register?</h5>
+        </a>
     </div>
-</div>
+
+<!--
+    <footer class="login-footer text-center">
+        <div class="col-xs-3">
+            <a class="login-action" href="" title="language">LANGUAGE</a>
+        </div>
+        <div class="col-xs-3">
+            <a class="login-action" href="" title="terms">TERMS</a>
+        </div>
+        <div class="col-xs-3">
+            <a class="login-action" href="" title="privacy">PRIVACY</a>
+        </div>
+        <div class="col-xs-3">
+            <a class="login-action" href="" title="careers">CAREERS</a>
+        </div>
+    </footer>
+-->
 
 
-    <script src="/assets/js/jquery.1.11.1.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-
+<script src="/assets/js/jquery.1.11.1.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
 </body>
+
 </html>
