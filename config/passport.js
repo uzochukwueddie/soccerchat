@@ -58,6 +58,7 @@ passport.use('local.signup', new LocalStrategy({
             }
         ], (err, result) => {
             var newUser = result[1];
+            console.log(newUser);
             return done(null, newUser);
         });
     })
@@ -80,7 +81,7 @@ passport.use('local.login', new LocalStrategy({
             messages.push('Email Does Not Exist Or Password is Invalid')
             return done(null, false, req.flash('error', messages));
         }
-        
+        console.log(user)
         return done(null, user); 
     });
 }));
