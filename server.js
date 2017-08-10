@@ -24,16 +24,16 @@ app.use(compression())
 app.use(helmet());
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true});
 //mongoose.connect('mongodb://localhost/soccerchat');
 
-mongoose.connection.on("open", function() {
-    //console.log("connection to database done!");
-});
-
-mongoose.connection.on("error", function() {
-    //console.log("error");
-});
+//mongoose.connection.on("open", function() {
+//    //console.log("connection to database done!");
+//});
+//
+//mongoose.connection.on("error", function() {
+//    //console.log("error");
+//});
 
 
 var server = http.createServer(app);

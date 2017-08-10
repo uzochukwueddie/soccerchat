@@ -51,11 +51,11 @@ module.exports = (app, io, mongoose) => {
     });
 
     app.post('/signup', validate,  passport.authenticate('local.signup', {
-//        successRedirect: '/home',
+        successRedirect: '/home',
         failureRedirect: '/signup',
         failureFlash: true
     }), (req, res) => {
-        res.redirect('/home');
+        //res.redirect('/home');
     });
     
     app.get('/home', isLoggedIn, (req, res) => {

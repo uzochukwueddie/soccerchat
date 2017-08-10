@@ -58,7 +58,7 @@ module.exports = (app) => {
         failureFlash : true
     }));
     
-    app.get('/admin/dashboard', (req, res) => {
+    app.get('/admin/dashboard', isLoggedIn, (req, res) => {
         res.render('admin/dashboard');
     });
     
