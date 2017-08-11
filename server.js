@@ -27,14 +27,6 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true});
 //mongoose.connect('mongodb://localhost/soccerchat', {useMongoClient: true});
 
-//mongoose.connection.on("open", function() {
-//    //console.log("connection to database done!");
-//});
-//
-//mongoose.connection.on("error", function() {
-//    //console.log("error");
-//});
-
 
 var server = http.createServer(app);
 var io = socketIO(server);
@@ -61,7 +53,7 @@ app.use(validator({
 
 app.use(session({
     secret: process.env.SECRET_COOKIE_SECRET,
-    //secret: 'Thisismytestkey',
+    secret: 'Thisismytestkey',
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({mongooseConnection: mongoose.connection})

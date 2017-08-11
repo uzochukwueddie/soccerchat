@@ -82,16 +82,24 @@ module.exports = (app) => {
                     .exec((err, result) => {
                         callback(err, result);
                     })
-            }
+            },
+			
+			function(callback){
+				Club.find({}, function(err, result){
+					callback(err, result);
+				}).sort({'name': 1});
+			}
         ], (err, results) => {
             var result1 = results[0];
             var result2 = results[1];
+			var result3 = results[2];
             
             Message.find({'$or': [{"authorName":req.user.username}, {"receiverName":req.user.username}]})
                 .populate('author')
                 .populate('receiver')
-                .exec((err, result3) => {
-                    res.render('user/profile', {title: 'Profile Settings || Soccerkik', user:req.user, message:result1, data:result2, image:result3});
+                .exec((err, result4) => {
+                    res.render('user/profile', {title: 'Profile Settings || Soccerkik', user:req.user, message:result1, 
+												data:result2, image:result4, clubs:result3});
                 })
         })
     });

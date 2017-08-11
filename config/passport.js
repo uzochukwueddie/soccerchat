@@ -19,7 +19,6 @@ passport.use('local.signup', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, (req, email, password, done) => {
-//{"$or":[{'email':email},{'username':req.body.username}]}
     User.findOne({"$or":[{'email':email},{'username':req.body.username}]}, (err, user) => {
         if(err){
             return done(err);
@@ -57,7 +56,6 @@ passport.use('local.login', new LocalStrategy({
             messages.push('Email Does Not Exist Or Password is Invalid')
             return done(null, false, req.flash('error', messages));
         }
-        console.log(user)
         return done(null, user); 
     });
 }));
