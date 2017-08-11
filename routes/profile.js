@@ -41,7 +41,7 @@ var upload = multer({
 
 module.exports = (app) => {
     
-    app.get('/settings/profile', (req, res) => {
+    app.get('/settings/profile', isLoggedIn, (req, res) => {
 
         async.parallel([
             function(callback){
@@ -170,7 +170,7 @@ module.exports = (app) => {
 
 
     
-    app.get('/settings/interests', (req, res) => {
+    app.get('/settings/interests', isLoggedIn, (req, res) => {
         
         async.parallel([
             function(callback){
@@ -393,7 +393,7 @@ module.exports = (app) => {
         
     });
     
-    app.get('/profile/:name', (req, res) => {
+    app.get('/profile/:name', isLoggedIn, (req, res) => {
         var name = req.params.name
 
         async.parallel([
@@ -459,6 +459,14 @@ module.exports = (app) => {
         req.logout();
         res.redirect('/');
     });
+}
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        next();
+    }else{
+		res.redirect('/');
+	}
 }
 
 function PostRequest(req, res, link){
