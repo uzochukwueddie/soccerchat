@@ -159,6 +159,7 @@ $(document).ready(function(){
         var gender = $('#gender').val();
         var userImage = $('#add-input').val();
         var image_user = $('#image_user').val();
+		var club = $('#club').val();
         
         var valid = true;
 
@@ -166,7 +167,7 @@ $(document).ready(function(){
             $('#add-input').val($('#image_user').val())
         }
         
-        if(fullname == '' || city == '' || description == ''){
+        if(fullname == '' || city == '' || description == '' || club == ''){
             valid = false;
             $('#error').html('<div class="alert alert-danger">You cannot submit an empty form field</div>');
         }else{
@@ -183,7 +184,8 @@ $(document).ready(function(){
                     city: city,
                     description: description,
                     gender: gender,
-                    userImage: userImage
+                    userImage: userImage,
+					club: club
                 },
                 success: function(data){
                     $('#fullname').val('');

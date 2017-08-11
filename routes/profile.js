@@ -97,6 +97,37 @@ module.exports = (app) => {
     });
     
     app.post('/settings/profile', (req, res) => {
+		async.parallel([
+            function(callback){
+               Club.update({
+                   'name':req.body.club,
+                   'fans.email': {$ne:req.user.email}
+               },
+               {
+                    $push: {fans: {
+                        username:req.user.username,
+                        email:req.user.email
+                    }}
+               }, (err, count) => {
+                   callback(err, count)
+               })
+            },
+            
+            function(callback){
+                User.update({
+                        '_id': req.user._id
+                    },
+                    {
+                        'club': req.body.club,
+                    }, 
+                    { 
+                        upsert: true 
+                        
+                    }, (err, result) => {
+                        callback(err, result);
+                    })
+            }
+        ]);
 
         async.waterfall([
             function(callback){

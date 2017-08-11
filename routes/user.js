@@ -635,7 +635,6 @@ function isLoggedIn(req, res, next){
     }else{
 		res.redirect('/');
 	}
-    
 }
 
 //Fussy search mongodb

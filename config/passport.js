@@ -20,7 +20,7 @@ passport.use('local.signup', new LocalStrategy({
     passReqToCallback: true
 }, (req, email, password, done) => {
 //{"$or":[{'email':email},{'username':req.body.username}]}
-    User.findOne({'email':email}, (err, user) => {
+    User.findOne({"$or":[{'email':email},{'username':req.body.username}]}, (err, user) => {
         if(err){
             return done(err);
         }
@@ -28,39 +28,15 @@ passport.use('local.signup', new LocalStrategy({
         if(user){
             return done(null, false, req.flash('error', 'Username Or Email Already Exist.'));
         }
-        
-        async.parallel([
-            function(callback){
-               Club.update({
-                   'name':req.body.club,
-                   'fans.email': {$ne:req.body.email}
-               },
-               {
-                    $push: {fans: {
-                        username:req.body.username,
-                        email:req.body.email
-                    }}
-               }, (err, count) => {
-                   callback(err, count)
-               })
-            },
-            
-            function(callback){
-                var newUser = new User();
-                newUser.username = req.body.username;
-                newUser.email = req.body.email;
-                newUser.password = newUser.encryptPassword(req.body.password);
-                newUser.club = req.body.club;
+		
+		var newUser = new User();
+		newUser.username = req.body.username;
+		newUser.email = req.body.email;
+		newUser.password = newUser.encryptPassword(req.body.password);
 
-                newUser.save((err) => {
-                    callback(err, newUser)
-                });
-            }
-        ], (err, result) => {
-            var newUser = result[1];
-            console.log(newUser);
-            return done(null, newUser);
-        });
+		newUser.save((err) => {
+			return done(err, newUser)
+		});
     })
 }));
 

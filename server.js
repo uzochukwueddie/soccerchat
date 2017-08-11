@@ -23,17 +23,9 @@ var app = express();
 app.use(compression())
 app.use(helmet());
 
- var forceSsl = function (req, res, next) {
-    if (req.headers['x-forwarded-proto'] !== 'https') {
-        return res.redirect(['https://', req.get('Host'), req.url].join(''));
-    }
-    return next();
- };
-app.use(forceSsl);
-
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true});
-//mongoose.connect('mongodb://localhost/soccerchat');
+//mongoose.connect('mongodb://localhost/soccerchat', {useMongoClient: true});
 
 //mongoose.connection.on("open", function() {
 //    //console.log("connection to database done!");
@@ -62,7 +54,7 @@ app.use(validator());
 app.use(validator({
  customValidators: {
     noSpace: function(value) {
-        return value.trim().length > 0
+        return !value.match(/\s/g);
     }
  }
 }));
