@@ -92,27 +92,10 @@ module.exports = (app, io) => {
         async.waterfall([
             function(callback){
                 User.findOne({passwordResetToken:req.params.token, passwordResetExpires: {$gt: Date.now()}}, (err, user) => {
-                    if(!user){
-                        req.flash('error', 'Password reset token has expired or is invalid. Enter your email to get a new token.');
-                        return res.redirect('/forgot_password');
-                    }
-
-                      req.checkBody('password', 'Password is Required').notEmpty();
-                      req.checkBody('password', 'Password Must Not Be Less Than 5').isLength({min:5});
-                    
-//                      req.getValidationResult()
-//                            .then((result) => {
-//                                const errors = result.array();
-//                                const messages = [];
-//                                errors.forEach((error) => {
-//                                    messages.push(error.msg);
-//                                });
-//                                req.flash('error', messages);
-//                                return res.redirect('/reset/'+req.params.token);
-//                            })
-//                            .catch((err) => {
-//                                return next(err);
-//                            })
+                      if(!user){
+                         req.flash('error', 'Password reset token has expired or is invalid. Enter your email to get a new token.');
+                         return res.redirect('/forgot_password');
+                      }
                     
                       if(req.body.password == req.body.cpassword){
                           
