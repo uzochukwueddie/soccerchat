@@ -88,7 +88,7 @@ module.exports = (app, io) => {
         });
     });
 
-    app.post('/reset/:token', resetPassword, (req, res) => {
+    app.post('/reset/:token', resetPassword, (req, res, next) => {
         async.waterfall([
             function(callback){
                 User.findOne({passwordResetToken:req.params.token, passwordResetExpires: {$gt: Date.now()}}, (err, user) => {
@@ -102,7 +102,7 @@ module.exports = (app, io) => {
                     
                       if(req.body.password == req.body.cpassword){
                           req.getValidationResult()
-                              .then((result) => {
+                                .then((result) => {
                                     const errors = result.array();
                                     if(errors){
                                         const messages = [];
@@ -122,7 +122,10 @@ module.exports = (app, io) => {
                                             res.redirect('/');
                                         })
                                     }
-                            })
+                                })
+                                .catch((err) => {
+                                    return next();
+                                })
                           
                       }else{
                           req.flash('error', 'Password and confirm password are not equal.');
