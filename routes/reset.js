@@ -104,28 +104,26 @@ module.exports = (app, io) => {
                           req.getValidationResult()
                                 .then((result) => {
                                     const errors = result.array();
-                                    if(errors){
-                                        const messages = [];
-                                        errors.forEach((error) => {
-                                            messages.push(error.msg);
-                                        });
-                                        req.flash('error', messages);
-                                        return res.redirect('/reset/'+req.params.token);
-                                    }else{
-                                        user.password = user.encryptPassword(req.body.password);
-                                        user.passwordResetToken = undefined;
-                                        user.passwordResetExpires = undefined;
-
-                                        user.save((err) => {
-                                            req.flash('success', 'Your password has been successfully updated.');
-                                            callback(err, user);
-                                            res.redirect('/');
-                                        })
-                                    }
+                                    const messages = [];
+                                    errors.forEach((error) => {
+                                        messages.push(error.msg);
+                                    });
+                                    req.flash('error', messages);
+                                    return res.redirect('/reset/'+req.params.token);
                                 })
                                 .catch((err) => {
-                                    return next();
+                                    return next(err);
                                 })
+                          
+                            user.password = user.encryptPassword(req.body.password);
+                            user.passwordResetToken = undefined;
+                            user.passwordResetExpires = undefined;
+
+                            user.save((err) => {
+                                req.flash('success', 'Your password has been successfully updated.');
+                                callback(err, user);
+                                res.redirect('/');
+                            })
                           
                       }else{
                           req.flash('error', 'Password and confirm password are not equal.');
