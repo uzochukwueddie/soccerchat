@@ -10,19 +10,21 @@ var validate = (req, res, next) => {
    req.checkBody('password', 'Password is Required').notEmpty();
    req.checkBody('password', 'Password Must Not Be Less Than 5').isLength({min:5});
 
-   var errors = req.validationErrors();
+    
+    req.getValidationResult()
+        .then((result) => {
+            const errors = result.array();
+            const messages = [];
+            errors.forEach((error) => {
+                messages.push(error.msg);
+            });
 
-   if(errors){
-       var messages = [];
-       errors.forEach((error) => {
-           messages.push(error.msg);
-       });
-
-       req.flash('error', messages);
-       res.redirect('/signup');
-   }else{
-       return next();
-   }
+            req.flash('error', messages);
+            res.redirect('/signup');
+        })
+        .catch((err) => {
+            return next();
+        })
 }
 
 module.exports = {isRealString, validate};

@@ -261,28 +261,6 @@ module.exports = (app) => {
     });
 }
 
-
-function loginValidation(req, res, next){
-   req.checkBody('email', 'Email is Required').notEmpty();
-   req.checkBody('email', 'Email is Invalid').isEmail();
-   req.checkBody('password', 'Password is Required').notEmpty();
-   req.checkBody('password', 'Password Must Not Be Less Than 5 Characters').isLength({min:5});
-
-   var loginErrors = req.validationErrors();
-
-   if(loginErrors){
-       var messages = [];
-       loginErrors.forEach((error) => {
-           messages.push(error.msg);
-       });
-
-       req.flash('error', messages);
-       res.redirect('/');
-   }else{
-       return next();
-   }
-}
-
 function chatRedirect(req, res, next){
     if(req.path === '/chat/'+'@'+req.user.username+'@'+req.user.username){
         res.redirect('/home');

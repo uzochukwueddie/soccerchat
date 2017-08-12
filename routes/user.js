@@ -614,19 +614,20 @@ function loginValidation(req, res, next){
    req.checkBody('password', 'Password is Required').notEmpty();
    req.checkBody('password', 'Password Must Not Be Less Than 5 Characters').isLength({min:5});
 
-   var loginErrors = req.validationErrors();
+    req.getValidationResult()
+        .then((result) => {
+            const errors = result.array();
+            const messages = [];
+            errors.forEach((error) => {
+                messages.push(error.msg);
+            });
 
-   if(loginErrors){
-       var messages = [];
-       loginErrors.forEach((error) => {
-           messages.push(error.msg);
-       });
-
-       req.flash('error', messages);
-       res.redirect('/');
-   }else{
-       return next();
-   }
+            req.flash('error', messages);
+            res.redirect('/');
+        })
+        .catch((err) => {
+            return next();
+        })
 }
 
 function isLoggedIn(req, res, next){

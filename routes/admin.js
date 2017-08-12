@@ -109,20 +109,21 @@ function signupValidation(req, res, next){
    req.checkBody('email', 'Email is Invalid').isEmail();
    req.checkBody('password', 'Password is Required').notEmpty();
    req.checkBody('password', 'Password Must Not Be Less Than 5 Characters').isLength({min:5});
+    
+    req.getValidationResult()
+        .then((result) => {
+            const errors = result.array();
+            const messages = [];
+            errors.forEach((error) => {
+                messages.push(error.msg);
+            });
 
-   var regErrors = req.validationErrors();
-
-   if(regErrors){
-       var messages = [];
-       regErrors.forEach((error) => {
-           messages.push(error.msg);
-       });
-
-       req.flash('error', messages);
-       res.redirect('/admin/signup');
-   }else{
-       return next();
-   }
+            req.flash('error', messages);
+            res.redirect('/admin/signup');
+        })
+        .catch((err) => {
+            return next();
+        })
 }
 
 function loginValidation(req, res, next){
@@ -130,20 +131,21 @@ function loginValidation(req, res, next){
    req.checkBody('email', 'Email is Invalid').isEmail();
    req.checkBody('password', 'Password is Required').notEmpty();
    req.checkBody('password', 'Password Must Not Be Less Than 5 Characters').isLength({min:5});
+    
+    req.getValidationResult()
+        .then((result) => {
+            const errors = result.array();
+            const messages = [];
+            errors.forEach((error) => {
+                messages.push(error.msg);
+            });
 
-   var loginErrors = req.validationErrors();
-
-   if(loginErrors){
-       var messages = [];
-       loginErrors.forEach((error) => {
-           messages.push(error.msg);
-       });
-
-       req.flash('error', messages);
-       res.redirect('/admin/login');
-   }else{
-       return next();
-   }
+            req.flash('error', messages);
+            res.redirect('/admin/login');
+        })
+        .catch((err) => {
+            return next();
+        })
 }
 
 function isLoggedIn(req, res, next){

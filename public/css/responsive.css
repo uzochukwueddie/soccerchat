@@ -196,6 +196,10 @@
     .no_record_text{
         font-size: 20px;
     }
+    
+    .clubDiv{
+        margin: 0 auto !important;
+    }
 }
 
 @media only screen and (max-width:640px) {
@@ -241,6 +245,7 @@
     .no_record_text{
         font-size: 20px;
     }
+    
 }
 
 @media only screen and (max-width:480px) {
@@ -309,6 +314,14 @@
     .no_record_text{
         font-size: 20px;
     }
+    
+     #login-page .form-div{
+        margin-top: 120px !important;
+    }
+    
+    #login-page .contact-text h4{
+        visibility: hidden;
+    }
 }
 
 @media only screen and (max-width:320px) {
@@ -358,6 +371,34 @@
 	.navbar_img{
 		display: none;
 	}
+    
+    .contact-link{
+        background: #4aa1f3;
+        border-radius: 0;
+        color: #fff;
+        width: 50px;
+        font-size: 12px !important;
+        
+    }
+
+    .contact-link:link, .contact-link:visited {
+        color: #fff;
+        text-decoration: none;
+        background: #4aa1f3;
+    }
+
+    .contact-link:active, .contact-link:hover {
+        background: #4aa1f3;
+        color: #fff;
+    }
+    
+    #login-page .contact-text h4{
+        visibility: hidden;
+    }
+    
+    #login-page .form-div{
+        margin-top: 20px !important;
+    }
 }
 
 

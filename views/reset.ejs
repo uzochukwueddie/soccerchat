@@ -21,7 +21,7 @@
        		<p class="text-center logo-text"><a href="/">SOCCERKIK</a></p>
        		<p class="text-center" style="color:#4aa1f3; font-weight:bold">Reset Your Password</p>
         </div>
-        <form method="post">
+        <form action="/reset/<%= passreset %>" method="post">
           	<% if(hasErrors) {%>
 				<% for(var i = 0; i < messages.length; i++) {%>
 					<div class="alert alert-danger text-center">

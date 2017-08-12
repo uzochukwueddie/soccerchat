@@ -17,8 +17,7 @@ module.exports = (app, io) => {
         
         var info = req.flash('info');
 
-        res.render('forgot', {title: 'Soccerkik | Forgot Password', messages: errors, hasErrors: errors.length > 0, 
-          info: info, noErrors: info.length > 0})        
+        res.render('forgot', {title: 'Soccerkik | Forgot Password', messages: errors, hasErrors: errors.length > 0, info: info, noErrors: info.length > 0})        
     });
 
     app.post('/forgot_password', (req, res) => {
@@ -34,7 +33,7 @@ module.exports = (app, io) => {
                     var token = random.RandomChar(40);
                     
                     user.passwordResetToken = token;
-                    user.passwordResetExpires = Date.now() + 60*60*1000;
+                    user.passwordResetExpires = Date.now() + 60*60*2*1000;
                     
                     user.save((err) => {
                         callback(err, token, user);
@@ -44,7 +43,6 @@ module.exports = (app, io) => {
             
             function(token, user, callback){
                 var smtpTransport = nodemailer.createTransport({
-//                    service: 'Gmail',
                     host: 'smtp.gmail.com',
                     port: 465,
                     secure: true,
@@ -60,7 +58,7 @@ module.exports = (app, io) => {
                     subject: 'Soccerkik Password Reset Token',
                     text: 'You have requested for password reset token. \n\n'+
                         'Please click on the link to complete the process: \n\n'+
-                        'http://soccerkik.com/reset/'+token+'\n\n'
+                        'https://www.soccerkik.com/reset/'+token+'\n\n'
                 };
                 
                 smtpTransport.sendMail(mailOptions, (err, response) => {
@@ -86,7 +84,7 @@ module.exports = (app, io) => {
             var errors = req.flash('error');
             var success = req.flash('success');
             
-            res.render('reset', {title: 'Reset Your Password', messages: errors, hasErrors: errors.length > 0, success:success, noErrors:success.length > 0});
+            res.render('reset', {title: 'Reset Your Password', messages: errors, hasErrors: errors.length > 0, success:success, noErrors:success.length > 0, passreset:req.params.token});
         });
     });
 
@@ -101,29 +99,31 @@ module.exports = (app, io) => {
 
                       req.checkBody('password', 'Password is Required').notEmpty();
                       req.checkBody('password', 'Password Must Not Be Less Than 5').isLength({min:5});
-                      
-                      var errors = req.validationErrors();
-                      
+                    
                       if(req.body.password == req.body.cpassword){
-                          if(errors){
-                              var messages = [];
-                              errors.forEach((error) => {
-                                  messages.push(error.msg)
-                              })
-                              
-                              var errors = req.flash('error');
-                              return res.redirect('/reset/'+req.params.token);
-                          }else{
-                              user.password = user.encryptPassword(req.body.password);
-                              user.passwordResetToken = undefined;
-                              user.passwordResetExpires = undefined;
-                              
-                              user.save((err) => {
-                                  req.flash('success', 'Your password has been successfully updated.');
-                                  callback(err, user);
-                                  res.redirect('/');
-                              })
-                          }
+                          req.getValidationResult()
+                              .then((result) => {
+                                    const errors = result.array();
+                                    if(errors){
+                                        const messages = [];
+                                        errors.forEach((error) => {
+                                            messages.push(error.msg);
+                                        });
+                                        req.flash('error', messages);
+                                        return res.redirect('/reset/'+req.params.token);
+                                    }else{
+                                        user.password = user.encryptPassword(req.body.password);
+                                        user.passwordResetToken = undefined;
+                                        user.passwordResetExpires = undefined;
+
+                                        user.save((err) => {
+                                            req.flash('success', 'Your password has been successfully updated.');
+                                            callback(err, user);
+                                            res.redirect('/');
+                                        })
+                                    }
+                            })
+                          
                       }else{
                           req.flash('error', 'Password and confirm password are not equal.');
                           return res.redirect('/reset/'+req.params.token);
@@ -135,7 +135,6 @@ module.exports = (app, io) => {
             
             function(user, callback){
                 var smtpTransport = nodemailer.createTransport({
-//                    service: 'Gmail',
                     host: 'smtp.gmail.com',
                     port: 465,
                     secure: true,
@@ -174,40 +173,41 @@ function loginValidation(req, res, next){
    req.checkBody('email', 'Email is Invalid').isEmail();
    req.checkBody('password', 'Password is Required').notEmpty();
    req.checkBody('password', 'Password Must Not Be Less Than 5 Characters').isLength({min:5});
+    
+    req.getValidationResult()
+        .then((result) => {
+            const errors = result.array();
+            const messages = [];
+            errors.forEach((error) => {
+                messages.push(error.msg);
+            });
 
-   var loginErrors = req.validationErrors();
-
-   if(loginErrors){
-       var messages = [];
-       loginErrors.forEach((error) => {
-           messages.push(error.msg);
-       });
-
-       req.flash('error', messages);
-       res.redirect('/');
-   }else{
-       return next();
-   }
+            req.flash('error', messages);
+            res.redirect('/');
+        })
+        .catch((err) => {
+            return next();
+        })
 }
 
 function resetPassword(req, res, next){
-   req.checkBody('password', 'Password is Required').notEmpty();
-   req.checkBody('password', 'Password Must Not Be Less Than 5 Characters').isLength({min:5});
-   //req.check("password", "Password Must Contain at least 1 Number.").matches(/^(?=.*\d)(?=.*[a-z])[0-9a-z]{5,}$/, "i");
+    req.checkBody('password', 'Password is Required').notEmpty();
+    req.checkBody('password', 'Password Must Not Be Less Than 5 Characters').isLength({min:5});
+    
+    req.getValidationResult()
+        .then((result) => {
+            const errors = result.array();
+            const messages = [];
+            errors.forEach((error) => {
+                messages.push(error.msg);
+            });
 
-   var resetErrors = req.validationErrors();
-
-   if(resetErrors){
-       var messages = [];
-       resetErrors.forEach((error) => {
-           messages.push(error.msg);
-       });
-
-       req.flash('error', messages);
-       res.redirect('/reset/'+req.params.token);
-   }else{
-       return next();
-   }
+            req.flash('error', messages);
+            res.redirect('/reset/'+req.params.token);
+        })
+        .catch((err) => {
+            return next();
+        })
 }
 
 function isLoggedIn(req, res, next){

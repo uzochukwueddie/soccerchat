@@ -927,6 +927,10 @@ pre.prettyprint {
     margin-top: 50px;
 }
 
+.member_span{
+    font-weight: bold;
+}
+
 .member_span:visited{
     color: white !important;
 }
@@ -1470,6 +1474,24 @@ legend {
 .errMsg{
     margin: 2px 50px 0px 50px;
     font-size: 18px;
+}
+
+.contact-link{
+    background: #4aa1f3;
+    border-radius: 0;
+    color: #fff;
+    width: 100px;
+}
+
+.contact-link:link, .contact-link:visited {
+    color: #fff;
+    text-decoration: none;
+    background: #4aa1f3;
+}
+
+.contact-link:active, .contact-link:hover {
+    background: #4aa1f3;
+    color: #fff;
 }
 
 

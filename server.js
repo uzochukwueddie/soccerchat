@@ -53,7 +53,7 @@ app.use(validator({
 
 app.use(session({
     secret: process.env.SECRET_COOKIE_SECRET,
-    secret: 'Thisismytestkey',
+    //secret: 'Thisismytestkey',
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({mongooseConnection: mongoose.connection})
@@ -82,6 +82,7 @@ require('./routes/profile')(app);
 require('./routes/chat')(app);
 require('./routes/reset')(app);
 require('./routes/footballnews')(app);
+require('./routes/contact')(app);
 
 require('./config/admin_passport');
 
