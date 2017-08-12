@@ -100,20 +100,21 @@ module.exports = (app, io) => {
                       req.checkBody('password', 'Password is Required').notEmpty();
                       req.checkBody('password', 'Password Must Not Be Less Than 5').isLength({min:5});
                     
+//                      req.getValidationResult()
+//                            .then((result) => {
+//                                const errors = result.array();
+//                                const messages = [];
+//                                errors.forEach((error) => {
+//                                    messages.push(error.msg);
+//                                });
+//                                req.flash('error', messages);
+//                                return res.redirect('/reset/'+req.params.token);
+//                            })
+//                            .catch((err) => {
+//                                return next(err);
+//                            })
+                    
                       if(req.body.password == req.body.cpassword){
-                          req.getValidationResult()
-                                .then((result) => {
-                                    const errors = result.array();
-                                    const messages = [];
-                                    errors.forEach((error) => {
-                                        messages.push(error.msg);
-                                    });
-                                    req.flash('error', messages);
-                                    return res.redirect('/reset/'+req.params.token);
-                                })
-                                .catch((err) => {
-                                    return next(err);
-                                })
                           
                             user.password = user.encryptPassword(req.body.password);
                             user.passwordResetToken = undefined;
